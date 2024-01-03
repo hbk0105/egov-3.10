@@ -99,7 +99,6 @@ public class EgovSampleController {
 		int totCnt = sampleService.selectSampleListTotCnt(searchVO);
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
-		System.out.println("###");
 		return "sample/egovSampleList";
 	}
 
