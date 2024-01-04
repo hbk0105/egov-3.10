@@ -54,7 +54,7 @@
 	</select>
 
 	<select id="selectSampleList" parameterType="searchVO" resultType="egovMap">
-
+	/* selectSampleList */
 			SELECT
 				ID, NAME, DESCRIPTION, USE_YN, REG_USER
 			FROM SAMPLE
@@ -74,7 +74,7 @@
 	</select>
 
 	<select id="selectSampleListTotCnt" parameterType="searchVO" resultType="int">
-
+		/* selectSampleListTotCnt */
 			SELECT COUNT(*) totcnt
 			FROM SAMPLE
 			WHERE 1=1
