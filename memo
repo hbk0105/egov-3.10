@@ -1,0 +1,4 @@
+톰캣 자바 리로드
+
+-Dfile.encoding=UTF-8 -javaagent:C:\project\eGovFrameDev-3.10.0-64bit\workspace\springloaded-1.2.8.RELEASE.jar -noverify
+
