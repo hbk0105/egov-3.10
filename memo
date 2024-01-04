@@ -2,3 +2,11 @@
 
 -Dfile.encoding=UTF-8 -javaagent:C:\project\eGovFrameDev-3.10.0-64bit\workspace\springloaded-1.2.8.RELEASE.jar -noverify
 
+MYSQL 카운트 - https://hdhdeveloper.tistory.com/108
+
+1. SQL_CALC_FOUND_ROWS 컬럼으로 카운트 조회
+SELECT SQL_CALC_FOUND_ROWS * FROM 급여
+    WHERE 연봉 > 60000 LIMIT 100;
+
+2. 아래 쿼리로 ROW수 조회
+SELECT FOUND_ROWS();

@@ -60,5 +60,13 @@
     </bean>
 	<!-- /For Pagination Tag -->
 
+    <!-- 마이클 로그 인터셉터  -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <bean id="loggerInterceptor" class="com.interceptor.ParameterLogInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator"/>
 </beans>

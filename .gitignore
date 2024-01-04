@@ -2,6 +2,9 @@
 .classpath
 .iml
 .idea
+.idea/*
+.study.iml
 out
 misc.xml
-target
+target/**
+*/target/**
