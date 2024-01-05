@@ -7,7 +7,7 @@
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
                 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
-    <context:component-scan base-package="egovframework">
+    <context:component-scan base-package="egovframework,com">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
@@ -59,6 +59,40 @@
         </property>
     </bean>
 	<!-- /For Pagination Tag -->
+
+    <!-- 첨부파일 -->
+    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="spring.RegularCommonsMultipartResolver">
+        <property name="maxUploadSize" value="2000000000"/>
+        <property name="maxInMemorySize" value="100000000"/>
+    </bean>
+    <!-- choose one from above and alias it to the name Spring expects -->
+    <alias alias="multipartResolver" name="spring.RegularCommonsMultipartResolver"/>
+    <!-- 첨부파일 -->
+
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" id="viewResolver" p:order="0" />
+    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+        <property name="contentType" value="application/json;charset=UTF-8"/>
+    </bean>
+
+    <!-- https://zoou.tistory.com/21 -->
+    <bean id="htmlEscapingObjectMapper" class="com.util.HtmlEscapingObjectMapperFactory" />
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="htmlEscapingObjectMapper"></property>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html; charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>application/x-www-form-urlencoded;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+
 
     <!-- 마이클 로그 인터셉터  -->
     <mvc:interceptors>

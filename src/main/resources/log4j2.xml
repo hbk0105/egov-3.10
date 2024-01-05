@@ -30,11 +30,11 @@
             <AppenderRef ref="console" />
             <AppenderRef ref="file" />
         </Logger>
-        <Logger name="org.springframework" level="ERROR" additivity="false">
+        <Logger name="org.springframework" level="DEBUG" additivity="false">
             <AppenderRef ref="console" />
             <AppenderRef ref="file" />
         </Logger>
-        <Logger name="com.zaxxer.hikari" level="ERROR">
+        <Logger name="com.zaxxer.hikari" level="DEBUG">
             <AppenderRef ref="console" />
             <AppenderRef ref="file" />
         </Logger>

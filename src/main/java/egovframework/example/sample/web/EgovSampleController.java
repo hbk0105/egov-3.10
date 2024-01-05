@@ -15,8 +15,19 @@
  */
 package egovframework.example.sample.web;
 
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.nhncorp.lucy.security.xss.XssPreventer;
+import com.util.FileUtil;
 import com.util.PageUtil;
 import egovframework.example.sample.service.EgovSampleService;
 import egovframework.example.sample.service.SampleDefaultVO;
@@ -27,16 +38,23 @@ import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 
+import jdk.nashorn.internal.parser.JSONParser;
+import net.sf.json.JSONObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 
 /**
@@ -59,6 +77,8 @@ import org.springmodules.validation.commons.DefaultBeanValidator;
 @Controller
 public class EgovSampleController {
 
+	private Logger log = LogManager.getLogger(this.getClass());
+
 	/** EgovSampleService */
 	@Resource(name = "sampleService")
 	private EgovSampleService sampleService;
@@ -70,6 +90,9 @@ public class EgovSampleController {
 	/** Validator */
 	@Resource(name = "beanValidator")
 	protected DefaultBeanValidator beanValidator;
+
+	@Autowired
+	private FileUtil fileUtil;
 
 	/**
 	 * 글 목록을 조회한다. (pageing)
@@ -215,5 +238,86 @@ public class EgovSampleController {
 		status.setComplete();
 		return "forward:/egovSampleList.do";
 	}
+	@RequestMapping(value = "/xss/jsonFilter.do")
+	public String method( @RequestParam Map<String,Object>params ,Model model , HttpServletRequest request){
+		try {
+			log.debug("#### " + request.getParameter("data"));
 
+			String json = params.get("list").toString();
+
+			JsonFactory factory = new JsonFactory();
+			factory.enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
+
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);  // list deserialization 기능 활성화
+			mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+			List<Map<String, Object>> list = mapper.readValue(json, new TypeReference<ArrayList<Map<String, Object>>>(){});
+
+			System.out.println("## list --> " + list);
+			model.addAttribute("param",list);
+
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return "jsonView";
+	}
+
+	@RequestMapping("/file.do")
+	public String file(HttpServletRequest request) throws Exception {
+
+		String inputMsg   = request.getParameter("inputMsg");
+		String convertMsg = XssPreventer.unescape(inputMsg);
+
+		log.info("### Get Message(Use XSS Filter) ###");
+		log.info("### 치환 => " + inputMsg);
+		log.info("### 역치환 => " + convertMsg);
+
+		return "sample/file";
+	}
+
+
+	@PostMapping("/uploadDynamicFiles.do" )
+	public String handleDynamicFileUpload(@RequestParam("file") List<MultipartFile> files , HttpServletRequest request) throws Exception {
+		MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest)request;
+		Iterator<String> iter = mRequest.getFileNames();
+		while (iter.hasNext()) {
+			MultipartFile item = mRequest.getFile(iter.next());
+			String fieldName = item.getName();
+			log.debug("### fieldName -- >"  + fieldName);
+			if(item.getSize() == 0) continue;
+			String path = "files";
+			log.debug("map -- > " + fileUtil.fileUpload(item,path));
+		}
+		return "redirect:/file.do";
+	}
+
+	/**
+	 * 파일 조회
+	 * @param fileId
+	 * @param req
+	 * @return ResponseEntity<byte[]>
+	 * @throws Exception
+	 */
+	// TODO: 파일 조회
+	@GetMapping("/file/downLoad.do")
+	//  @GetMapping("/files/{fileId}")
+	@Consumes(MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<byte[]> downloadDocument( HttpServletRequest req) throws Exception {
+		// @PathVariable Long fileId
+		File f = new File("C:\\upload\\files\\cB4NGcToTUlnqwe7vu7VWz1QoOLfSWzq.pdf");
+		return  fileUtil.fileDownload( f.getName() , new File(f.getAbsolutePath()) , req);
+	}
+
+	/**
+	 * 이미지 조회
+	 * @param req
+	 * @return ResponseEntity<byte[]>
+	 * @throws Exception
+	 */
+	// TODO: 이미지 조회
+	@GetMapping("/images/downLoad.do")
+	public  ResponseEntity<byte[]> getImage(HttpServletRequest req) throws Exception {
+		File f = new File("C:\\upload\\files\\test.png");
+		return  fileUtil.getImage(new File(f.getAbsolutePath()));
+	}
 }

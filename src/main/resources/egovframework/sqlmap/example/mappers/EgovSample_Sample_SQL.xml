@@ -56,7 +56,7 @@
 	<select id="selectSampleList" parameterType="searchVO" resultType="egovMap">
 
 			SELECT
-				ID, NAME, DESCRIPTION, USE_YN, REG_USER , SQL_CALC_FOUND_ROWS
+				ID, NAME, DESCRIPTION, USE_YN, REG_USER
 			FROM SAMPLE
 			WHERE 1=1
 			<if test="searchKeyword != null and searchKeyword != ''">
