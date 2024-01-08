@@ -21,13 +21,13 @@ public class TestController {
 
         //세션에 회원 데이터가 없으면 home
         if (SessionUtil.getAttribute(SessionConst.LOGIN_USER) == null) {
-            return "sample/user/login";
+            return "user/login";
         }
         UserInfo userInfo = (UserInfo) SessionUtil.getAttribute(SessionConst.LOGIN_USER);
         System.out.println("### userInfo " + userInfo);
         //세션이 유지되면 로그인으로 이동
         model.addAttribute("userEntity", userInfo);
-        return "sample/user/userList";
+        return "user/userList";
     }
 
     @RequestMapping("/login.do")
@@ -48,11 +48,11 @@ public class TestController {
                 SessionUtil.setAttribute(SessionConst.LOGIN_USER, userInfo); // 세션에 로그인 정보 저장
                 model.addAttribute("user", userInfo);
                 //return "loginHome"; // 로그인 홈 화면으로 이동
-                rt =  "sample/user/success";
+                rt =  "/user/success";
             } else {
                 model.addAttribute("error", "아이디 또는 비밀번호가 올바르지 않습니다.");
                 // return "loginForm"; // 로그인 폼 화면으로 이동
-                rt =  "sample/user/fail";
+                rt =  "user/fail";
             }
         }catch (Exception e){
             e.printStackTrace();

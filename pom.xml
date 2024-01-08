@@ -158,6 +158,13 @@
         </dependency>
         -->
 
+
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>1.5</version>
+        </dependency>
+
         <dependency>
             <groupId>egovframework.rte</groupId>
             <artifactId>egovframework.rte.psl.dataaccess</artifactId>
