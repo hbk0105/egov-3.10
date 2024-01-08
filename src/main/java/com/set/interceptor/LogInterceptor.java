@@ -1,4 +1,4 @@
-package com.interceptor;
+package com.set.interceptor;
 
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;

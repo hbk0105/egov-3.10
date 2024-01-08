@@ -1,6 +1,10 @@
-package com.util;
+package com.set.xss;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.text.translate.AggregateTranslator;
+import org.apache.commons.lang3.text.translate.CharSequenceTranslator;
+import org.apache.commons.lang3.text.translate.EntityArrays;
+import org.apache.commons.lang3.text.translate.LookupTranslator;
 import org.springframework.beans.factory.FactoryBean;
 
 import com.fasterxml.jackson.core.SerializableString;
@@ -47,6 +51,8 @@ public class HtmlEscapingObjectMapperFactory implements FactoryBean {
 
         private final int[] asciiEscapes;
 
+        private final CharSequenceTranslator translator;
+
         public HTMLCharacterEscapes() {
 
             // start with set of characters known to require escaping (double-quote,
@@ -66,6 +72,22 @@ public class HtmlEscapingObjectMapperFactory implements FactoryBean {
 
             asciiEscapes['\''] = CharacterEscapes.ESCAPE_CUSTOM;
 
+            //2.XSS방지처리특수문자인코딩값지정
+            translator = new AggregateTranslator(
+                    new LookupTranslator(EntityArrays.BASIC_ESCAPE()),//<,>,&,"는여기에포함됨
+                    new LookupTranslator(EntityArrays.ISO8859_1_ESCAPE()),
+                    new LookupTranslator(EntityArrays.HTML40_EXTENDED_ESCAPE()),
+                    //여기에서커스터마이징가능
+                    new LookupTranslator(
+                            new String[][]{
+                                    {"(","&#40;"},
+                                    {")","&#41;"},
+                                    {"#","&#35;"},
+                                    {"\'","&#39;"}
+                            }
+                    )
+            );
+
         }
 
         @Override
@@ -80,8 +102,8 @@ public class HtmlEscapingObjectMapperFactory implements FactoryBean {
         @Override
         public SerializableString getEscapeSequence(int ch) {
 
-            return new SerializedString(StringEscapeUtils.escapeHtml4(Character.toString((char) ch)));
-/*
+            //return new SerializedString(StringEscapeUtils.escapeHtml4(Character.toString((char) ch)));
+
             SerializedString serializedString = null;
             char charAt = (char) ch;
             //emoji jackson parse 오류에 따른 예외 처리
@@ -93,7 +115,7 @@ public class HtmlEscapingObjectMapperFactory implements FactoryBean {
             } else {
                 serializedString = new SerializedString(StringEscapeUtils.escapeHtml4(Character.toString(charAt)));
             }
-            return serializedString;*/
+            return serializedString;
         }
     }
 }
