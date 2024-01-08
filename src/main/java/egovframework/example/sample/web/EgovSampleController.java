@@ -16,7 +16,6 @@
 package egovframework.example.sample.web;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 import com.fasterxml.jackson.core.JsonFactory;
@@ -24,11 +23,9 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.nhncorp.lucy.security.xss.XssPreventer;
-import com.util.FileUtil;
-import com.util.PageUtil;
+import com.set.util.FileUtil;
+import com.set.util.PageUtil;
 import egovframework.example.sample.service.EgovSampleService;
 import egovframework.example.sample.service.SampleDefaultVO;
 import egovframework.example.sample.service.SampleVO;
@@ -40,8 +37,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 
-import jdk.nashorn.internal.parser.JSONParser;
-import net.sf.json.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -241,14 +236,13 @@ public class EgovSampleController {
 	@RequestMapping(value = "/xss/jsonFilter.do")
 	public String method( @RequestParam Map<String,Object>params ,Model model , HttpServletRequest request){
 		try {
-			log.debug("#### " + request.getParameter("data"));
 
 			String json = params.get("list").toString();
 
 			JsonFactory factory = new JsonFactory();
 			factory.enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
 
-			ObjectMapper mapper = new ObjectMapper();
+			ObjectMapper mapper = new ObjectMapper(factory);
 			mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);  // list deserialization 기능 활성화
 			mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 			List<Map<String, Object>> list = mapper.readValue(json, new TypeReference<ArrayList<Map<String, Object>>>(){});

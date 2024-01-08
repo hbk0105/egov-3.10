@@ -75,7 +75,7 @@
     </bean>
 
     <!-- https://zoou.tistory.com/21 -->
-    <bean id="htmlEscapingObjectMapper" class="com.util.HtmlEscapingObjectMapperFactory" />
+    <bean id="htmlEscapingObjectMapper" class="com.set.xss.HtmlEscapingObjectMapperFactory" />
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
@@ -92,13 +92,31 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+    <!-- Usage 2. -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                    <property name="objectMapper" ref="htmlEscapingObjectMapper"/>
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html; charset=UTF-8</value>
+                            <value>application/json;charset=UTF-8</value>
+                            <value>application/x-www-form-urlencoded;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
 
 
     <!-- 마이클 로그 인터셉터  -->
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**" />
-            <bean id="loggerInterceptor" class="com.interceptor.ParameterLogInterceptor"/>
+            <bean id="loggerInterceptor" class="com.set.interceptor.ParameterLogInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 

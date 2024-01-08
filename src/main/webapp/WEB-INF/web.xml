@@ -4,7 +4,11 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
 	<display-name>egov.sample</display-name>
-    
+
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -19,7 +23,7 @@
 	</filter-mapping>
 
 	<!-- multipart/form-data도 xss필터를 거치기 위해 -->
-	<filter>
+	<!--<filter>
 		<filter-name>multipartFilter</filter-name>
 		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
 	</filter>
@@ -28,7 +32,7 @@
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 
-	<!-- xss 필터링 -->
+	&lt;!&ndash; xss 필터링 &ndash;&gt;
 	<filter>
 		<filter-name>xssEscapeServletFilter</filter-name>
 		<filter-class>com.navercorp.lucy.security.xss.servletfilter.XssEscapeServletFilter</filter-class>
@@ -36,7 +40,7 @@
 	<filter-mapping>
 		<filter-name>xssEscapeServletFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
+	</filter-mapping>-->
 
 	<filter>
 		<filter-name>HTMLTagFilter</filter-name>
