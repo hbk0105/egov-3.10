@@ -133,10 +133,7 @@
                   </li>
               </ul>
         	</div>
-
-			<div>
-				${paper}
-			</div>
+			<%@ include file="/WEB-INF/jsp/egovframework/example/common/paging.jsp"%>
         </div>
     </form:form>
 </body>
