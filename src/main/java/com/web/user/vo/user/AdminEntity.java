@@ -4,17 +4,14 @@ import com.web.user.vo.Menu;
 import com.web.user.vo.Role;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.*;
 
 @Getter
 @Setter
-public class AdminEntity implements User {
-
-    private Long id;
-    private String username;
-    private String password; // 보안상의 이유로 실제 데이터베이스에는 암호화된 비밀번호를 저장합니다.
-    private String email;
+@ToString
+public class AdminEntity extends UserEntity {
 
     // 관리자 특정 필드..
     private Set<Role> roles = new HashSet<>();

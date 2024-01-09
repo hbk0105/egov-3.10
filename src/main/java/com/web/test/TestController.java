@@ -2,7 +2,10 @@ package com.web.test;
 
 import com.set.util.SessionConst;
 import com.set.util.SessionUtil;
+import com.web.user.vo.user.AdminEntity;
 import com.web.user.vo.user.UserEntity;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,5 +71,14 @@ public class TestController {
             session.invalidate(); //세션을 제거한다.
         }
         return "redirect:/";
+    }
+
+    public static void main(String[] args) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId((long)(Math.random()*10));
+        userEntity.setUsername("michael"+(long)(Math.random()*10));
+        userEntity.setEmail("michael@sangs.co.rk"+(long)(Math.random()*10));
+        userEntity.setPassword("1234"+(long)(Math.random()*10));
+        System.out.println(userEntity.toString());
     }
 }

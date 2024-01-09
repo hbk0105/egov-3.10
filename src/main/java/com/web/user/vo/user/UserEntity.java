@@ -2,11 +2,13 @@ package com.web.user.vo.user;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Objects;
 
 @Getter
 @Setter
+@ToString
 public class UserEntity implements User{
 
     private Long id;
@@ -31,13 +33,4 @@ public class UserEntity implements User{
         return Objects.hash(id);
     }
 
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                // 기타 필드 출력
-                '}';
-    }
 }

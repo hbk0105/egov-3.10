@@ -47,6 +47,15 @@ public class PageUtil {
      */
     private String queryString;
 
+    /**
+     * PageUtil
+     *
+     * @param totalCount 전체 수
+     * @param pageSize 한페이지에 나오는 개수
+     * @param pageIndex 현재 페이지 번호
+     * @param queryString 페이지 이동시 전달되는 파라미터(쿼리스트링)
+     * @return PageUtil
+     */
     public PageUtil(long totalCount, long pageSize, long pageIndex, String queryString) {
         this.totalCount = totalCount;
         this.pageSize = pageSize;
@@ -54,6 +63,15 @@ public class PageUtil {
         this.queryString = queryString;
     }
 
+    /**
+     * PageUtil
+     *
+     * @param totalCount 전체 수
+     * @param pageSize 한페이지에 나오는 개수
+     * @param pageIndex 현재 페이지 번호
+     * @param req HttpServletRequest
+     * @return PageUtil
+     */
     public PageUtil(long totalCount, long pageSize, long pageIndex, HttpServletRequest req) {
         this.totalCount = totalCount;
         this.pageSize = pageSize;
@@ -132,6 +150,11 @@ public class PageUtil {
         }
     }
 
+    /**
+     *
+     * @param req
+     * @return HashMap
+     */
     public static HashMap<String,String> reqToMap(HttpServletRequest req){
         HashMap<String,String> param = new HashMap<String,String>();
         Enumeration<?> parameter = req.getParameterNames();
@@ -146,7 +169,7 @@ public class PageUtil {
     }
 
     /**
-     * Method mapToString.
+     * @param obj
      * @return String
      */
     // TODO: Map To String
