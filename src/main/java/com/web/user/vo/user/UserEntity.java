@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public abstract class UserEntity implements User{
+public class UserEntity implements User{
 
     private Long id;
     private String username;

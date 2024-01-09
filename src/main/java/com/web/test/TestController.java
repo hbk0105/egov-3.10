@@ -2,7 +2,7 @@ package com.web.test;
 
 import com.set.util.SessionConst;
 import com.set.util.SessionUtil;
-import com.web.user.vo.user.UserInfo;
+import com.web.user.vo.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,13 +20,13 @@ public class TestController {
     public String test( Model model) {
 
         //세션에 회원 데이터가 없으면 home
-        if (SessionUtil.getAttribute(SessionConst.LOGIN_USER) == null) {
+       /* if (SessionUtil.getAttribute(SessionConst.LOGIN_USER) == null) {
             return "user/login";
-        }
-        UserInfo userInfo = (UserInfo) SessionUtil.getAttribute(SessionConst.LOGIN_USER);
-        System.out.println("### userInfo " + userInfo);
+        }*/
+        UserEntity userEntity = (UserEntity) SessionUtil.getAttribute(SessionConst.LOGIN_USER);
+        System.out.println("### userEntity " + userEntity);
         //세션이 유지되면 로그인으로 이동
-        model.addAttribute("userEntity", userInfo);
+        model.addAttribute("userEntity", userEntity);
         return "user/userList";
     }
 
@@ -38,15 +38,15 @@ public class TestController {
         String rt = "";
         try{
             if (true) {
-                UserInfo userInfo = new UserInfo();
-                userInfo.setId((long)(Math.random()*10));
-                userInfo.setUsername("michael"+(long)(Math.random()*10));
-                userInfo.setEmail("michael@sangs.co.rk"+(long)(Math.random()*10));
-                userInfo.setPassword("1234"+(long)(Math.random()*10));
+                UserEntity userEntity = new UserEntity();
+                userEntity.setId((long)(Math.random()*10));
+                userEntity.setUsername("michael"+(long)(Math.random()*10));
+                userEntity.setEmail("michael@sangs.co.rk"+(long)(Math.random()*10));
+                userEntity.setPassword("1234"+(long)(Math.random()*10));
 
-                System.out.println("### userInfo --> " + userInfo);
-                SessionUtil.setAttribute(SessionConst.LOGIN_USER, userInfo); // 세션에 로그인 정보 저장
-                model.addAttribute("user", userInfo);
+                System.out.println("### userEntity --> " + userEntity);
+                SessionUtil.setAttribute(SessionConst.LOGIN_USER, userEntity); // 세션에 로그인 정보 저장
+                model.addAttribute("userEntity", userEntity);
                 //return "loginHome"; // 로그인 홈 화면으로 이동
                 rt =  "/user/success";
             } else {
@@ -64,6 +64,7 @@ public class TestController {
     public String logout(HttpServletResponse response, HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if(session != null){
+            SessionUtil.removeAttribute(SessionConst.LOGIN_USER);
             session.invalidate(); //세션을 제거한다.
         }
         return "redirect:/";

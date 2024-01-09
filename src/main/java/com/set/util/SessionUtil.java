@@ -1,6 +1,5 @@
 package com.set.util;
 
-import com.web.user.vo.user.UserInfo;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
