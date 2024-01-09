@@ -15,22 +15,22 @@ public class CustomMapArgumentResovler implements HandlerMethodArgumentResolver 
 	@Override
 	public Object resolveArgument(MethodParameter arg0, ModelAndViewContainer arg1, NativeWebRequest arg2,
 			WebDataBinderFactory arg3) throws Exception {
-		 // TODO Auto-generated method stub
-		
+        // TODO Auto-generated method stub
+        // https://beecomci.tistory.com/42
         CommandMap commandMap = new CommandMap();
+
+        HttpServletRequest request = (HttpServletRequest) arg2.getNativeRequest();
+        Enumeration<?> enumeration = request.getParameterNames();
         
-       HttpServletRequest request = (HttpServletRequest) arg2.getNativeRequest();
-       Enumeration<?> enumeration = request.getParameterNames();
-        
-       String key = null;
-       String[] values = null;
-       while(enumeration.hasMoreElements()){
+        String key = null;
+        String[] values = null;
+        while(enumeration.hasMoreElements()){
            key = (String) enumeration.nextElement();
            values = request.getParameterValues(key);
            if(values != null){
                commandMap.put(key, (values.length > 1) ? values:values[0] );
            }
-       }
+        }
        return commandMap;
 	}
 
