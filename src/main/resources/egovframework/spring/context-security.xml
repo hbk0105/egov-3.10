@@ -17,8 +17,10 @@
 		<s:intercept-url pattern="/ajaxTest.do" access="permitAll" />
 
 		<s:intercept-url pattern="/dbTest" requires-channel="http" access="permitAll" />
+		<!--
+			SSL 인증서 필요 하므로 주석
 		<s:intercept-url pattern="/egovSampleList*" requires-channel="https" access="permitAll" />
-
+		-->
 		<!-- 로그인된 상태에서는 로그인이나 회원가입 화면에 접근 못하도록 함 -->
 		<s:intercept-url pattern="/customLogin.do" access="permitAll" />
 		<s:intercept-url pattern="/test.do" access="permitAll" />
@@ -43,7 +45,7 @@
 			delete-cookies="true" />
 			
 		<s:port-mappings>
-		    <s:port-mapping http="8088" https="8443"/>
+		    <s:port-mapping http="8080" https="8443"/>
 		</s:port-mappings>
 		
 		<!-- 중복 로그인을 방지하기 위한 설정이다. -->
