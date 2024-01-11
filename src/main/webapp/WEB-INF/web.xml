@@ -52,6 +52,7 @@
 	</filter-mapping>
 
 	<!-- Spring Security  Filter Chain 선언 -->
+	<!-- 2024.01.11 시큐리티 주석
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -61,6 +62,7 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	-->
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

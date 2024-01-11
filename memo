@@ -25,3 +25,47 @@ https://colorlib.com/wp/free-bootstrap-admin-dashboard-templates/
 -----
 
 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
+
+
+
+-- 회원 정보 테이블
+CREATE TABLE MemberT (
+    member_idx INT PRIMARY KEY AUTO_INCREMENT COMMENT '회원인덱스',
+    username VARCHAR(50) NOT NULL UNIQUE COMMENT '사용자명 (도메인: [A-Za-z0-9_])',
+    password VARCHAR(255) NOT NULL COMMENT '비밀번호 (해싱된 값)',
+    email VARCHAR(100) UNIQUE COMMENT '이메일 (도메인: [A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,})',
+    -- 기타 필요한 회원 정보 (도메인 및 코멘트 추가 필요)
+);
+
+-- 메뉴 정보 테이블
+CREATE TABLE MenuT (
+    menu_idx INT PRIMARY KEY AUTO_INCREMENT COMMENT '메뉴인덱스',
+    parent_menu_idx INT COMMENT '상위 메뉴인덱스 (NULL 가능)',
+    menu_name VARCHAR(100) NOT NULL COMMENT '메뉴 이름',
+    menu_level INT NOT NULL COMMENT '메뉴 레벨 (최대 4단계)',
+    FOREIGN KEY (parent_menu_idx) REFERENCES MenuT(menu_idx)
+);
+
+-- 권한 정보 테이블
+CREATE TABLE RoleT (
+    role_idx INT PRIMARY KEY AUTO_INCREMENT COMMENT '권한인덱스',
+    role_name VARCHAR(50) NOT NULL UNIQUE COMMENT '권한명 (도메인: [A-Za-z0-9_])'
+);
+
+-- 회원-권한 매핑 테이블
+CREATE TABLE MemberRoleT (
+    member_idx INT COMMENT '회원인덱스',
+    role_idx INT COMMENT '권한인덱스',
+    PRIMARY KEY (member_idx, role_idx),
+    FOREIGN KEY (member_idx) REFERENCES MemberT(member_idx),
+    FOREIGN KEY (role_idx) REFERENCES RoleT(role_idx)
+);
+
+-- 권한-메뉴 매핑 테이블
+CREATE TABLE RoleMenuT (
+    role_idx INT COMMENT '권한인덱스',
+    menu_idx INT COMMENT '메뉴인덱스',
+    PRIMARY KEY (role_idx, menu_idx),
+    FOREIGN KEY (role_idx) REFERENCES RoleT(role_idx),
+    FOREIGN KEY (menu_idx) REFERENCES MenuT(menu_idx)
+);

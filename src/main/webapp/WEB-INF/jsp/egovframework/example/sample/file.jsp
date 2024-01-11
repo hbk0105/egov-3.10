@@ -28,6 +28,30 @@
 <script>
     function fnXss(){
 
+        $.ajax({
+            url : "/ajax/List.do",
+            dataType:'text',
+            processData:false,
+            contentType:false,
+            success : function(data){
+                console.log(data);
+            },
+            error : function(request, status, error) {
+                console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+            }
+        });
+
+        $.ajax({
+            url : "/ajax/Map.do",
+            success : function(data){
+                console.log(data);
+            },
+            error : function(request, status, error) {
+                console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+            }
+        });
+
+
         var params = {
             "name": $('#inputMsg').val(),
             "age": 30

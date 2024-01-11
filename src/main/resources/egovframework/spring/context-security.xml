@@ -56,8 +56,8 @@
 		<!-- 권한이 없어서 금지된 URI 접속할 때 보여줄 페이지(403 에러 페이지 대체) -->
 		<s:access-denied-handler ref="customAccessDenied"/>
 		
-		<!-- <s:csrf disabled="true"/> -->
-		
+		<s:csrf disabled="true"/>
+
 	</s:http>
 
 

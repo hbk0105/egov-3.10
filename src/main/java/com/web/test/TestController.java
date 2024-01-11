@@ -1,19 +1,27 @@
 package com.web.test;
 
+import com.set.util.CommandMap;
 import com.set.util.SessionConst;
 import com.set.util.SessionUtil;
-import com.web.user.vo.user.AdminEntity;
 import com.web.user.vo.user.UserEntity;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -72,6 +80,40 @@ public class TestController {
         }
         return "redirect:/";
     }
+
+    @GetMapping("/sse/list.do")
+    public String list(CommandMap commandMap , HttpServletResponse response) throws IOException {
+       return "user/sse";
+    }
+
+
+    @GetMapping(value = "/ajax/List.do")
+    public  String List(Model model){
+        List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("USER_ID", "AAA");
+        map.put("PROG_ID", "KEBA1111");
+        map.put("PROG_NAME", "KEBAKE");
+        map.put("PHONE_NUM", "010-1111-1111");
+        listMap.add(map);
+
+        model.addAttribute("result",listMap);
+
+        return "jsonView";
+    }
+
+    // return Map<?,?>
+    @GetMapping(value = "/ajax/Map.do")
+    public String testList(Model model){
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("USER_ID", "AAA");
+        map.put("PROG_ID", "KEBA1111");
+        map.put("PROG_NAME", "KEBAKE");
+        map.put("PHONE_NUM", "010-1111-1111");
+        model.addAttribute("result",map);
+        return "jsonView";
+    }
+
 
     public static void main(String[] args) {
         UserEntity userEntity = new UserEntity();
