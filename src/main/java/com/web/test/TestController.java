@@ -11,8 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -81,10 +83,16 @@ public class TestController {
         return "redirect:/";
     }
 
-    @GetMapping("/sse/list.do")
+    @GetMapping("/sse/test.do")
     public String list(CommandMap commandMap , HttpServletResponse response) throws IOException {
-       return "user/sse";
+       return "sse/sse";
     }
+
+    @GetMapping("/sse/add.do")
+    public String add(CommandMap commandMap , HttpServletResponse response) throws IOException {
+        return "sse/add";
+    }
+
 
 
     @GetMapping(value = "/ajax/List.do")

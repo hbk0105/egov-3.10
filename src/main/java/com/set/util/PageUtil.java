@@ -119,7 +119,7 @@ public class PageUtil {
             sb.append(System.lineSeparator());
         }
 
-        if(nextPageIndex > pageIndex){
+        if(totalBlockCount > pageIndex && totalBlockCount > pageBlockSize){
             sb.append(String.format("<a href='?pageIndex=%d%s'>&gt;</a>", nextPageIndex, addQueryString));
             sb.append(System.lineSeparator());
             sb.append(String.format("<a href='?pageIndex=%d%s'>&gt;&gt;</a>", totalBlockCount, addQueryString));

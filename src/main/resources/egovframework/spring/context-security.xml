@@ -9,11 +9,18 @@
 
 	<!-- https://taetae0079.tistory.com/5?category=790789  -->
 	<!-- https://codevang.tistory.com/266?category=857253 -->
+
 	<s:http auto-config="true" use-expressions="true" disable-url-rewriting="true">
-			
+
 		<!-- 정적 리소스는 모두 접근 허용 -->
-		<s:intercept-url pattern="/resources/**" access="permitAll" />
-		
+		<!--<s:intercept-url pattern="/resources/**" access="permitAll" />
+		<s:intercept-url pattern="/css/**" access="permitAll"  />
+		<s:intercept-url pattern="/js/**" access="permitAll" />
+		<s:intercept-url pattern="/images/**" access="permitAll"  />
+		-->
+
+
+		<s:intercept-url pattern="/notifications/**" access="permitAll" />
 		<s:intercept-url pattern="/ajaxTest.do" access="permitAll" />
 
 		<s:intercept-url pattern="/dbTest" requires-channel="http" access="permitAll" />
@@ -27,41 +34,41 @@
 
 		<!-- 관리자페이지는 관리자만 접근 허용 -->
 		<s:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-		<s:intercept-url pattern="/member/**" access="hasRole('ROLE_USER')" /> 
+		<s:intercept-url pattern="/member/**" access="hasRole('ROLE_USER')" />
 
 		<!-- 로그인 설정 -->
-		
+
 		<s:form-login login-page="/customLogin.do"
 			login-processing-url="/user/login.do"
 			authentication-success-handler-ref="customLoginSuccessHandler"
 			authentication-failure-handler-ref="customLoginFailureHandler"
 			username-parameter="email" password-parameter="passwd" />
-			
+
 		<!-- 로그아웃 설정 -->
-		<s:logout 
+		<s:logout
 			logout-url="/logout.do"
 			logout-success-url="/"
 			invalidate-session="true"
 			delete-cookies="true" />
-			
+
 		<s:port-mappings>
 		    <s:port-mapping http="8080" https="8443"/>
 		</s:port-mappings>
-		
+
 		<!-- 중복 로그인을 방지하기 위한 설정이다. -->
 	  	<s:session-management>
         	<s:concurrency-control max-sessions="1" expired-url="/login_duplicate"/>
         </s:session-management>
-		
+
 		<!-- 권한이 없어서 금지된 URI 접속할 때 보여줄 페이지(403 에러 페이지 대체) -->
 		<s:access-denied-handler ref="customAccessDenied"/>
-		
+
 		<s:csrf disabled="true"/>
 
 	</s:http>
 
 
-	<!-- SHA256 적용 --> 
+	<!-- SHA256 적용 -->
 	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 	<bean id="userDetailsService" class="com.web.user.service.UserLoginAuthenticationProvider"/>
 
@@ -70,7 +77,7 @@
 	<bean id="customLoginSuccessHandler" class="com.set.security.CustomLoginSuccessHandler" />
 	<bean id="customLoginFailureHandler" class="com.set.security.CustomLoginFailureHandler" />
 
-	
+
 	<s:authentication-manager>
 		<s:authentication-provider ref="userDetailsService">
 		</s:authentication-provider>
