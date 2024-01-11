@@ -127,13 +127,13 @@
     </bean>-->
 
 
-    <!-- 마이클 로그인 체크 인터셉터  -->
+    <!-- 마이클 권한 체크 인터셉터  -->
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/user/*.do" />
             <mvc:mapping path="/test.do"/>
             <mvc:exclude-mapping path="/login.do"/>
-            <bean id="loginInterceptor" class="com.set.interceptor.LoginInterceptor"/>
+            <bean id="loginInterceptor" class="com.set.interceptor.AuthInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 

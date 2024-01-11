@@ -1,5 +1,6 @@
 package com.set.interceptor;
 
+import com.set.util.PrintWiterUtil;
 import com.set.util.SessionConst;
 import com.set.util.SessionUtil;
 import org.apache.logging.log4j.LogManager;
@@ -8,11 +9,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 
-public class LoginInterceptor extends HandlerInterceptorAdapter  {
+public class AuthInterceptor extends HandlerInterceptorAdapter  {
 
     private Logger log = LogManager.getLogger(this.getClass());
 
@@ -28,21 +30,42 @@ public class LoginInterceptor extends HandlerInterceptorAdapter  {
         
         log.debug("########## LoggerInterceptor 시작  ##########");
 
-        System.out.println("## login --> " + login);
         if(SessionUtil.getAttribute(SessionConst.LOGIN_USER) == null){
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            //out.println("<script>alert('로그인이 필요합니다.');window.location.href='"+login+"';</script>");
-            out.println("<script>alert('로그인이 필요합니다.');window.location.href='/';</script>");
-
-            out.flush();
-            //response.sendRedirect("/");
+            new PrintWiterUtil().cmmnMsg(response,"로그인이 필요합니다.");
             return false;
         }
 
+        /* CSRF 대응 로직 시작 */
 
-        
+        /* 보통은 아래 로직으로 충분히 가능, 추가로 진행 하고 싶을 경우, csrf token 사용 */
+        String referer = request.getHeader("Referer"); // 요청을 보내기 전 페이지
+        String host = request.getHeader("host"); // 도메인 호스트 (ex : www.naver.com)
+        if (referer == null || !referer.contains(host)) {
+            new PrintWiterUtil().cmmnMsg(response,"CSRF 공격이 감지되었습니다.");
+            return false;
+        }
+
+        String headerToken = request.getHeader("X-CSRF-HEADER");
+        String paramToken = request.getParameter("CSRF_TOKEN");
+        String cookieToken = null;
+        for (Cookie cookie : request.getCookies()) {
+            if ("CSRF_TOKEN".equals(cookie.getName())) { // 쿠키로 전달되 csrf 토큰 값
+                cookieToken = cookie.getValue();
+                // 재사용이 불가능하도록 쿠키 만료
+                cookie.setPath("/");
+                cookie.setValue("");
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+                break;
+            }
+        }
+        // 쿠키 token 과 (파라미터 토큰 or 헤더 토큰)을 비교
+        if (cookieToken == null || (!cookieToken.equals(headerToken) && !cookieToken.equals(paramToken)))  {
+            new PrintWiterUtil().cmmnMsg(response,"CSRF 공격이 감지되었습니다.");
+            return false;
+        }
+        /* CSRF 대응 로직 종료 */
+
         log.debug("########## LoggerInterceptor 종료  ##########");
         
         return true; // 반환이 false라면 controller로 요청을 안함
@@ -60,7 +83,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter  {
     @Override
     public void afterCompletion(
             HttpServletRequest request, HttpServletResponse response,Object obj, Exception e)throws Exception {
-    	
     }
 
 

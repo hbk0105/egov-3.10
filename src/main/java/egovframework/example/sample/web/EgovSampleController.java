@@ -34,7 +34,9 @@ import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 
 import org.apache.logging.log4j.LogManager;
@@ -271,7 +273,8 @@ public class EgovSampleController {
 
 
 	@PostMapping("/uploadDynamicFiles.do" )
-	public String handleDynamicFileUpload(@RequestParam("file") List<MultipartFile> files , HttpServletRequest request) throws Exception {
+	public String handleDynamicFileUpload(@RequestParam("file") List<MultipartFile> files
+			, HttpServletRequest request , HttpServletResponse response) throws Exception {
 		MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest)request;
 		Iterator<String> iter = mRequest.getFileNames();
 		while (iter.hasNext()) {

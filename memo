@@ -26,7 +26,8 @@ https://colorlib.com/wp/free-bootstrap-admin-dashboard-templates/
 
 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
 
-
+-- csrf 방어
+https://junhyunny.github.io/information/security/spring-boot/spring-security/cross-site-reqeust-forgery/
 
 -- 회원 정보 테이블
 CREATE TABLE MemberT (

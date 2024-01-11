@@ -11,21 +11,40 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/uploadDynamicFiles.do" method="post" enctype="multipart/form-data">
+<form name="frm" id="frm" action="/uploadDynamicFiles.do" method="post" enctype="multipart/form-data">
     <input type="file" name="file1">
     <input type="file" name="file2">
     <!-- 동적으로 생성된 파일 필드들 -->
     <input type="file" name="dynamicFile3">
     <input type="file" name="dynamicFile4">
     <input type="file" name="dynamicFile5">
+
+    <input type="text" name="CSRF_TOKEN" id="CSRF_TOKEN">
     <!-- ... -->
-    <button type="submit">Upload</button>
+    <button type="button" onclick="fnSubmit()">Upload</button>
 </form>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
 <input type="text" class="form-control" id="inputMsg" name="inputMsg" value="<script>alert(1)</script>">
 <button type="button" onclick="fnXss();">json xss test</button>
 <script>
+
+    function fnUuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    function fnSubmit(){
+        let uuid = fnUuidv4();
+        $('#CSRF_TOKEN').val(uuid);
+        document.cookie = 'CSRF_TOKEN=' + uuid + ";path=/";
+
+        $('#frm').attr('action','/test.do').submit();
+
+    }
+
     function fnXss(){
 
         $.ajax({
