@@ -1,4 +1,4 @@
-package com.set.config;
+package com.stn.config;
 
 
 import org.apache.commons.logging.Log;

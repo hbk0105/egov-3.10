@@ -1,4 +1,4 @@
-package com.set.xss;
+package com.stn.xss;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.text.translate.AggregateTranslator;

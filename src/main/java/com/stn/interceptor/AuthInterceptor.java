@@ -1,8 +1,8 @@
-package com.set.interceptor;
+package com.stn.interceptor;
 
-import com.set.util.PrintWiterUtil;
-import com.set.util.SessionConst;
-import com.set.util.SessionUtil;
+import com.stn.util.PrintWiterUtil;
+import com.stn.util.SessionConst;
+import com.stn.util.SessionUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;

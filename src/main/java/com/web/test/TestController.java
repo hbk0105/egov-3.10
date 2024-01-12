@@ -1,20 +1,14 @@
 package com.web.test;
 
-import com.set.util.CommandMap;
-import com.set.util.SessionConst;
-import com.set.util.SessionUtil;
+import com.stn.util.CommandMap;
+import com.stn.util.SessionConst;
+import com.stn.util.SessionUtil;
 import com.web.user.vo.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

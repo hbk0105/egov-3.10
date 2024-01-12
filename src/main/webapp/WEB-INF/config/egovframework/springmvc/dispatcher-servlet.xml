@@ -38,7 +38,7 @@
         -->
         <property name="customArgumentResolvers">
             <list>
-                <bean class="com.set.resolver.CustomMapArgumentResovler" />
+                <bean class="com.stn.resolver.CustomMapArgumentResovler" />
             </list>
         </property>
     </bean>
@@ -99,7 +99,7 @@
     </bean>
 
     <!-- https://zoou.tistory.com/21 -->
-    <bean id="htmlEscapingObjectMapper" class="com.set.xss.HtmlEscapingObjectMapperFactory" />
+    <bean id="htmlEscapingObjectMapper" class="com.stn.xss.HtmlEscapingObjectMapperFactory" />
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
@@ -141,7 +141,7 @@
             <mvc:mapping path="/user/*.do" />
             <mvc:mapping path="/test.do"/>
             <mvc:exclude-mapping path="/login.do"/>
-            <bean id="loginInterceptor" class="com.set.interceptor.AuthInterceptor"/>
+            <bean id="loginInterceptor" class="com.stn.interceptor.AuthInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 
@@ -150,7 +150,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**" />
-            <bean id="loggerInterceptor" class="com.set.interceptor.ParameterLogInterceptor"/>
+            <bean id="loggerInterceptor" class="com.stn.interceptor.ParameterLogInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 

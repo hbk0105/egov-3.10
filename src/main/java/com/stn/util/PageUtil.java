@@ -1,4 +1,4 @@
-package com.set.util;
+package com.stn.util;
 
 import org.apache.commons.lang3.StringUtils;
 

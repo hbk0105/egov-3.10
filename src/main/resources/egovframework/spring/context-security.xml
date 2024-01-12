@@ -73,9 +73,9 @@
 	<bean id="userDetailsService" class="com.web.user.service.UserLoginAuthenticationProvider"/>
 
 
-	<bean id="customAccessDenied" class="com.set.security.CustomAccessDeniedHandler"></bean>
-	<bean id="customLoginSuccessHandler" class="com.set.security.CustomLoginSuccessHandler" />
-	<bean id="customLoginFailureHandler" class="com.set.security.CustomLoginFailureHandler" />
+	<bean id="customAccessDenied" class="com.stn.security.CustomAccessDeniedHandler"></bean>
+	<bean id="customLoginSuccessHandler" class="com.stn.security.CustomLoginSuccessHandler" />
+	<bean id="customLoginFailureHandler" class="com.stn.security.CustomLoginFailureHandler" />
 
 
 	<s:authentication-manager>

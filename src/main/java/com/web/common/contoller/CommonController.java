@@ -1,7 +1,7 @@
 package com.web.common.contoller;
 
-import com.set.util.CommandMap;
-import com.set.util.ControllerParamManager;
+import com.stn.util.CommandMap;
+import com.stn.util.ControllerParamManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
