@@ -41,7 +41,23 @@
         $('#CSRF_TOKEN').val(uuid);
         document.cookie = 'CSRF_TOKEN=' + uuid + ";path=/";
 
-        $('#frm').attr('action','/test.do').submit();
+        //$('#frm').attr('action','/test.do').submit();
+        //$('#frm').attr('action','/uploadDynamicFiles.do').submit();
+
+        var formData = new FormData(document.getElementById('frm'));
+        $.ajax({
+            type:"POST",
+            enctype: 'multipart/form-data',
+            processData:false,
+            contentType:false,
+            url:"/uploadDynamicFiles.do",
+            data:formData,
+            success:function(data){
+                console.log("success")
+            },error : function(request, status, error) {
+                console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+            }
+        });
 
     }
 

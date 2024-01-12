@@ -277,15 +277,20 @@ public class EgovSampleController {
 	@PostMapping("/uploadDynamicFiles.do" )
 	public String handleDynamicFileUpload(@RequestParam("file") List<MultipartFile> files
 			, HttpServletRequest request , HttpServletResponse response) throws Exception {
-		MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest)request;
-		Iterator<String> iter = mRequest.getFileNames();
-		while (iter.hasNext()) {
-			MultipartFile item = mRequest.getFile(iter.next());
-			String fieldName = item.getName();
-			log.debug("### fieldName -- >"  + fieldName);
-			if(item.getSize() == 0) continue;
-			String path = "files";
-			log.debug("map -- > " + fileUtil.fileUpload(item,path));
+
+		try {
+			MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest)request;
+			Iterator<String> iter = mRequest.getFileNames();
+			while (iter.hasNext()) {
+				MultipartFile item = mRequest.getFile(iter.next());
+				String fieldName = item.getName();
+				log.debug("### fieldName -- >"  + fieldName);
+				if(item.getSize() == 0) continue;
+				String path = "files";
+				log.debug("map -- > " + fileUtil.fileUpload(item,path));
+			}
+		}catch (Exception e){
+			e.printStackTrace();
 		}
 		return "redirect:/file.do";
 	}

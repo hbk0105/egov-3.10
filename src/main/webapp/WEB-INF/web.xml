@@ -36,12 +36,16 @@
 
 	<!-- multipart/form-data도 xss필터를 거치기 위해 -->
 	<filter>
-		<filter-name>multipartFilter</filter-name>
+		<filter-name>multipartResolver</filter-name>
 		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+		<!--<init-param>
+			<param-name>multipartResolverBeanName</param-name>
+			<param-value>multipartResolver</param-value>
+		</init-param>-->
 	</filter>
 	<filter-mapping>
-		<filter-name>multipartFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
+		<filter-name>multipartResolver</filter-name>
+		<url-pattern>/</url-pattern>
 	</filter-mapping>
 
 	<!--xss 필터링 -->
@@ -62,7 +66,7 @@
 
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 
 
