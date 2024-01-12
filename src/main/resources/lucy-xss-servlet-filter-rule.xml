@@ -62,11 +62,11 @@
             </params>
         </url-rule>
 
-        <url-rule>
+       <!-- <url-rule>
             <url>/xss/jsonFilter.do</url>
             <params>
                 <param name="list" usePrefix="true" useDefender="false"/>
             </params>
-        </url-rule>
+        </url-rule>-->
     </url-rule-set>
 </config>

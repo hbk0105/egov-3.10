@@ -72,12 +72,12 @@
 
 
         var params = {
-            "name": $('#inputMsg').val(),
-            "age": 30
+            name: $('#inputMsg').val(),
+            age: 30
         };
 
 
-        var dataParam = {list:JSON.stringify(params), param1:'param1', param2:'param2'};
+        var dataParam = {list:JSON.stringify(params), 'param1':'param1', 'param2':'param2'};
 
 
         $.ajax({
@@ -87,7 +87,7 @@
             dataType: "json",
             success: function(data) {
                 console.log(data);
-               $('#ajaxResult').html(xssFilter(data.param[0].name));
+               $('#ajaxResult').html(data.param[0].name);
             },
             error : function(request, status, error) {
                 console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);

@@ -238,12 +238,15 @@ public class EgovSampleController {
 	public String method( @RequestParam Map<String,Object>params ,Model model , HttpServletRequest request){
 		try {
 
-			String json = params.get("list").toString();
+			String json = params.get("list").toString().replace("&quot;","\"");
 
 			JsonFactory factory = new JsonFactory();
 			factory.enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
 
+
+
 			ObjectMapper mapper = new ObjectMapper(factory);
+
 			mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);  // list deserialization 기능 활성화
 			mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 			List<Map<String, Object>> list = mapper.readValue(json, new TypeReference<ArrayList<Map<String, Object>>>(){});

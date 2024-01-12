@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+    <description>Custom Tag Library</description>
+    <tlib-version>1.0</tlib-version>
+    <short-name>custom</short-name>
+    <uri>http://example.com/custom</uri>
+
+    <tag>
+        <name>replaceChars</name>
+        <tag-class>com.stn.util.ReplaceCharsTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>inputString</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>

@@ -21,27 +21,8 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
-
-	<!-- multipart/form-data도 xss필터를 거치기 위해 -->
-	<!--<filter>
-		<filter-name>multipartFilter</filter-name>
-		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>multipartFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
-
-	&lt;!&ndash; xss 필터링 &ndash;&gt;
-	<filter>
-		<filter-name>xssEscapeServletFilter</filter-name>
-		<filter-class>com.navercorp.lucy.security.xss.servletfilter.XssEscapeServletFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>xssEscapeServletFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping>-->
-
+<!--
+	전자정부에서 제공하는 filter는 lucy보다 성능이 떨어져 보이므로 주석!
 	<filter>
 		<filter-name>HTMLTagFilter</filter-name>
 		<filter-class>egovframework.rte.ptl.mvc.filter.HTMLTagFilter</filter-class>
@@ -51,7 +32,29 @@
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 
-	<!-- Spring Security  Filter Chain 선언 --><!--
+-->
+
+	<!-- multipart/form-data도 xss필터를 거치기 위해 -->
+	<filter>
+		<filter-name>multipartFilter</filter-name>
+		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>multipartFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+
+	<!--xss 필터링 -->
+	<filter>
+		<filter-name>xssEscapeServletFilter</filter-name>
+		<filter-class>com.navercorp.lucy.security.xss.servletfilter.XssEscapeServletFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>xssEscapeServletFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+
+	<!-- Spring Security  Filter Chain 선언 -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -61,7 +64,7 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/</url-pattern>
 	</filter-mapping>
--->
+
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
