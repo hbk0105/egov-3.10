@@ -93,12 +93,13 @@
     <alias alias="filterMultipartResolver" name="multipartResolver"/>
     <!-- 첨부파일 -->
 
+    <!-- ajax view 처리 -->
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" id="viewResolver" p:order="0" />
     <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
         <property name="contentType" value="application/json;charset=UTF-8"/>
     </bean>
 
-    <!-- https://zoou.tistory.com/21 -->
+    <!-- https://zoou.tistory.com/21 , ajax xss filtier 처리 -->
     <bean id="htmlEscapingObjectMapper" class="com.stn.xss.HtmlEscapingObjectMapperFactory" />
     <mvc:annotation-driven>
         <mvc:message-converters>
@@ -135,7 +136,7 @@
     </bean>-->
 
 
-    <!-- 마이클 권한 체크 인터셉터  -->
+    <!-- 권한 체크 인터셉터  -->
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/user/*.do" />
@@ -145,8 +146,7 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
-
-    <!-- 마이클 파라미터 로그 인터셉터  -->
+    <!-- 파라미터 로그 인터셉터  -->
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**" />

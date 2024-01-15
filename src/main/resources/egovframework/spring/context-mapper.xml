@@ -4,6 +4,7 @@
 
 	<!-- SqlSession setup for MyBatis Database Layer -->
 	<!--<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">-->
+	<!-- XML 리로드 CUSTOM -->
 	<bean id="sqlSession" class="com.stn.config.RefreshableSqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:/egovframework/sqlmap/example/sql-mapper-config.xml" />
@@ -14,7 +15,7 @@
 				<value>classpath:/egovframework/sqlmap/**/mappers/*.xml</value>
 			</array>
 		</property>
-
+		<!-- sql log -->
 		<property name="plugins">
 			<array>
 				<bean class="com.stn.interceptor.LogInterceptor"/>

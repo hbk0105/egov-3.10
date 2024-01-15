@@ -3,6 +3,8 @@ package com.stn.util;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -12,10 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -30,8 +33,24 @@ import java.util.Map;
 @Component
 public class FileUtil {
 
+    private Logger log = LogManager.getLogger(this.getClass());
     @Value("${Globals.file.uploadDir}")
     private String uploadDir;
+
+    public List<Map<String,Object>> fileUpload(HttpServletRequest request) throws Exception {
+        List<Map<String,Object>> fileList = new ArrayList<>();
+        MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest)request;
+        Iterator<String> iter = mRequest.getFileNames();
+        while (iter.hasNext()) {
+            MultipartFile item = mRequest.getFile(iter.next());
+            String fieldName = item.getName();
+            log.debug("### fieldName -- >"  + fieldName);
+            if(item.getSize() == 0) continue;
+            String path = "files";
+            fileList.add(fileUpload(item,path));
+        }
+        return fileList;
+    }
 
     /**
      * 파일 업로드

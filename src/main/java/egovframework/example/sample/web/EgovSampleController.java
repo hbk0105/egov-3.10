@@ -279,7 +279,7 @@ public class EgovSampleController {
 			, HttpServletRequest request , HttpServletResponse response) throws Exception {
 
 		try {
-			MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest)request;
+			/*MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest)request;
 			Iterator<String> iter = mRequest.getFileNames();
 			while (iter.hasNext()) {
 				MultipartFile item = mRequest.getFile(iter.next());
@@ -288,7 +288,10 @@ public class EgovSampleController {
 				if(item.getSize() == 0) continue;
 				String path = "files";
 				log.debug("map -- > " + fileUtil.fileUpload(item,path));
-			}
+			}*/
+
+			System.out.println(fileUtil.fileUpload(request));
+
 		}catch (Exception e){
 			e.printStackTrace();
 		}
