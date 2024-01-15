@@ -300,7 +300,6 @@ public class EgovSampleController {
 
 	/**
 	 * 파일 조회
-	 * @param fileId
 	 * @param req
 	 * @return ResponseEntity<byte[]>
 	 * @throws Exception
@@ -312,7 +311,7 @@ public class EgovSampleController {
 	public ResponseEntity<byte[]> downloadDocument( HttpServletRequest req) throws Exception {
 		// @PathVariable Long fileId
 		File f = new File("C:\\upload\\files\\cB4NGcToTUlnqwe7vu7VWz1QoOLfSWzq.pdf");
-		return  fileUtil.fileDownload( f.getName() , new File(f.getAbsolutePath()) , req);
+		return  fileUtil.fileDownload( "상스.pdf" , new File(f.getAbsolutePath()) , req);
 	}
 
 	/**
