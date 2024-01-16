@@ -16,21 +16,21 @@
             <div class="col-lg-3 col-md-6">
                 <div class="footer-link">
                     <h2>Popular Links</h2>
-                    <a href="">About Us</a>
-                    <a href="">Contact Us</a>
-                    <a href="">Our Service</a>
-                    <a href="">Service Points</a>
-                    <a href="">Pricing Plan</a>
+                    <a href="javascript:void(0)">About Us</a>
+                    <a href="javascript:void(0)">Contact Us</a>
+                    <a href="javascript:void(0)">Our Service</a>
+                    <a href="javascript:void(0)">Service Points</a>
+                    <a href="javascript:void(0)">Pricing Plan</a>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="footer-link">
                     <h2>Useful Links</h2>
-                    <a href="">Terms of use</a>
-                    <a href="">Privacy policy</a>
-                    <a href="">Cookies</a>
-                    <a href="">Help</a>
-                    <a href="">FQAs</a>
+                    <a href="javascript:void(0)">Terms of use</a>
+                    <a href="javascript:void(0)">Privacy policy</a>
+                    <a href="javascript:void(0)">Cookies</a>
+                    <a href="javascript:void(0)">Help</a>
+                    <a href="javascript:void(0)">FQAs</a>
                 </div>
             </div>
             <%-- <div class="col-lg-3 col-md-6">
@@ -48,18 +48,16 @@
                 <div class="footer-newsletter">
                     <h2>Social</h2>
                     <div class="footer-social">
-                      <a class="btn" href=""><i class="fab fa-twitter"></i></a>
-                      <a class="btn" href=""><i class="fab fa-facebook-f"></i></a>
-                      <a class="btn" href=""><i class="fab fa-youtube"></i></a>
-                      <a class="btn" href=""><i class="fab fa-instagram"></i></a>
-                      <a class="btn" href=""><i class="fab fa-linkedin-in"></i></a>
+                      <a class="btn" href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a>
+                      <a class="btn" href="javascript:void(0)"><i class="fab fa-youtube"></i></a>
+                      <a class="btn" href="javascript:void(0)"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="container copyright">
-        <p>&copy; <a href="#">Your Site Name</a>, All Right Reserved. Designed By <a href="https://htmlcodex.com">HTML
+        <p>&copy; <a href="javascript:void(0)">Your Site Name</a>, All Right Reserved. Designed By <a href="https://htmlcodex.com">HTML
             Codex</a></p>
     </div>
 </div>

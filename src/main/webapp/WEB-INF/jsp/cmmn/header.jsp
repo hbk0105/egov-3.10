@@ -41,7 +41,7 @@
         <div class="row align-items-center">
             <div class="col-lg-4 col-md-12">
                 <div class="logo">
-                    <a href="index.html">
+                    <a href="/sample/main.do">
                         <h1>Ace<span> Car Wash</span></h1>
                         <!-- <img src="/common/bootstrap/img/logo.jpg" alt="Logo"> -->
                     </a>
@@ -88,5 +88,43 @@
     </div>
 </div>
 <!-- Top Bar End -->
+
+
+
+<!-- Nav Bar Start -->
+<div class="nav-bar">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <a href="javascript:void(0)" class="navbar-brand">MENU</a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav mr-auto">
+                    <a href="javascript:void(0)" class="nav-item nav-link active">Home</a>
+                    <a href="javascript:void(0)" class="nav-item nav-link">About</a>
+                    <a href="javascript:void(0)" class="nav-item nav-link">Service</a>
+                    <a href="javascript:void(0)" class="nav-item nav-link">Price</a>
+                    <a href="javascript:void(0)" class="nav-item nav-link">Washing Points</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu">
+                            <a href="javascript:void(0)" class="dropdown-item">Blog Grid</a>
+                            <a href="javascript:void(0)" class="dropdown-item">Detail Page</a>
+                            <a href="javascript:void(0)" class="dropdown-item">Team Member</a>
+                            <a href="javascript:void(0)" class="dropdown-item">Schedule Booking</a>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0)" class="nav-item nav-link">Contact</a>
+                </div>
+                <div class="ml-auto">
+                    <a class="btn btn-custom" href="#">Get Appointment</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- Nav Bar End -->
 
 

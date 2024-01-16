@@ -9,43 +9,6 @@
 <%@ include file="/WEB-INF/jsp/cmmn/header.jsp" %>
 
 
-<!-- Nav Bar Start -->
-<div class="nav-bar">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-            <a href="#" class="navbar-brand">MENU</a>
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                <div class="navbar-nav mr-auto">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="about.html" class="nav-item nav-link">About</a>
-                    <a href="service.html" class="nav-item nav-link">Service</a>
-                    <a href="price.html" class="nav-item nav-link">Price</a>
-                    <a href="location.html" class="nav-item nav-link">Washing Points</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu">
-                            <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                            <a href="single.html" class="dropdown-item">Detail Page</a>
-                            <a href="team.html" class="dropdown-item">Team Member</a>
-                            <a href="booking.html" class="dropdown-item">Schedule Booking</a>
-                        </div>
-                    </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
-                </div>
-                <div class="ml-auto">
-                    <a class="btn btn-custom" href="#">Get Appointment</a>
-                </div>
-            </div>
-        </nav>
-    </div>
-</div>
-<!-- Nav Bar End -->
-
-
 <!-- Carousel Start -->
 <div class="carousel">
     <div class="container-fluid">
@@ -60,7 +23,7 @@
                     <p>
                         Lorem ipsum dolor sit amet elit. Phasellus ut mollis mauris. Vivamus egestas eleifend dui ac
                     </p>
-                    <a class="btn btn-custom" href="">Explore More</a>
+                    <a class="btn btn-custom" href="javascript:void(0)">Explore More</a>
                 </div>
             </div>
             <div class="carousel-item">
@@ -74,7 +37,7 @@
                         Morbi sagittis turpis id suscipit feugiat. Suspendisse eu augue urna. Morbi sagittis orci
                         sodales
                     </p>
-                    <a class="btn btn-custom" href="">Explore More</a>
+                    <a class="btn btn-custom" href="javascript:void(0)">Explore More</a>
                 </div>
             </div>
             <div class="carousel-item">
@@ -88,7 +51,7 @@
                         Sed ultrices, est eget feugiat accumsan, dui nibh egestas tortor, ut rhoncus nibh ligula euismod
                         quam
                     </p>
-                    <a class="btn btn-custom" href="">Explore More</a>
+                    <a class="btn btn-custom" href="javascript:void(0)">Explore More</a>
                 </div>
             </div>
         </div>
@@ -123,7 +86,7 @@
                         <li><i class="far fa-check-circle"></i>Interior wet cleaning</li>
                         <li><i class="far fa-check-circle"></i>Window wiping</li>
                     </ul>
-                    <a class="btn btn-custom" href="">Learn More</a>
+                    <a class="btn btn-custom" href="javascript:void(0)">Learn More</a>
                 </div>
             </div>
         </div>
@@ -272,7 +235,7 @@
                         </ul>
                     </div>
                     <div class="price-footer">
-                        <a class="btn btn-custom" href="">Book Now</a>
+                        <a class="btn btn-custom" href="javascript:void(0)">Book Now</a>
                     </div>
                 </div>
             </div>
@@ -292,7 +255,7 @@
                         </ul>
                     </div>
                     <div class="price-footer">
-                        <a class="btn btn-custom" href="">Book Now</a>
+                        <a class="btn btn-custom" href="javascript:void(0)">Book Now</a>
                     </div>
                 </div>
             </div>
@@ -312,7 +275,7 @@
                         </ul>
                     </div>
                     <div class="price-footer">
-                        <a class="btn btn-custom" href="">Book Now</a>
+                        <a class="btn btn-custom" href="javascript:void(0)">Book Now</a>
                     </div>
                 </div>
             </div>
@@ -416,10 +379,10 @@
                         <h2>Donald John</h2>
                         <p>Engineer</p>
                         <div class="team-social">
-                            <a href=""><i class="fab fa-twitter"></i></a>
-                            <a href=""><i class="fab fa-facebook-f"></i></a>
-                            <a href=""><i class="fab fa-linkedin-in"></i></a>
-                            <a href=""><i class="fab fa-instagram"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-twitter"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
@@ -433,10 +396,10 @@
                         <h2>Adam Phillips</h2>
                         <p>Engineer</p>
                         <div class="team-social">
-                            <a href=""><i class="fab fa-twitter"></i></a>
-                            <a href=""><i class="fab fa-facebook-f"></i></a>
-                            <a href=""><i class="fab fa-linkedin-in"></i></a>
-                            <a href=""><i class="fab fa-instagram"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-twitter"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
@@ -450,10 +413,10 @@
                         <h2>Thomas Olsen</h2>
                         <p>Worker</p>
                         <div class="team-social">
-                            <a href=""><i class="fab fa-twitter"></i></a>
-                            <a href=""><i class="fab fa-facebook-f"></i></a>
-                            <a href=""><i class="fab fa-linkedin-in"></i></a>
-                            <a href=""><i class="fab fa-instagram"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-twitter"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
@@ -467,10 +430,10 @@
                         <h2>James Alien</h2>
                         <p>Worker</p>
                         <div class="team-social">
-                            <a href=""><i class="fab fa-twitter"></i></a>
-                            <a href=""><i class="fab fa-facebook-f"></i></a>
-                            <a href=""><i class="fab fa-linkedin-in"></i></a>
-                            <a href=""><i class="fab fa-instagram"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-twitter"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="javascript:void(0)"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
@@ -558,16 +521,16 @@
                         </div>
                     </div>
                     <div class="blog-text">
-                        <h3><a href="#">Lorem ipsum dolor sit amet</a></h3>
+                        <h3><a href="javascript:void(0)">Lorem ipsum dolor sit amet</a></h3>
                         <p>
                             Lorem ipsum dolor sit amet elit. Pellent iaculis blandit lorem, quis convall diam eleife.
                             Nam in arcu sit amet massa ferment quis enim. Nunc augue velit metus congue eget semper
                         </p>
                     </div>
                     <div class="blog-meta">
-                        <p><i class="fa fa-user"></i><a href="">Admin</a></p>
-                        <p><i class="fa fa-folder"></i><a href="">Web Design</a></p>
-                        <p><i class="fa fa-comments"></i><a href="">15 Comments</a></p>
+                        <p><i class="fa fa-user"></i><a href="javascript:void(0)">Admin</a></p>
+                        <p><i class="fa fa-folder"></i><a href="javascript:void(0)">Web Design</a></p>
+                        <p><i class="fa fa-comments"></i><a href="javascript:void(0)">15 Comments</a></p>
                     </div>
                 </div>
             </div>
@@ -582,16 +545,16 @@
                         </div>
                     </div>
                     <div class="blog-text">
-                        <h3><a href="#">Lorem ipsum dolor sit amet</a></h3>
+                        <h3><a href="javascript:void(0)">Lorem ipsum dolor sit amet</a></h3>
                         <p>
                             Lorem ipsum dolor sit amet elit. Pellent iaculis blandit lorem, quis convall diam eleife.
                             Nam in arcu sit amet massa ferment quis enim. Nunc augue velit metus congue eget semper
                         </p>
                     </div>
                     <div class="blog-meta">
-                        <p><i class="fa fa-user"></i><a href="">Admin</a></p>
-                        <p><i class="fa fa-folder"></i><a href="">Web Design</a></p>
-                        <p><i class="fa fa-comments"></i><a href="">15 Comments</a></p>
+                        <p><i class="fa fa-user"></i><a href="javascript:void(0)">Admin</a></p>
+                        <p><i class="fa fa-folder"></i><a href="javascript:void(0)">Web Design</a></p>
+                        <p><i class="fa fa-comments"></i><a href="javascript:void(0)">15 Comments</a></p>
                     </div>
                 </div>
             </div>
@@ -606,16 +569,16 @@
                         </div>
                     </div>
                     <div class="blog-text">
-                        <h3><a href="#">Lorem ipsum dolor sit amet</a></h3>
+                        <h3><a href="javascript:void(0)">Lorem ipsum dolor sit amet</a></h3>
                         <p>
                             Lorem ipsum dolor sit amet elit. Pellent iaculis blandit lorem, quis convall diam eleife.
                             Nam in arcu sit amet massa ferment quis enim. Nunc augue velit metus congue eget semper
                         </p>
                     </div>
                     <div class="blog-meta">
-                        <p><i class="fa fa-user"></i><a href="">Admin</a></p>
-                        <p><i class="fa fa-folder"></i><a href="">Web Design</a></p>
-                        <p><i class="fa fa-comments"></i><a href="">15 Comments</a></p>
+                        <p><i class="fa fa-user"></i><a href="javascript:void(0)">Admin</a></p>
+                        <p><i class="fa fa-folder"></i><a href="javascript:void(0)">Web Design</a></p>
+                        <p><i class="fa fa-comments"></i><a href="javascript:void(0)">15 Comments</a></p>
                     </div>
                 </div>
             </div>

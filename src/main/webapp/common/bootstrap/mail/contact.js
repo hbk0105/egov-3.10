@@ -14,8 +14,13 @@ $(function () {
             $this = $("#sendMessageButton");
             $this.prop("disabled", true);
 
+            alert('success');
+            return;
+
+            // 수정 필요
+
             $.ajax({
-                url: "contact.php",
+                url: "",
                 type: "POST",
                 data: {
                     name: name,

@@ -21,4 +21,11 @@ public class SampleController {
     }
 
 
+    @RequestMapping("/sample/login.do")
+    public String login(SampleVO sampleVO, @ModelAttribute("searchVO") SampleDefaultVO searchVO, SessionStatus status) throws Exception {
+        return "/sample/login";
+    }
+
+
+
 }
