@@ -70,3 +70,7 @@ CREATE TABLE RoleMenuT (
     FOREIGN KEY (role_idx) REFERENCES RoleT(role_idx),
     FOREIGN KEY (menu_idx) REFERENCES MenuT(menu_idx)
 );
+
+
+-- #  ID Generation
+https://egovframe.go.kr/wiki/doku.php?id=egovframework:rte:sample:cvpl:id_generation

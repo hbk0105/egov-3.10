@@ -17,7 +17,6 @@ package egovframework.example.sample.web;
 
 import java.io.File;
 import java.util.*;
-
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -29,15 +28,12 @@ import com.stn.util.PageUtil;
 import egovframework.example.sample.service.EgovSampleService;
 import egovframework.example.sample.service.SampleDefaultVO;
 import egovframework.example.sample.service.SampleVO;
-
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +122,7 @@ public class EgovSampleController {
 		model.addAttribute("paper", pageUtil.pager());
 		/* MICHAEL CUSTOM PAGING INFO */
 
-		return "sample/egovSampleList";
+		return "egovframework/example/sample/egovSampleList";
 	}
 
 	/**
@@ -139,7 +135,7 @@ public class EgovSampleController {
 	@RequestMapping(value = "/addSample.do", method = RequestMethod.GET)
 	public String addSampleView(@ModelAttribute("searchVO") SampleDefaultVO searchVO, Model model) throws Exception {
 		model.addAttribute("sampleVO", new SampleVO());
-		return "sample/egovSampleRegister";
+		return "egovframework/example/sample/egovSampleRegister";
 	}
 
 	/**
@@ -159,7 +155,7 @@ public class EgovSampleController {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("sampleVO", sampleVO);
-			return "sample/egovSampleRegister";
+			return "egovframework/example/sample/egovSampleRegister";
 		}
 
 		sampleService.insertSample(sampleVO);
@@ -181,7 +177,7 @@ public class EgovSampleController {
 		sampleVO.setId(id);
 		// 변수명은 CoC 에 따라 sampleVO
 		model.addAttribute(selectSample(sampleVO, searchVO));
-		return "sample/egovSampleRegister";
+		return "egovframework/example/sample/egovSampleRegister";
 	}
 
 	/**
@@ -212,7 +208,7 @@ public class EgovSampleController {
 
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("sampleVO", sampleVO);
-			return "sample/egovSampleRegister";
+			return "egovframework/example/sample/egovSampleRegister";
 		}
 
 		sampleService.updateSample(sampleVO);
@@ -270,7 +266,7 @@ public class EgovSampleController {
 		log.info("### 치환 => " + inputMsg);
 		log.info("### 역치환 => " + convertMsg);
 
-		return "sample/file";
+		return "egovframework/example/sample/file";
 	}
 
 
