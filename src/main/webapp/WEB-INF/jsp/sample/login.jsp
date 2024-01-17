@@ -83,7 +83,7 @@
 
 <script src="/common/fullcalendar-6.1.10/index.global.js"></script>
 <script src="/common/fullcalendar-6.1.10/index.global.min.js"></script>
-
+<%-- https://chobopark.tistory.com/245 --%>
 
 
 <script>

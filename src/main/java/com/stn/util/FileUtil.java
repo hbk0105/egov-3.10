@@ -37,12 +37,12 @@ public class FileUtil {
     @Value("${Globals.file.uploadDir}")
     private String uploadDir;
 
-    public List<Map<String,Object>> fileUpload(HttpServletRequest request) throws Exception {
+    public List<Map<String,Object>> fileUpload(MultipartHttpServletRequest request) throws Exception {
         List<Map<String,Object>> fileList = new ArrayList<>();
-        MultipartHttpServletRequest mRequest = (MultipartHttpServletRequest)request;
-        Iterator<String> iter = mRequest.getFileNames();
+        //MultipartHttpServletRequest mRequest = request;
+        Iterator<String> iter = request.getFileNames();
         while (iter.hasNext()) {
-            MultipartFile item = mRequest.getFile(iter.next());
+            MultipartFile item = request.getFile(iter.next());
             String fieldName = item.getName();
             log.debug("### fieldName -- >"  + fieldName);
             if(item.getSize() == 0) continue;

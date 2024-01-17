@@ -38,14 +38,14 @@
 	<filter>
 		<filter-name>multipartResolver</filter-name>
 		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
-		<!--<init-param>
+		<init-param>
 			<param-name>multipartResolverBeanName</param-name>
 			<param-value>multipartResolver</param-value>
-		</init-param>-->
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>multipartResolver</filter-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
 
 	<!--xss 필터링 -->
@@ -88,6 +88,13 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
+		<!-- START : multipart 설정 필수 -->
+		<multipart-config>
+			<max-file-size>100000000</max-file-size>
+			<max-request-size>200000000</max-request-size>
+			<file-size-threshold>1024</file-size-threshold>
+		</multipart-config>
+		<!-- END : multipart 설정 필수 -->
 	</servlet>
     
 	<servlet-mapping>

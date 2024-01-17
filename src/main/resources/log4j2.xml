@@ -2,7 +2,11 @@
 <Configuration>
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
+<!--
             <PatternLayout pattern="%d %5p (%13F:%L) | %m%n" />
+-->
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+
         </Console>
 
         <RollingFile name="file" fileName="/data/was-app/logs/study.log" filePattern="/data/was-app/logs/study.log.%d{yyyy-MM-dd}">
