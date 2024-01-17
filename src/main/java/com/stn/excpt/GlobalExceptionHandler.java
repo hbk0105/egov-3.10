@@ -13,6 +13,12 @@ public class GlobalExceptionHandler {
 
     private Logger log = LogManager.getLogger(this.getClass());
 
+    @ExceptionHandler(Exception.class)
+    public ModelAndView Exception(HttpServletRequest req, Exception ex) {
+        return createErrorModelAndView(req.getRequestURI() , "Exception [msg] : " + ex.getMessage());
+
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ModelAndView handleException(HttpServletRequest req, Exception ex) {
         return createErrorModelAndView(req.getRequestURI() , "RuntimeException [msg] : " + ex.getMessage());
