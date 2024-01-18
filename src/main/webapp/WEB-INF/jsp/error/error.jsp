@@ -5,152 +5,121 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900" rel="stylesheet">
     <style>
-        .clearfix:before,
-        .clearfix:after {
-            display: table;
+        * {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
 
-            content: ' ';
-        }
-        .clearfix:after {
-            clear: both;
-        }
         body {
-            background: #f0f0f0 !important;
+            padding: 0;
+            margin: 0;
         }
-        .page-404 .outer {
+
+        #notfound {
+            position: relative;
+            height: 100vh;
+        }
+
+        #notfound .notfound {
             position: absolute;
-            top: 0;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
 
-            display: table;
-
+        .notfound {
+            max-width: 410px;
             width: 100%;
-            height: 100%;
-        }
-        .page-404 .outer .middle {
-            display: table-cell;
-
-            vertical-align: middle;
-        }
-        .page-404 .outer .middle .inner {
-            width: 300px;
-            margin-right: auto;
-            margin-left: auto;
-        }
-        .page-404 .outer .middle .inner .inner-circle {
-            height: 300px;
-
-            border-radius: 50%;
-            background-color: #ffffff;
-        }
-        .page-404 .outer .middle .inner .inner-circle:hover i {
-            color: #39bbdb!important;
-            background-color: #f5f5f5;
-            box-shadow: 0 0 0 15px #39bbdb;
-        }
-        .page-404 .outer .middle .inner .inner-circle:hover span {
-            color: #39bbdb;
-        }
-        .page-404 .outer .middle .inner .inner-circle i {
-            font-size: 5em;
-            line-height: 1em;
-
-            float: right;
-
-            width: 1.6em;
-            height: 1.6em;
-            margin-top: -.7em;
-            margin-right: -.5em;
-            padding: 20px;
-
-            -webkit-transition: all .4s;
-            transition: all .4s;
             text-align: center;
-
-            color: #f5f5f5!important;
-            border-radius: 50%;
-            background-color: #39bbdb;
-            box-shadow: 0 0 0 15px #f0f0f0;
         }
-        .page-404 .outer .middle .inner .inner-circle span {
-            font-size: 5em !important;
+
+        .notfound .notfound-404 {
+            height: 280px;
+            position: relative;
+            z-index: -1;
+        }
+
+        .notfound .notfound-404 h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 230px;
+            margin: 0px;
+            font-weight: 900;
+            position: absolute;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
+            background: url('/common/image/errorBg.jpg') no-repeat;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: cover;
+            background-position: center;
+        }
+
+
+        .notfound h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: #000;
+            font-size: 24px;
             font-weight: 700;
-            line-height: 1.2em;
-
-            display: block;
-
-            -webkit-transition: all .4s;
-            transition: all .4s;
-            text-align: center;
-
-            color: #e0e0e0;
-        }
-        .page-404 .outer .middle .inner .inner-status {
-            font-size: 20px;
-
-            display: block;
-
-            margin-top: 20px;
-            margin-bottom: 5px;
-
-            text-align: center;
-
-            color: #39bbdb;
-        }
-        .page-404 .outer .middle .inner .inner-detail {
-            line-height: 1.4em;
-
-            display: block;
-
-            margin-bottom: 10px;
-
-            text-align: center;
-
-            color: #999999;
+            text-transform: uppercase;
+            margin-top: 0;
         }
 
-        .return-btn {
-            padding: 10px 15px;
-            margin-top: 10px;
-            margin-bottom: 30px;
+        .notfound p {
+            font-family: 'Montserrat', sans-serif;
+            color: #000;
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 20px;
+            margin-top: 0px;
+        }
+
+        .notfound a {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            text-decoration: none;
+            text-transform: uppercase;
+            background: #0046d5;
             display: inline-block;
-            -webkit-border-radius: 5px;
-            -webkit-background-clip: padding-box;
-            -moz-border-radius: 5px;
-            -moz-background-clip: padding;
-            border-radius: 5px;
-            background-clip: padding-box;
-            color: #999999;
-            font-weight: bold !important;
-            font-size: 20px;
-            font-weight: 300;
+            padding: 15px 30px;
+            border-radius: 40px;
+            color: #fff;
+            font-weight: 700;
+            -webkit-box-shadow: 0px 4px 15px -5px #0046d5;
+            box-shadow: 0px 4px 15px -5px #0046d5;
         }
-        .return-btn:hover{
-            color: #39bbdb!important;
-            background-color: #f5f5f5;
-            box-shadow: 0 0 0 1px #39bbdb;
+
+
+        @media only screen and (max-width: 767px) {
+            .notfound .notfound-404 {
+                height: 142px;
+            }
+            .notfound .notfound-404 h1 {
+                font-size: 112px;
+            }
         }
+
     </style>
 </head>
 <body>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="page-404">
-    <div class="outer">
-        <div class="middle">
-            <div class="inner">
-                <!--BEGIN CONTENT-->
-                <div class="inner-circle"><i class="fa fa-cogs"></i><span>ERROR</span></div>
-                <span class="inner-status">Opps! Internal Server Error!</span>
-                <span class="inner-detail">Unfortunately we're having trouble loading the page you are looking for. Please come back in a while.
-                    <a href="/sample/main.do" class="return-btn"><i class="fa fa-home"></i>Home</a>
-                </span>
-                <!--END CONTENT-->
+    <div id="notfound">
+        <div class="notfound">
+            <div class="notfound-404">
+                <h1>Oops!</h1>
             </div>
+            <h2>An error occurred</h2>
+            <p>The page you are looking for might have been removed had its name changed or is temporarily unavailable.</p>
+            <a href="/sample/main.do">Go To Homepage</a>
         </div>
     </div>
-</div>
-</div>
 </body>
 <script>
     console.log('${url}');

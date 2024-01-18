@@ -5,26 +5,21 @@ import egovframework.example.sample.service.SampleDefaultVO;
 import egovframework.example.sample.service.SampleVO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.poi.sl.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class SampleController {
@@ -34,14 +29,23 @@ public class SampleController {
     @Autowired
     ExcelDownUtil excelDownUtil;
 
+    /**
+     * 샘플 메인 페이지
+     * @return String
+     * @throws Exception
+     * */
     @RequestMapping("/sample/main.do")
-    public String main(SampleVO sampleVO, @ModelAttribute("searchVO") SampleDefaultVO searchVO, SessionStatus status) throws Exception {
+    public String main() throws Exception {
         return "/sample/main";
     }
 
-
+    /**
+     * 샘플 로그인 페이지
+     * @return String
+     * @throws Exception
+     * */
     @RequestMapping("/sample/login.do")
-    public String login(SampleVO sampleVO, @ModelAttribute("searchVO") SampleDefaultVO searchVO, SessionStatus status) throws Exception {
+    public String login() throws Exception {
         return "/sample/login";
     }
 
@@ -76,32 +80,6 @@ public class SampleController {
         excelDownUtil.excelDown(headers,dataList,fileNm,response,request);
     }
 
-
-    public static void main(String[] args) {
-
-        SXSSFWorkbook  wb= new SXSSFWorkbook(); // xlsx
-        SXSSFSheet sheet =  wb.createSheet("sample");
-        Cell cell;
-
-        List<String> h = new ArrayList<>();
-        h.add("c");
-        h.add("a");
-        h.add("b");
-
-        Row row ;
-
-
-        row = sheet.createRow(0);
-        for (int i = 0; i < h.size(); i++) {
-            cell = row.createCell(i);
-            System.out.println("## h.get("+i+") -- > " + h.get(i));
-            cell.setCellValue(h.get(i));
-
-        }
-
-
-
-    }
 
 
 
