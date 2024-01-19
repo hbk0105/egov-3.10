@@ -83,6 +83,11 @@
 <script src="/common/bootstrap/mail/jqBootstrapValidation.min.js"></script>
 <script src="/common/bootstrap/mail/contact.js"></script>
 
+<!-- Template Javascript -->
+<script src="/common/bootstrap/js/main.js"></script>
+
+<%-- 공통 정의 함수--%>
+<script src="/common/js/cmmonFn.js"></script>
 
 </body>
 </html>

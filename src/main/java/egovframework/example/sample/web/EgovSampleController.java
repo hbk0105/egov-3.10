@@ -261,11 +261,11 @@ public class EgovSampleController {
 
 		String inputMsg   = request.getParameter("inputMsg");
 		String convertMsg = XssPreventer.unescape(inputMsg);
-
+		/*
 		log.info("### Get Message(Use XSS Filter) ###");
 		log.info("### 치환 => " + inputMsg);
 		log.info("### 역치환 => " + convertMsg);
-
+		*/
 		return "egovframework/example/sample/file";
 	}
 

@@ -49,6 +49,19 @@ public class SampleController {
         return "/sample/login";
     }
 
+    /**
+     * 아이디 찾기 페이지
+     * @return String
+     * @throws Exception
+     * */
+    @RequestMapping("/sample/idSearch.do")
+    public String idSearch() throws Exception {
+        return "/sample/idSearch";
+    }
+
+    
+
+
 
     @GetMapping("/sample/hello")
     public String hello() {

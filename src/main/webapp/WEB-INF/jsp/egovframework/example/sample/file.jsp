@@ -24,7 +24,8 @@
     <button type="button" onclick="fnSubmit()">Upload</button>
 </form>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-
+<%-- 공통 정의 함수--%>
+<script src="/common/js/cmmonFn.js"></script>
 <input type="text" class="form-control" id="inputMsg" name="inputMsg" value="<script>alert(1)</script>">
 <button type="button" onclick="fnXss();">json xss test</button>
 <script>
@@ -44,7 +45,28 @@
         //$('#frm').attr('action','/test.do').submit();
         //$('#frm').attr('action','/uploadDynamicFiles.do').submit();
 
-        var formData = new FormData(document.getElementById('frm'));
+
+        // AJAX 요청을 수행하는 함수 생성
+        const dynamicAjax = fnCreateDynamicAjax();
+
+        const dynamicOptions = {
+            url: '/uploadDynamicFiles.do',
+            method: 'POST',
+            data: new FormData(document.getElementById('frm')),
+            processData: false,  // 동적으로 설정 가능
+            contentType:false,
+        };
+
+        // 콜백 함수 정의
+        const myCallback = (response) => {
+            // 동적으로 설정된 옵션으로 AJAX 요청을 보냈을 때의 콜백 동작
+            console.log(response);
+        };
+
+        dynamicAjax(dynamicOptions,myCallback);
+
+
+       /* var formData = new FormData(document.getElementById('frm'));
         $.ajax({
             type:"POST",
             enctype: 'multipart/form-data',
@@ -57,58 +79,45 @@
             },error : function(request, status, error) {
                 console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
             }
-        });
+        });*/
 
     }
 
     function fnXss(){
 
-        $.ajax({
-            url : "/ajax/List.do",
-            dataType:'text',
-            processData:false,
-            contentType:false,
-            success : function(data){
-                console.log(data);
-            },
-            error : function(request, status, error) {
-                console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-            }
-        });
+        // AJAX 요청을 수행하는 함수 생성
+        let dynamicAjax = fnCreateDynamicAjax();
 
-        $.ajax({
-            url : "/ajax/Map.do",
-            success : function(data){
-                console.log(data);
-            },
-            error : function(request, status, error) {
-                console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-            }
-        });
+        let dynamicOptions = {
+            url: '/ajax/List.do',
+            dataType:'text'
+        };
 
+        // 콜백 함수 정의
+        const myCallback = (response) => {
+            // 동적으로 설정된 옵션으로 AJAX 요청을 보냈을 때의 콜백 동작
+            console.log(response);
+        };
+
+        //dynamicAjax(dynamicOptions,myCallback);
 
         var params = {
             name: $('#inputMsg').val(),
             age: 30
         };
 
-
         var dataParam = {list:JSON.stringify(params), 'param1':'param1', 'param2':'param2'};
 
-
-        $.ajax({
-            type       : "POST",
-            url        : "/xss/jsonFilter.do",
+        dynamicOptions = {
+            url: '/xss/jsonFilter.do',
             data       : dataParam,
             dataType: "json",
-            success: function(data) {
-                console.log(data);
-               $('#ajaxResult').html(data.param[0].name);
-            },
-            error : function(request, status, error) {
-                console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-            }
+        };
+
+        dynamicAjax(dynamicOptions, (response) => {
+            $('#ajaxResult').html(response.param[0].name);
         });
+
 
     }
 

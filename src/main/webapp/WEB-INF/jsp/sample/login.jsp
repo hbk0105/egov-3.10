@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ include file="/WEB-INF/jsp/cmmn/header.jsp" %>
 
+
 <style>
 
     body{
@@ -22,10 +23,11 @@
     .login-wrap{
         width:100%;
         margin:auto;
-        max-width:525px;
-        min-height:670px;
+       /* max-width:525px;*/
+        min-height:720px;
         position:relative;
         background:url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg) no-repeat center;
+        background-size: cover;
         box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
     }
     .login-html{
@@ -57,6 +59,7 @@
         text-transform:uppercase;
     }
     .login-html .tab{
+        cursor: pointer;
         font-size:22px;
         margin-right:15px;
         padding-bottom:5px;
@@ -97,7 +100,7 @@
         -webkit-text-security:circle;
     }
     .login-form .group .label{
-        color:#aaa;
+        color:#fff;
         font-size:12px;
     }
     .login-form .group .button{
@@ -159,16 +162,31 @@
         text-align:center;
         color: white;
     }
+
+
+
+    div.message{
+        background: transparent url(msg_arrow.gif) no-repeat scroll left center;
+        padding-left: 7px;
+    }
+
+    div.error{
+        background-color:rgb(243 7 7 / 10%;
+        border-color: #924949;
+        border-style: solid solid solid none;
+        border-width: 2px;
+        padding: 5px;
+    }
 </style>
 <div class="contact">
     <div class="container">
         <div class="section-header text-center">
             <p>Welcome</p>
-            <h2>Login</h2>
+            <h2>SIGN IN & SIGN UP</h2>
         </div>
         <div class="row">
             <div class="col-md-4">
-               <%-- <div class="contact-info">
+               <div class="contact-info">
                     <h2>Quick Contact Info</h2>
                     <div class="contact-info-item">
                         <div class="contact-info-icon">
@@ -197,143 +215,123 @@
                             <p>info@example.com</p>
                         </div>
                     </div>
-                </div>--%>
+                </div>
             </div>
-            <div class="col-md-12">
-                <%--<div class="contact-form">
-                    <div id="success"></div>
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
-                        <div class="control-group">
-                            <input type="text" class="form-control" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name" aria-invalid="false">
-                            <p class="help-block text-danger"></p>
-                        </div>
-                        <div class="control-group">
-                            <input type="email" class="form-control" id="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email">
-                            <p class="help-block text-danger"></p>
-                        </div>
-                        <div class="control-group">
-                            <input type="text" class="form-control" id="subject" placeholder="Subject" required="required" data-validation-required-message="Please enter a subject">
-                            <p class="help-block text-danger"></p>
-                        </div>
-                        <div class="control-group">
-                            <textarea class="form-control" id="message" placeholder="Message" required="required" data-validation-required-message="Please enter your message"></textarea>
-                            <p class="help-block text-danger"></p>
-                        </div>
-                        <div>
-                            <button class="btn btn-custom" type="submit" id="sendMessageButton">Send Message</button>
-
-                            &lt;%&ndash;<button type="button" class="btn btn-primary">Primary</button>
-                            <button type="button" class="btn btn-secondary">Secondary</button>
-                            <button type="button" class="btn btn-success">Success</button>
-                            <button type="button" class="btn btn-danger">Danger</button>
-                            <button type="button" class="btn btn-warning">Warning</button>
-                            <button type="button" class="btn btn-info">Info</button>
-                            <button type="button" class="btn btn-light">Light</button>
-                            <button type="button" class="btn btn-dark">Dark</button>
-
-                            <button type="button" class="btn btn-link">Link</button>&ndash;%&gt;
-                        </div>
-                    </form>
-                </div>--%>
-
-                    <div class="login-wrap">
-                        <div class="login-html">
-                            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-                            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-                            <div class="login-form">
+            <div class="col-md-8">
+                <div class="login-wrap">
+                    <div class="login-html">
+                        <input id="tab-1" type="radio" text="Sign In" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+                        <input id="tab-2" type="radio" text="Sign Up" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                        <div class="login-form">
+                            <form name="signIn" id="signIn" onsubmit="return false;">
                                 <div class="sign-in-htm">
                                     <div class="group">
-                                        <label for="username" class="label">username</label>
-                                        <input id="username" name="username" type="text" class="input">
+                                        <label for="name" class="label">name</label>
+                                        <input id="name" name="name" type="text" class="input">
                                     </div>
                                     <div class="group">
-                                        <label for="password" class="label">Password</label>
-                                        <input id="password" name="Password" type="password" class="input" data-type="password">
+                                        <label for="password" class="label">password</label>
+                                        <input id="password" name="password" type="password" class="input" data-type="password">
                                     </div>
                                     <div class="group">
                                         <input id="check" type="checkbox" class="check" checked>
                                         <label for="check"><span class="icon"></span> Keep me Signed in</label>
                                     </div>
                                     <div class="group">
-                                        <button type="button" class="button" value="Sign Up">Sign In</button>
+                                        <button type="button" id="btnSignIn" class="button" value="Sign Up">Sign In</button>
                                     </div>
                                     <div class="hr"></div>
                                     <div class="foot-lnk">
                                         <a href="#forgot">Forgot Password?</a>
                                     </div>
                                 </div>
+                            </form>
+                            <form name="signUp" id="signUp" onsubmit="return false;">
                                 <div class="sign-up-htm">
                                     <div class="group">
-                                        <label for="username" class="label">Username</label>
+                                        <label for="username" class="label">name</label>
                                         <input id="username" name="username" type="text" class="input">
                                     </div>
                                     <div class="group">
-                                        <label for="password" class="label">Password</label>
-                                        <input id="password" name="password" type="password" class="input" data-type="password">
+                                        <label for="passwordCh" class="label">password</label>
+                                        <input id="passwordCh" name="passwordCh" type="password" class="input" data-type="password">
                                     </div>
                                     <div class="group">
-                                        <label for="repeatPassword" class="label">Repeat Password</label>
-                                        <input id="repeatPassword" name="repeatPassword" type="password" class="input" data-type="password">
+                                        <label for="passwordVerify" class="label">Password Verify</label>
+                                        <input id="passwordVerify" name="passwordVerify" type="password" class="input" data-type="password">
                                     </div>
                                     <div class="group">
                                         <label for="email" class="label">Email Address</label>
                                         <input id="email" name="email" type="text" class="input">
                                     </div>
                                     <div class="group">
-                                        <button type="button" class="button" value="Sign Up">Sign Up</button>
+                                        <button type="button" id="btnSignUp" class="button" value="Sign Up">Sign Up</button>
                                     </div>
                                     <div class="foot-lnk">
                                         <a href="#Already">Already Member?</a>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
-
-
-
-
-
-
-
-
-      <%--  <div class="container mt-3">
-            <h2>Basic Table</h2>
-            <p>The .table class adds basic styling (light padding and horizontal dividers) to a table:</p>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Email</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>john@example.com</td>
-                </tr>
-                <tr>
-                    <td>Mary</td>
-                    <td>Moe</td>
-                    <td>mary@example.com</td>
-                </tr>
-                <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td>july@example.com</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>--%>
-
     </div>
 </div>
-
-
 <%@ include file="/WEB-INF/jsp/cmmn/footer.jsp" %>
-<!-- Template Javascript -->
-<script src="/common/bootstrap/js/main.js"></script>
+<%--
+<link rel="stylesheet" type="text/css" media="screen" href="/common/bootstrap/css/bootstrap.min.css">--%>
+<script src="/common/bootstrap/js/bootstrap.min.js"></script>
+
+<script src="/js/validate/validate.js" ></script>
+<script src="/js/validate/validateMin.js" ></script>
+<script src="/js/validate/customModule.js" ></script>
+
+<script type="text/javascript">
+
+
+    let html = '';
+    html += '<div class="form-group group">';
+    html += '<label for="name" class="label">name</label>';
+    html += '<input id="name" name="name" type="text" class="input">';
+    html += '</div>';
+    html += '<div class="form-group group">';
+    html += '    <label for="password" class="label">password</label>';
+    html += '    <input id="password" name="password" type="password" class="input" data-type="password">';
+    html += '</div>';
+
+    $(function(){
+
+        customModule.init($('#signIn'),null,null,fnSubmit);
+
+
+        // 사용 예시:
+        const customRules = {
+            username:  { required : true, regex : /^[가-힣]{2,10}$/ },
+        };
+
+        const customMsgs = {
+            username: {required:"이름을 입력해주세요.", regex : "한글 2글자 이상 10글자 미만으로 작성하세요."},
+        };
+
+        //customModule.init($('#signUp'),null,null,fnSubmit);
+
+        customModule.updateDefaultRule($('#signUp'),customRules,customMsgs,fnSubmit);
+
+        $("#btnSignIn").click(function(){
+            $("#signIn").submit();
+        });
+
+        $("#btnSignUp").click(function(){
+            $("#signUp").submit();
+        });
+    });
+
+
+
+    function fnSubmit(){
+
+    }
+
+</script>
