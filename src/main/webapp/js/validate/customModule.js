@@ -115,10 +115,12 @@
     }
 
     function errorPlacement(error, element) {
+
           offset = element.offset();
           error.insertBefore(element)
           error.addClass('message');  // add a class to the wrapper
           error.css('color', 'red');
+          error.appendTo(element.parent());
     }
 
     function addAttachmentRulesAndMsg(names){
@@ -167,9 +169,8 @@
             rules: { ...defaultFormRules, ...newRules },
             messages: { ...defaultFormMessages, ...newMsgs },
             //showErrors : showErrors,
-            errorElement: "div",
-            wrapper: "div",  // a wrapper around the error message
             errorPlacement: errorPlacement,
+
             submitHandler : function(form) {
                 if (submitCallback) {
                     submitCallback(form);
