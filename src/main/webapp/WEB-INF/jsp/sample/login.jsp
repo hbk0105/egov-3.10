@@ -282,7 +282,7 @@
 <%@ include file="/WEB-INF/jsp/cmmn/footer.jsp" %>
 <%--
 <link rel="stylesheet" type="text/css" media="screen" href="/common/bootstrap/css/bootstrap.min.css">--%>
-<script src="/common/bootstrap/js/bootstrap.min.js"></script>
+<script src="/common/www/bootstrap/js/bootstrap.min.js"></script>
 
 <script src="/js/validate/validate.js" ></script>
 <script src="/js/validate/validateMin.js" ></script>
@@ -330,8 +330,8 @@
 
 
 
-    function fnSubmit(){
-
+    function fnSubmit(form){
+        console.log(form);
     }
 
 </script>

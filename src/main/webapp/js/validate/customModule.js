@@ -152,7 +152,6 @@
         // 폼이 제출될 때 기본적으로 수행되어야 할 로직을 여기에 작성
         //form.submit(); // 폼 제출
         alert('defaultSubmitHandler ');
-        console.log(form);
     }
 
 

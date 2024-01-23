@@ -72,22 +72,22 @@
 </div>
 
 <!-- JavaScript Libraries -->
-<script src="/common/js/jquery-3.7.1.js"></script>
-<script src="/common/bootstrap/js/bootstrap-4.4.1.bundle.min.js"></script>
-<script src="/common/bootstrap/lib/easing/easing.min.js"></script>
-<script src="/common/bootstrap/lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="/common/bootstrap/lib/waypoints/waypoints.min.js"></script>
-<script src="/common/bootstrap/lib/counterup/counterup.min.js"></script>
+<script src="/js/jquery-3.7.1.js"></script>
+<script src="/common/www/bootstrap/js/bootstrap-4.4.1.bundle.min.js"></script>
+<script src="/common/www/bootstrap/lib/easing/easing.min.js"></script>
+<script src="/common/www/bootstrap/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/common/www/bootstrap/lib/waypoints/waypoints.min.js"></script>
+<script src="/common/www/bootstrap/lib/counterup/counterup.min.js"></script>
 
 <!-- Contact Javascript File -->
-<script src="/common/bootstrap/mail/jqBootstrapValidation.min.js"></script>
-<script src="/common/bootstrap/mail/contact.js"></script>
+<script src="/common/www/bootstrap/mail/jqBootstrapValidation.min.js"></script>
+<script src="/common/www/bootstrap/mail/contact.js"></script>
 
 <!-- Template Javascript -->
-<script src="/common/bootstrap/js/main.js"></script>
+<script src="/common/www/bootstrap/js/main.js"></script>
 
 <%-- 공통 정의 함수--%>
-<script src="/common/js/cmmonFn.js"></script>
+<script src="/js/cmmonFn.js"></script>
 
 </body>
 </html>

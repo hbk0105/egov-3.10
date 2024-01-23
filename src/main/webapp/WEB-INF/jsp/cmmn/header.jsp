@@ -16,21 +16,21 @@
     <meta content="Free Website Template" name="description">
 
     <!-- Favicon -->
-    <link href="/common/bootstrap/lib/img/favicon.ico" rel="icon">
+    <link href="/common/www/bootstrap/lib/img/favicon.ico" rel="icon">
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap"
           rel="stylesheet">
 
     <!-- CSS Libraries -->
-    <link href="/common/bootstrap/css/bootstrap-4.4.1.min.css" rel="stylesheet">
+    <link href="/common/www/bootstrap/css/bootstrap-4.4.1.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="/common/bootstrap/lib/flaticon/font/flaticon.css" rel="stylesheet">
-    <link href="/common/bootstrap/lib/animate/animate.min.css" rel="stylesheet">
-    <link href="/common/bootstrap/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/common/www/bootstrap/lib/flaticon/font/flaticon.css" rel="stylesheet">
+    <link href="/common/www/bootstrap/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="/common/www/bootstrap/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="/common/bootstrap/css/style.css" rel="stylesheet">
+    <link href="/common/www/bootstrap/css/style.css" rel="stylesheet">
 </head>
 <body>
 
