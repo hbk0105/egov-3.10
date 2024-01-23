@@ -72,7 +72,7 @@
 </div>
 
 <!-- JavaScript Libraries -->
-<script src="/js/jquery-3.7.1.js"></script>
+<script src="/common/js/jquery-3.7.1.js"></script>
 <script src="/common/bootstrap/js/bootstrap-4.4.1.bundle.min.js"></script>
 <script src="/common/bootstrap/lib/easing/easing.min.js"></script>
 <script src="/common/bootstrap/lib/owlcarousel/owl.carousel.min.js"></script>

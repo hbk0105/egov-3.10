@@ -290,17 +290,6 @@
 
 <script type="text/javascript">
 
-
-    let html = '';
-    html += '<div class="form-group group">';
-    html += '<label for="name" class="label">name</label>';
-    html += '<input id="name" name="name" type="text" class="input">';
-    html += '</div>';
-    html += '<div class="form-group group">';
-    html += '    <label for="password" class="label">password</label>';
-    html += '    <input id="password" name="password" type="password" class="input" data-type="password">';
-    html += '</div>';
-
     $(function(){
 /*
         $('.login-wrap').css('min-height','600px');

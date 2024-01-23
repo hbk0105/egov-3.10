@@ -19,7 +19,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge;"/>
 
 <body>
-<script src="/js/jquery-3.7.1.js"></script>
+<script src="/common/js/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {

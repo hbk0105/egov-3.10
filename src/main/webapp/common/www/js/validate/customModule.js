@@ -2,7 +2,7 @@
   const customModule = (function() {
 
       // 영문 대소문자 8글자 이상 /^[a-zA-Z]{8,}$/
-      // 한글 2자 이상 /^[가-힣]{2,10}$/
+      // 한글 2자 이상 /^[가-힣]{2,10}$/K
       // ^[a-zA-Z가-힣]{2,9}$
       let nameRules = { required : true, maxlength: 30, regex: /^[a-zA-Z]{8,}$/ };
       let nameMsg = { required:"이름을 입력해주세요.", maxlength: "입력 가능한 최대 글자수를 초과하였습니다.", regex:"이름 형식이 잘못되었습니다."};
@@ -160,10 +160,6 @@
     function updateDefaultRule(formSelector = "#frm_user_info",newRules,newMsgs,submitCallback) {
         //const updatedRules = { ...defaultFormRules, ...newRules };
         //const updatedMags = { ...defaultFormMessages, ...newMsgs };
-        console.log(newRules);
-        console.log(newMsgs);
-        var s =  { ...defaultFormRules, ...newRules };
-        console.log(s);
         fnRegexLoad();
         $(formSelector).validate({
             rules: { ...defaultFormRules, ...newRules },

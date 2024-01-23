@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>Title</title>
-    <script src="${pageContext.request.contextPath}/js/jquery-3.7.1.js"></script>
+    <script src="${pageContext.request.contextPath}/common/js/jquery-3.7.1.js"></script>
 </head>
 <body>
 

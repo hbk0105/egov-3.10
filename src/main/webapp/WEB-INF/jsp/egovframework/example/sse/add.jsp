@@ -16,7 +16,7 @@
     <!-- ... -->
     <button type="button" onclick="fnSubmit()">addMsg</button>
 </form>
-<script src="/js/jquery-3.7.1.js"></script>
+<script src="/common/js/jquery-3.7.1.js"></script>
 <script>
 
     function fnUuidv4() {
