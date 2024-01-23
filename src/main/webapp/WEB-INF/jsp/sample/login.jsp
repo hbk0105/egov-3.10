@@ -24,7 +24,7 @@
         width:100%;
         margin:auto;
        /* max-width:525px;*/
-        min-height:720px;
+        min-height:750px;
         position:relative;
         background:url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg) no-repeat center;
         background-size: cover;
@@ -302,6 +302,17 @@
     html += '</div>';
 
     $(function(){
+/*
+        $('.login-wrap').css('min-height','600px');
+
+        $('.sign-in').on('click',function(i){
+            $('.login-wrap').css('min-height','600px');
+        });
+
+        $('.sign-up').on('click',function(i){
+            $('.login-wrap').css('min-height','750px');
+        });
+*/
 
         customModule.init($('#signIn'),null,null,fnSubmit);
 

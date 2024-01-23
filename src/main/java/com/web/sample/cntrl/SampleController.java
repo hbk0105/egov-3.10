@@ -1,6 +1,7 @@
 package com.web.sample.cntrl;
 
 import com.stn.util.ExcelDownUtil;
+import com.stn.util.MailUtil;
 import egovframework.example.sample.service.SampleDefaultVO;
 import egovframework.example.sample.service.SampleVO;
 import org.apache.logging.log4j.LogManager;
@@ -10,6 +11,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,6 +31,13 @@ public class SampleController {
     @Autowired
     ExcelDownUtil excelDownUtil;
 
+
+    @Autowired
+    MailUtil mailUtil;
+
+    @Autowired
+    JavaMailSender javaMailSender;
+
     /**
      * 샘플 메인 페이지
      * @return String
@@ -46,6 +55,7 @@ public class SampleController {
      * */
     @RequestMapping("/sample/login.do")
     public String login() throws Exception {
+        // mailUtil.signCertificationMail("aceCarWash","에이스카","michael@sangs.co.kr","마이클" ,(long)1 , javaMailSender);
         return "/sample/login";
     }
 
@@ -59,7 +69,7 @@ public class SampleController {
         return "/sample/idSearch";
     }
 
-    
+
 
 
 
