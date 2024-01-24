@@ -40,7 +40,8 @@ function fnDynamicFormData(options, formData) {
     };
 
     // options와 defaultOptions 병합
-    options = $.extend({}, defaultOptions, options);
+    //options = $.extend({}, defaultOptions, options);
+    options = { ...defaultOptions, ...options };
 
     // 기존 폼 선택
     let existingForm = $('#existingForm');
@@ -65,6 +66,7 @@ function fnDynamicFormData(options, formData) {
     });
 
     console.log(form);
+    return;
     form.appendTo('body');
 
     // 폼을 문서에 추가하고 submit

@@ -88,6 +88,15 @@
         color:#fff;
         display:block;
     }
+
+    .login-form .group2 .label,
+    .login-form .group2 .input,
+    .login-form .group2 .button{
+        width:50%;
+        color:#fff;
+    }
+
+
     .login-form .group .input,
     .login-form .group .button{
         border:none;
@@ -168,15 +177,35 @@
     div.message{
         background: transparent url(msg_arrow.gif) no-repeat scroll left center;
         padding-left: 7px;
+
     }
 
     div.error{
-        background-color:rgb(243 7 7 / 10%;
+        /*background-color:rgb(243 7 7 / 10%;
         border-color: #924949;
         border-style: solid solid solid none;
         border-width: 2px;
-        padding: 5px;
+        padding: 5px;*/
+
+
+        position:absolute;
+        margin-top:-42px;
+        margin-left:120px;
+       /* border:1px solid red;*/
+        /*background-color:rgba(40,57,101,.9);*/ /*#fff*/;
+        color:white;
+        padding:3px;
+        text-align:left;
+        z-index:1;
+        color:gold;
+        font:100% arial,helvetica,clean,sans-serif;
+        font-size:15px;
+        font-weight:bold;
+        white-space: nowrap;
+
     }
+
+
 </style>
 <div class="contact">
     <div class="container">
@@ -226,8 +255,8 @@
                             <form name="signIn" id="signIn" onsubmit="return false;">
                                 <div class="sign-in-htm">
                                     <div class="group">
-                                        <label for="name" class="label">name</label>
-                                        <input id="name" name="name" type="text" class="input">
+                                        <label for="userId" class="label">userId</label>
+                                        <input id="userId" name="userId" type="text" class="input">
                                     </div>
                                     <div class="group">
                                         <label for="password" class="label">password</label>
@@ -248,6 +277,10 @@
                             </form>
                             <form name="signUp" id="signUp" onsubmit="return false;">
                                 <div class="sign-up-htm">
+                                    <div class="group">
+                                        <label for="userId" class="label">userId</label>
+                                        <input id="userId" name="userId" type="text" class="input">
+                                    </div>
                                     <div class="group">
                                         <label for="username" class="label">name</label>
                                         <input id="username" name="username" type="text" class="input">
@@ -282,6 +315,7 @@
 <%@ include file="/WEB-INF/jsp/cmmn/footer.jsp" %>
 <%--
 <link rel="stylesheet" type="text/css" media="screen" href="/common/bootstrap/css/bootstrap.min.css">--%>
+
 <script src="/common/www/bootstrap/js/bootstrap.min.js"></script>
 
 <script src="/js/validate/validate.js" ></script>
@@ -303,15 +337,16 @@
         });
 */
 
+
         customModule.init($('#signIn'),null,null,fnSubmit);
 
 
         // 사용 예시:
-        const customRules = {
+        customRules = {
             username:  { required : true, regex : /^[가-힣]{2,10}$/ },
         };
 
-        const customMsgs = {
+        customMsgs = {
             username: {required:"이름을 입력해주세요.", regex : "한글 2글자 이상 10글자 미만으로 작성하세요."},
         };
 
@@ -331,7 +366,25 @@
 
 
     function fnSubmit(form){
-        console.log(form);
+        //console.log(form);
+
+        // 동적으로 생성된 폼 데이터
+        let formData = {
+            'name': 'John Doe',
+            'email': 'john@example.com',
+            // 원하는 데이터 필드를 추가할 수 있습니다.
+        };
+        // 동적으로 설정될 옵션
+        let options = {
+            'formName': 'dynamicForm1',
+            'url': '/sample/submit.do',  // 실제 서버로 데이터를 보낼 URL을 입력하세요.
+            'method': 'POST',  // 데이터 전송 방식 (POST 또는 GET)
+        };
+
+        // 동적으로 생성된 폼 데이터를 받아와서 submit
+        fnDynamicFormData(options, formData);
+
+
     }
 
 </script>

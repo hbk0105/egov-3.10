@@ -15,7 +15,7 @@
         <div class="owl-carousel">
             <div class="carousel-item">
                 <div class="carousel-img">
-                    <img src="/common/bootstrap/img/carousel-1.jpg" alt="Image">
+                    <img src="/common/www/bootstrap/img/carousel-1.jpg" alt="Image">
                 </div>
                 <div class="carousel-text">
                     <h3>Washing & Detailing</h3>
@@ -28,7 +28,7 @@
             </div>
             <div class="carousel-item">
                 <div class="carousel-img">
-                    <img src="/common/bootstrap/img/carousel-2.jpg" alt="Image">
+                    <img src="/common/www/bootstrap/img/carousel-2.jpg" alt="Image">
                 </div>
                 <div class="carousel-text">
                     <h3>Washing & Detailing</h3>
@@ -42,7 +42,7 @@
             </div>
             <div class="carousel-item">
                 <div class="carousel-img">
-                    <img src="/common/bootstrap/img/carousel-3.jpg" alt="Image">
+                    <img src="/common/www/bootstrap/img/carousel-3.jpg" alt="Image">
                 </div>
                 <div class="carousel-text">
                     <h3>Washing & Detailing</h3>
@@ -66,7 +66,7 @@
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <div class="about-img">
-                    <img src="/common/bootstrap/img/about.jpg" alt="Image">
+                    <img src="/common/www/bootstrap/img/about.jpg" alt="Image">
                 </div>
             </div>
             <div class="col-lg-6">
@@ -166,7 +166,7 @@
 
 
 <!-- Facts Start -->
-<%--<div class="facts" data-parallax="scroll" data-image-src="/common/bootstrap/img/facts.jpg">
+<%--<div class="facts" data-parallax="scroll" data-image-src="/common/www/bootstrap/img/facts.jpg">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6">
@@ -373,7 +373,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="team-item">
                     <div class="team-img">
-                        <img src="/common/bootstrap/img/team-1.jpg" alt="Team Image">
+                        <img src="/common/www/bootstrap/img/team-1.jpg" alt="Team Image">
                     </div>
                     <div class="team-text">
                         <h2>Donald John</h2>
@@ -390,7 +390,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="team-item">
                     <div class="team-img">
-                        <img src="/common/bootstrap/img/team-2.jpg" alt="Team Image">
+                        <img src="/common/www/bootstrap/img/team-2.jpg" alt="Team Image">
                     </div>
                     <div class="team-text">
                         <h2>Adam Phillips</h2>
@@ -407,7 +407,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="team-item">
                     <div class="team-img">
-                        <img src="/common/bootstrap/img/team-3.jpg" alt="Team Image">
+                        <img src="/common/www/bootstrap/img/team-3.jpg" alt="Team Image">
                     </div>
                     <div class="team-text">
                         <h2>Thomas Olsen</h2>
@@ -424,7 +424,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="team-item">
                     <div class="team-img">
-                        <img src="/common/bootstrap/img/team-4.jpg" alt="Team Image">
+                        <img src="/common/www/bootstrap/img/team-4.jpg" alt="Team Image">
                     </div>
                     <div class="team-text">
                         <h2>James Alien</h2>
@@ -453,7 +453,7 @@
         </div>
         <div class="owl-carousel testimonials-carousel">
             <div class="testimonial-item">
-                <img src="/common/bootstrap/img/testimonial-1.jpg" alt="Image">
+                <img src="/common/www/bootstrap/img/testimonial-1.jpg" alt="Image">
                 <div class="testimonial-text">
                     <h3>Client Name</h3>
                     <h4>Profession</h4>
@@ -464,7 +464,7 @@
                 </div>
             </div>
             <div class="testimonial-item">
-                <img src="/common/bootstrap/img/testimonial-2.jpg" alt="Image">
+                <img src="/common/www/bootstrap/img/testimonial-2.jpg" alt="Image">
                 <div class="testimonial-text">
                     <h3>Client Name</h3>
                     <h4>Profession</h4>
@@ -475,7 +475,7 @@
                 </div>
             </div>
             <div class="testimonial-item">
-                <img src="/common/bootstrap/img/testimonial-3.jpg" alt="Image">
+                <img src="/common/www/bootstrap/img/testimonial-3.jpg" alt="Image">
                 <div class="testimonial-text">
                     <h3>Client Name</h3>
                     <h4>Profession</h4>
@@ -486,7 +486,7 @@
                 </div>
             </div>
             <div class="testimonial-item">
-                <img src="/common/bootstrap/img/testimonial-4.jpg" alt="Image">
+                <img src="/common/www/bootstrap/img/testimonial-4.jpg" alt="Image">
                 <div class="testimonial-text">
                     <h3>Client Name</h3>
                     <h4>Profession</h4>
@@ -513,7 +513,7 @@
             <div class="col-lg-4">
                 <div class="blog-item">
                     <div class="blog-img">
-                        <img src="/common/bootstrap/img/blog-1.jpg" alt="Image">
+                        <img src="/common/www/bootstrap/img/blog-1.jpg" alt="Image">
                         <div class="meta-date">
                             <span>01</span>
                             <strong>Jan</strong>
@@ -537,7 +537,7 @@
             <div class="col-lg-4">
                 <div class="blog-item">
                     <div class="blog-img">
-                        <img src="/common/bootstrap/img/blog-2.jpg" alt="Image">
+                        <img src="/common/www/bootstrap/img/blog-2.jpg" alt="Image">
                         <div class="meta-date">
                             <span>01</span>
                             <strong>Jan</strong>
@@ -561,7 +561,7 @@
             <div class="col-lg-4">
                 <div class="blog-item">
                     <div class="blog-img">
-                        <img src="/common/bootstrap/img/blog-3.jpg" alt="Image">
+                        <img src="/common/www/bootstrap/img/blog-3.jpg" alt="Image">
                         <div class="meta-date">
                             <span>01</span>
                             <strong>Jan</strong>
@@ -590,4 +590,4 @@
 
 <%@ include file="/WEB-INF/jsp/cmmn/footer.jsp" %>
 <!-- Template Javascript -->
-<script src="/common/bootstrap/js/main.js"></script>
+<script src="/common/www/bootstrap/js/main.js"></script>

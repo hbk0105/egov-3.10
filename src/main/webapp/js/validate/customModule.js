@@ -4,6 +4,12 @@
       // 영문 대소문자 8글자 이상 /^[a-zA-Z]{8,}$/
       // 한글 2자 이상 /^[가-힣]{2,10}$/K
       // ^[a-zA-Z가-힣]{2,9}$
+      // ^[a-zA-Z][a-zA-Z0-9]{4,15}$
+
+      let userIdRules = {required : true , regex : /^[a-zA-Z][a-zA-Z0-9]{4,15}$/};
+      let userIdMsg = {required : '아이디를 입력해주세요.' , regex : '영문자로 시작하며, 숫자포함 4글자이상 16글자 미만으로 입력해주세요.'};
+
+
       let nameRules = { required : true, maxlength: 30, regex: /^[a-zA-Z]{8,}$/ };
       let nameMsg = { required:"이름을 입력해주세요.", maxlength: "입력 가능한 최대 글자수를 초과하였습니다.", regex:"이름 형식이 잘못되었습니다."};
 
@@ -31,6 +37,7 @@
 
       // 기본 formRules와 formMessages 설정
       let defaultFormRules = {
+          userId:userIdRules,
           name:nameRules,
           password : passwordChRuls,
           passwordCh:passwordChRuls,
@@ -44,6 +51,7 @@
 
 
       let defaultFormMessages = {
+          userId:userIdMsg,
           name:nameMsg,
           password:passwordMsg,
           passwordCh:passwordMsg,
@@ -121,6 +129,8 @@
           error.addClass('message');  // add a class to the wrapper
           error.css('color', 'red');
           error.appendTo(element.parent());
+
+
     }
 
     function addAttachmentRulesAndMsg(names){
@@ -164,8 +174,9 @@
             rules: { ...defaultFormRules, ...newRules },
             messages: { ...defaultFormMessages, ...newMsgs },
             //showErrors : showErrors,
+            errorElement: "div",
+            wrapper: "div",  // a wrapper around the error message
             errorPlacement: errorPlacement,
-
             submitHandler : function(form) {
                 if (submitCallback) {
                     submitCallback(form);
