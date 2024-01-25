@@ -1,27 +1,26 @@
 package com.web.sample.cntrl;
 
+import com.stn.util.CommandMap;
 import com.stn.util.ExcelDownUtil;
 import com.stn.util.MailUtil;
-import egovframework.example.sample.service.SampleDefaultVO;
-import egovframework.example.sample.service.SampleVO;
+import com.stn.util.PageUtil;
+import com.web.sample.cntrl.service.SampleService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.streaming.SXSSFSheet;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.support.SessionStatus;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class SampleController {
@@ -38,13 +37,27 @@ public class SampleController {
     @Autowired
     JavaMailSender javaMailSender;
 
+    @Resource(name = "sampleService")
+    private SampleService sampleService;
+
     /**
      * 샘플 메인 페이지
      * @return String
      * @throws Exception
      * */
     @RequestMapping("/sample/main.do")
-    public String main() throws Exception {
+    public String main( ModelMap model , HttpServletRequest req)  {
+
+        HashMap map = new HashMap();
+        map.put("id",1);
+
+        try{
+            model.addAttribute("board",sampleService.findByOne(map));
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         return "/sample/main";
     }
 
@@ -54,29 +67,65 @@ public class SampleController {
      * @throws Exception
      * */
     @RequestMapping("/sample/login.do")
-    public String login() throws Exception {
+    public String login( ModelMap model , HttpServletRequest req) throws Exception {
         // mailUtil.signCertificationMail("aceCarWash","에이스카","michael@sangs.co.kr","마이클" ,(long)1 , javaMailSender);
         return "/sample/login";
     }
 
     /**
-     * 아이디 찾기 페이지
+     * 게시판 리스트
      * @return String
      * @throws Exception
      * */
-    @RequestMapping("/sample/idSearch.do")
-    public String idSearch() throws Exception {
-        return "/sample/idSearch";
+    @RequestMapping("/sample/board.do")
+    public String board(CommandMap commandMap , ModelMap model , HttpServletRequest req ) {
+
+
+       HashMap param = (HashMap) commandMap.getMap();
+        long pageIndex = commandMap.getMap().get("pageIndex") == null ? 1 : (long) commandMap.getMap().get("pageIndex");
+
+        int totCnt = 0;
+        try {
+            //long pageIndex = commandMap.getMap().get("pageIndex") == null ? 1 : Long.parseLong(String.valueOf(commandMap.getMap().get("pageIndex")));
+
+
+
+            totCnt = sampleService.totalCount(param) ;
+
+            /* MICHAEL CUSTOM PAGING INFO */
+            PageUtil pageUtil = new PageUtil(totCnt, 3, pageIndex, req);
+            model.addAttribute("paper", pageUtil.pager());
+            /* MICHAEL CUSTOM PAGING INFO */
+
+            System.out.println(pageUtil.getPageIndex());
+            System.out.println(pageUtil.getMysqlStartNumber());
+
+
+            param.put("startPage",pageUtil.getMysqlStartNumber());
+            param.put("pageSize",pageUtil.getPageSize());
+
+
+            List<Map<String,Object>> ressultList = sampleService.findAll(param);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+
+
+        return "/sample/board";
     }
 
-
-
-
-
     @GetMapping("/sample/hello")
-    public String hello() {
+    public String hello() throws Exception{
         // 예외 발생 시뮬레이션
-        throw new RuntimeException("서버에서 예외가 발생했습니다.");
+        try{
+            throw new RuntimeException("서버에서 예외가 발생했습니다.");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
+
     }
 
     @RequestMapping("/sample/excelDwon.do")

@@ -1,10 +1,12 @@
 package com.stn.util;
 
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
+@Getter
 public class PageUtil {
 
     /**
@@ -47,6 +49,8 @@ public class PageUtil {
      */
     private String queryString;
 
+    private long mysqlStartNumber;
+
     /**
      * PageUtil
      *
@@ -61,6 +65,7 @@ public class PageUtil {
         this.pageSize = pageSize;
         this.pageIndex = pageIndex;
         this.queryString = queryString;
+        this.mysqlStartNumber = (pageIndex - 1) * pageSize;
     }
 
     /**
@@ -77,6 +82,7 @@ public class PageUtil {
         this.pageSize = pageSize;
         this.pageIndex = pageIndex;
         this.queryString = mapToString(reqToMap(req));
+        this.mysqlStartNumber = (pageIndex - 1) * pageSize;
     }
 
     public PageUtil(long totalCount, long pageIndex, String queryString, long pageSize, long pageBlockSize) {
@@ -85,6 +91,7 @@ public class PageUtil {
         this.queryString = queryString;
         this.pageBlockSize = pageBlockSize;
         this.pageIndex = pageIndex;
+        this.mysqlStartNumber = (pageIndex - 1) * pageSize;
     }
 
     public String pager() {

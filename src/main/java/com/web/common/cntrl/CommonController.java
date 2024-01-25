@@ -46,7 +46,7 @@ public class CommonController {
 		request.setAttribute("returnUrl", request.getAttribute("returnUrl"));
 		request.setAttribute("msg", request.getAttribute("msg"));
 
-		return "common/msgForward";
+		return "cmmn/msgForward";
 	}
 
 }

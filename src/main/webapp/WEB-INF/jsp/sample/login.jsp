@@ -99,16 +99,16 @@ Decrypted Data: ${decryptedData}
                                         <input id="username" name="username" type="text" class="input">
                                     </div>
                                     <div class="group">
+                                        <label for="email" class="label">Email Address</label>
+                                        <input id="email" name="email" type="text" class="input">
+                                    </div>
+                                    <div class="group">
                                         <label for="passwordCh" class="label">password</label>
                                         <input id="passwordCh" name="passwordCh" type="password" class="input" data-type="password">
                                     </div>
                                     <div class="group">
                                         <label for="passwordVerify" class="label">Password Verify</label>
                                         <input id="passwordVerify" name="passwordVerify" type="password" class="input" data-type="password">
-                                    </div>
-                                    <div class="group">
-                                        <label for="email" class="label">Email Address</label>
-                                        <input id="email" name="email" type="text" class="input">
                                     </div>
                                     <div class="group">
                                         <button type="button" id="btnSignUp" class="button" value="Sign Up">Sign Up</button>
@@ -122,7 +122,40 @@ Decrypted Data: ${decryptedData}
                     </div>
                 </div>
             </div>
+            <%-- col-md-8 --%>
         </div>
+        <%-- row --%>
+    </div>
+
+    <div class="container mt-3">
+        <h2>Basic Table</h2>
+        <p>The .table class adds basic styling (light padding and horizontal dividers) to a table:</p>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>John</td>
+                <td>Doe</td>
+                <td>john@example.com</td>
+            </tr>
+            <tr>
+                <td>Mary</td>
+                <td>Moe</td>
+                <td>mary@example.com</td>
+            </tr>
+            <tr>
+                <td>July</td>
+                <td>Dooley</td>
+                <td>july@example.com</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 <%@ include file="/WEB-INF/jsp/cmmn/footer.jsp" %>

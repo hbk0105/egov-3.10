@@ -72,7 +72,7 @@ public class EgovSampleController {
 	private Logger log = LogManager.getLogger(this.getClass());
 
 	/** EgovSampleService */
-	@Resource(name = "sampleService")
+	@Resource(name = "egovSampleService")
 	private EgovSampleService sampleService;
 
 	/** EgovPropertyService */

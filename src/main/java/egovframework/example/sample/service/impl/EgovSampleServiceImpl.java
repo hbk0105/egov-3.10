@@ -47,7 +47,7 @@ import org.springframework.stereotype.Service;
  *  Copyright (C) by MOPAS All right reserved.
  */
 
-@Service("sampleService")
+@Service("egovSampleService")
 public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements EgovSampleService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EgovSampleServiceImpl.class);
@@ -58,8 +58,8 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	 * @Resource(name = "sampleDAO") private SampleDAO sampleDAO;
 	 */
 	// TODO mybatis 사용
-	@Resource(name="sampleMapper")
-	private SampleMapper sampleDAO;
+	@Resource(name="egovSampleMapper")
+	private EgovSampleMapper sampleDAO;
 
 	/** ID Generation */
 	@Resource(name = "egovIdGnrService")

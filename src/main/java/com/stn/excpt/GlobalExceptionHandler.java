@@ -11,7 +11,7 @@ import java.sql.SQLException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    private Logger log = LogManager.getLogger(this.getClass());
+    private Logger log = LogManager.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(Exception.class)
     public ModelAndView Exception(HttpServletRequest req, Exception ex) {
@@ -31,6 +31,8 @@ public class GlobalExceptionHandler {
     }
 
     private ModelAndView createErrorModelAndView(String reqUrl,String errorMessage) {
+        log.error("reqUrl :  {}.", reqUrl);
+        log.error( errorMessage);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("url",reqUrl);
         modelAndView.addObject("error", errorMessage);

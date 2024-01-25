@@ -14,8 +14,7 @@ public class MailConfig {
     @Value("${mail.host}")
     private String host;
 
-    @Value("${mail.port}")
-    private int port;
+    private String port = String.valueOf(587);
 
     @Value("${mail.username}")
     private String username;
@@ -44,7 +43,7 @@ public class MailConfig {
         javaMailSender.setHost(host);
         javaMailSender.setUsername(username);
         javaMailSender.setPassword(password);
-        javaMailSender.setPort(port);
+        javaMailSender.setPort(Integer.parseInt(port));
         javaMailSender.setJavaMailProperties(getMailProperties());
         return javaMailSender;
     }

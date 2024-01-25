@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.sample.cntrl.mapper.SampleMapper">
+
+
+	<select id="findByOne" resultType="hashmap" parameterType="hashmap">
+	/* SampleMapper - findByOne */
+		SELECT
+			ID				/* 글 ID */
+			, TITLE         /* 글제목 */
+			, CONTENT       /* 글 내용 */
+			, USER_ID       /* 작성자 ID */
+			, CREATED_AT    /* 작성일자 */
+			, UPDATED_AT    /* 수정일자 */
+			, IS_DELETED    /* 삭제 여부 */
+		FROM BOARDS
+		WHERE ID = #{id} LIMIT 0,1
+	</select>
+
+	<select id="totalCount" resultType="int" parameterType="hashmap">
+	/* SampleMapper - totalCount */
+	SELECT COUNT(*) FROM BOARDS
+	WHERE 1 = 1
+	</select>
+
+
+	<select id="findAll" resultType="java.util.HashMap" parameterType="hashmap">
+		/* SampleMapper - findAll */
+		SELECT
+			ID				/* 글 ID */
+			 , TITLE         /* 글제목 */
+			 , CONTENT       /* 글 내용 */
+			 , USER_ID       /* 작성자 ID */
+			 , CREATED_AT    /* 작성일자 */
+			 , UPDATED_AT    /* 수정일자 */
+			 , IS_DELETED    /* 삭제 여부 */
+		FROM BOARDS
+		WHERE 1 = 1 LIMIT #{startPage},#{pageSize}
+	</select>
+
+	<insert id="save" parameterType="hashmap">
+	INSERT INTO
+		BOARDS(TITLE, CONTENT, USER_ID, CREATED_AT)
+		VALUES(#{title},#{title},1,sysdate() )
+	</insert>
+
+	<update id="update" parameterType="hashmap">
+	<![CDATA[
+
+	]]>
+	</update>
+
+	<delete id="delete" parameterType="hashmap">
+	<![CDATA[
+
+	]]>
+	</delete>
+</mapper>

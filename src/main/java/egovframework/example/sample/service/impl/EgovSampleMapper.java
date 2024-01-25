@@ -37,8 +37,8 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
  *
  * </pre>
  */
-@Mapper("sampleMapper")
-public interface SampleMapper {
+@Mapper("egovSampleMapper")
+public interface EgovSampleMapper {
 
 	/**
 	 * 글을 등록한다.

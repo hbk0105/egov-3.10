@@ -141,7 +141,7 @@
                   </li>
               </ul>
         	</div>
-			<%@ include file="/WEB-INF/jsp/egovframework/example/common/paging.jsp"%>
+			<%@ include file="/WEB-INF/jsp/cmmn/paging.jsp"%>
         </div>
     </form:form>
 </body>
