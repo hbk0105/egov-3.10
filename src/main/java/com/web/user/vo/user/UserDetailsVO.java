@@ -19,6 +19,8 @@ public class UserDetailsVO implements UserDetails {
 	private String password; // PW
 	private List<GrantedAuthority> authorities;
 
+	private List<String> meuns; // 로그인 시 메뉴 정보 셋
+
 	// setter
 	public void setUsername(String username) {
 		this.username = username;

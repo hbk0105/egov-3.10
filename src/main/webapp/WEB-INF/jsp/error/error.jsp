@@ -56,7 +56,7 @@
             -webkit-transform: translateX(-50%);
             -ms-transform: translateX(-50%);
             transform: translateX(-50%);
-            background: url('/common/image/errorBg.jpg') no-repeat;
+            background: url('/common/www/image/errorBg.jpg') no-repeat;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: cover;

@@ -1,0 +1,64 @@
+
+CREATE TABLE menus (
+                       id INT AUTO_INCREMENT PRIMARY KEY,
+                       menu_name VARCHAR(255) NOT NULL COMMENT '메뉴명',
+                       menu_url VARCHAR(255) NOT NULL COMMENT '메뉴 URL',
+                       parent_menu_id INT COMMENT '상위 메뉴 ID',
+                       required_permission VARCHAR(50) COMMENT '필요한 권한'
+);
+
+CREATE TABLE users (
+                       id INT AUTO_INCREMENT PRIMARY KEY,
+                       username VARCHAR(50) NOT NULL COMMENT '사용자명',
+                       email VARCHAR(255) NOT NULL UNIQUE COMMENT '이메일 주소',
+                       password_hash VARCHAR(255) NOT NULL COMMENT '비밀번호 해시',
+                       full_name VARCHAR(100) NOT NULL COMMENT '실명',
+                       phone_number VARCHAR(255) COMMENT '휴대전화',
+                       registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '가입일자',
+                       login_session_id VARCHAR(255) COMMENT '로그인 세션 ID',
+                       last_login_at TIMESTAMP COMMENT '최근 로그인 일시',
+                       login_failure_count INT DEFAULT 0 COMMENT '로그인 실패 횟수',
+                       is_withdrawn BOOLEAN DEFAULT FALSE COMMENT '탈퇴 여부',
+                       withdrawal_date TIMESTAMP COMMENT '탈퇴 일자',
+                       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정 일자'
+);
+
+-- 테이블 이름과 일부 컬럼명 변경
+CREATE TABLE user_roles (
+                            id INT AUTO_INCREMENT PRIMARY KEY,
+                            user_id INT NOT NULL COMMENT '사용자 ID',
+                            role_name VARCHAR(50) NOT NULL COMMENT '역할명',  -- 권한명을 역할명으로 변경
+                            FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE user_menu_permissions (
+                                       id INT AUTO_INCREMENT PRIMARY KEY,
+                                       user_id INT NOT NULL COMMENT '사용자 ID',
+                                       menu_id INT NOT NULL COMMENT '메뉴 ID',
+                                       permission_name VARCHAR(50) NOT NULL COMMENT '권한명',
+                                       FOREIGN KEY (user_id) REFERENCES users(id),
+                                       FOREIGN KEY (menu_id) REFERENCES menus(id)
+);
+CREATE TABLE boards (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        title VARCHAR(255) NOT NULL COMMENT '글 제목',
+                        content TEXT COMMENT '글 내용',
+                        user_id INT NOT NULL COMMENT '작성자 ID',  -- 작성자 아이디를 user_id로 변경
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '작성일자',
+                        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일자',
+                        is_deleted BOOLEAN DEFAULT FALSE COMMENT '삭제 여부',
+                        FOREIGN KEY (user_id) REFERENCES users(id)  -- 외래키 추가
+);
+
+CREATE TABLE board_files (
+                             id INT AUTO_INCREMENT PRIMARY KEY,
+                             board_id INT NOT NULL COMMENT '게시글 ID',
+                             file_name VARCHAR(255) NOT NULL COMMENT '파일명',
+                             file_size INT COMMENT '파일 크기',
+                             file_type VARCHAR(50) COMMENT '파일 타입',
+                             original_file_name VARCHAR(255) COMMENT '원본 파일명',
+                             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '업로드 일자',
+                             is_deleted BOOLEAN DEFAULT FALSE COMMENT '삭제 여부',
+                             FOREIGN KEY (board_id) REFERENCES boards(id)
+);
+

@@ -119,7 +119,7 @@
                     <a href="javascript:void(0)" class="nav-item nav-link">Contact</a>
                 </div>
                 <div class="ml-auto">
-                    <a class="btn btn-custom" href="#">Get Appointment</a>
+                    <a class="btn btn-custom" href="/sample/login.do">Sing In/Up</a>
                 </div>
             </div>
         </nav>

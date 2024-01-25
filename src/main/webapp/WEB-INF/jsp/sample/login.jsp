@@ -9,6 +9,17 @@
 <%@ include file="/WEB-INF/jsp/cmmn/header.jsp" %>
 <link href="/common/www/css/sign.css" rel="stylesheet">
 <link href="/css/validate/error.css" rel="stylesheet">
+
+<%--
+개인정보 암복호화 tld 예제
+<%@ taglib prefix="encryp" uri="/WEB-INF/tlds/AESEncryption.tld"%>
+<encryp:AESEncryp value="Hello, AES Encryption!" mode="enc" var="encryptedData"/>
+Encrypted Data: ${encryptedData}
+<br><br>
+<encryp:AESEncryp value="${encryptedData}" mode="dec" var="decryptedData"/>
+Decrypted Data: ${decryptedData}
+--%>
+
 <div class="contact">
     <div class="container">
         <div class="section-header text-center">
