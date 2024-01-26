@@ -79,39 +79,28 @@ public class SampleController {
      * */
     @RequestMapping("/sample/board.do")
     public String board(CommandMap commandMap , ModelMap model , HttpServletRequest req ) {
-
-
-       HashMap param = (HashMap) commandMap.getMap();
-        long pageIndex = commandMap.getMap().get("pageIndex") == null ? 1 : (long) commandMap.getMap().get("pageIndex");
+        HashMap param = (HashMap) commandMap.getMap();
+        long pageIndex = commandMap.getMap().get("pageIndex") == null ? 1 : Long.parseLong(String.valueOf(commandMap.getMap().get("pageIndex")));
 
         int totCnt = 0;
         try {
-            //long pageIndex = commandMap.getMap().get("pageIndex") == null ? 1 : Long.parseLong(String.valueOf(commandMap.getMap().get("pageIndex")));
-
-
 
             totCnt = sampleService.totalCount(param) ;
 
             /* MICHAEL CUSTOM PAGING INFO */
-            PageUtil pageUtil = new PageUtil(totCnt, 3, pageIndex, req);
+            PageUtil pageUtil = new PageUtil(totCnt, 10, pageIndex, req);
             model.addAttribute("paper", pageUtil.pager());
+            model.addAttribute("pageUtil", pageUtil);
             /* MICHAEL CUSTOM PAGING INFO */
-
-            System.out.println(pageUtil.getPageIndex());
-            System.out.println(pageUtil.getMysqlStartNumber());
-
 
             param.put("startPage",pageUtil.getMysqlStartNumber());
             param.put("pageSize",pageUtil.getPageSize());
 
-
-            List<Map<String,Object>> ressultList = sampleService.findAll(param);
+            model.addAttribute("resultList", sampleService.findAll(param));
+            model.addAttribute("paramMap",param);
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
-
 
         return "/sample/board";
     }

@@ -49,7 +49,20 @@ public class PageUtil {
      */
     private String queryString;
 
+    /**
+     * Mysql 전용 limit startNumber
+     */
     private long mysqlStartNumber;
+
+    /* 핵심 : 현재 게시판 레코드의 토탈 갯수 - ((현재 페이지-1) * 한 화면에 보여질 레코드의 갯수) */
+
+    /**
+     * 게시글 번호 역순 구하기
+     * 공식 : 현재 게시판 레코드의 토탈 갯수 - ((현재 페이지-1) * 한 화면에 보여질 레코드의 갯수)
+     * ex) 300 - ((pageIngex-1) * pageSize)
+     */
+    private long reverseNumber;
+
 
     /**
      * PageUtil
@@ -66,6 +79,8 @@ public class PageUtil {
         this.pageIndex = pageIndex;
         this.queryString = queryString;
         this.mysqlStartNumber = (pageIndex - 1) * pageSize;
+        this.reverseNumber = totalCount - ((pageIndex-1) * pageSize);
+
     }
 
     /**
@@ -83,6 +98,8 @@ public class PageUtil {
         this.pageIndex = pageIndex;
         this.queryString = mapToString(reqToMap(req));
         this.mysqlStartNumber = (pageIndex - 1) * pageSize;
+        this.reverseNumber = totalCount - ((pageIndex-1) * pageSize);
+
     }
 
     public PageUtil(long totalCount, long pageIndex, String queryString, long pageSize, long pageBlockSize) {
@@ -92,6 +109,8 @@ public class PageUtil {
         this.pageBlockSize = pageBlockSize;
         this.pageIndex = pageIndex;
         this.mysqlStartNumber = (pageIndex - 1) * pageSize;
+        this.reverseNumber = totalCount - ((pageIndex-1) * pageSize);
+
     }
 
     public String pager() {

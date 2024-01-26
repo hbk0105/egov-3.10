@@ -16,6 +16,7 @@
     border: 1px solid #ddd;
     margin: 0 4px;
 }
+/*
 
 .pagination a.on {
     background-color: #4CAF50;
@@ -24,3 +25,13 @@
 }
 
 .pagination a:hover:not(.on) {background-color: #ddd;}
+*/
+
+
+.pagination a.on {
+    background-color: #202C45;
+    color: #ffffff;
+    border: 1px solid #202C45;
+}
+
+.pagination a:hover:not(.on) {color: #ffffff; background-color: #E81C2E;}

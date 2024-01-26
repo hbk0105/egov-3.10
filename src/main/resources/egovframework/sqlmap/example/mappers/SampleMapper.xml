@@ -2,6 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.sample.cntrl.mapper.SampleMapper">
 
+	<sql id="searchBoard">
+		<if test="searchType != null and searchType != '' and searchTxt != null and searchTxt != '' ">
+			<choose>
+				<when test='"title".equalsIgnoreCase(searchType)'>
+					AND TITLE LIKE CONCAT('%', #{searchTxt}, '%')
+				</when>
+				<when test='"content".equalsIgnoreCase(searchType)'>
+					AND CONTENT LIKE CONCAT('%', #{searchTxt}, '%')
+				</when>
+				<when test='"witer".equalsIgnoreCase(searchType)'>
+					AND USERNAME = #{USERNAME}
+				</when>
+
+				<when test='"all".equalsIgnoreCase(searchType)'>
+					AND
+					(
+						TITLE LIKE CONCAT('%', #{searchTxt}, '%')
+					OR
+						CONTENT LIKE CONCAT('%', #{searchTxt}, '%')
+					OR
+						 USERNAME = #{searchTxt}
+					)
+				</when>
+
+			</choose>
+		</if>
+	</sql>
 
 	<select id="findByOne" resultType="hashmap" parameterType="hashmap">
 	/* SampleMapper - findByOne */
@@ -19,23 +46,41 @@
 
 	<select id="totalCount" resultType="int" parameterType="hashmap">
 	/* SampleMapper - totalCount */
-	SELECT COUNT(*) FROM BOARDS
+	SELECT
+		COUNT(*)
+	FROM (
+		SELECT
+			  TITLE         /* 글제목 */
+			 , CONTENT       /* 글 내용 */
+			 , (SELECT USERNAME FROM USERS U WHERE U.ID = USER_ID) AS USERNAME       /* 작성자 ID */
+		FROM BOARDS
+	) A
 	WHERE 1 = 1
+	<include refid="searchBoard"></include>
 	</select>
 
 
 	<select id="findAll" resultType="java.util.HashMap" parameterType="hashmap">
-		/* SampleMapper - findAll */
+	/* SampleMapper - findAll */
 		SELECT
-			ID				/* 글 ID */
-			 , TITLE         /* 글제목 */
-			 , CONTENT       /* 글 내용 */
-			 , USER_ID       /* 작성자 ID */
-			 , CREATED_AT    /* 작성일자 */
-			 , UPDATED_AT    /* 수정일자 */
-			 , IS_DELETED    /* 삭제 여부 */
-		FROM BOARDS
-		WHERE 1 = 1 LIMIT #{startPage},#{pageSize}
+			A.*
+		FROM (
+			SELECT
+			    B.*
+			FROM (
+				SELECT
+					 ID				/* 글 ID */
+					 , TITLE         /* 글제목 */
+					 , CONTENT       /* 글 내용 */
+					 , USER_ID       /* 작성자 ID */
+					 , (SELECT USERNAME FROM USERS U WHERE U.ID = USER_ID) AS USERNAME       /* 작성자 ID */
+					 , DATE_FORMAT(CREATED_AT, '%Y-%m-%d %H:%i:%S') AS CREATED_AT    /* 작성일자 */
+					 , DATE_FORMAT(UPDATED_AT, '%Y-%m-%d %H:%i:%S') AS UPDATED_AT    /* 수정일자 */
+					 , IS_DELETED    /* 삭제 여부 */
+				FROM BOARDS
+			) B WHERE 1 = 1
+		<include refid="searchBoard"></include>
+		) A LIMIT #{startPage},#{pageSize}
 	</select>
 
 	<insert id="save" parameterType="hashmap">

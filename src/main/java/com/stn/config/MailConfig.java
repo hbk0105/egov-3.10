@@ -3,18 +3,21 @@ package com.stn.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
 @Configuration
+@PropertySource("classpath:/egovframework/egovProps/globals.properties")
 public class MailConfig {
 
     @Value("${mail.host}")
     private String host;
 
-    private String port = String.valueOf(587);
+    @Value("${mail.port}")
+    private int port;
 
     @Value("${mail.username}")
     private String username;
@@ -43,7 +46,7 @@ public class MailConfig {
         javaMailSender.setHost(host);
         javaMailSender.setUsername(username);
         javaMailSender.setPassword(password);
-        javaMailSender.setPort(Integer.parseInt(port));
+        javaMailSender.setPort(port);
         javaMailSender.setJavaMailProperties(getMailProperties());
         return javaMailSender;
     }

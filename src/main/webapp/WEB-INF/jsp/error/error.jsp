@@ -1,9 +1,21 @@
+<%@ page import="java.io.PrintWriter" %>
+<%@ page import="java.io.StringWriter" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
+
+    <%
+        // 예외 정보를 가져옴
+        Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        throwable.printStackTrace(pw);
+        String stackTrace = sw.toString();
+    %>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -122,7 +134,8 @@
     </div>
 </body>
 <script>
-    console.log('${url}');
-    console.log('${error}');
+    console.log(${url});
+    console.log(${error});
+    console.log(<%= stackTrace %>);
 </script>
 </html>
