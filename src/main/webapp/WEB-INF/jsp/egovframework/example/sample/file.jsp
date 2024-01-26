@@ -25,7 +25,7 @@
 </form>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <%-- 공통 정의 함수--%>
-<script src="/common/js/cmmonFn.js"></script>
+<script src="/js/cmmonFn.js"></script>
 <input type="text" class="form-control" id="inputMsg" name="inputMsg" value="<script>alert(1)</script>">
 <button type="button" onclick="fnXss();">json xss test</button>
 <script>

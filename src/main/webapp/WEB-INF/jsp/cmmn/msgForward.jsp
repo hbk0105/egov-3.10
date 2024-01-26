@@ -19,7 +19,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge;"/>
 
 <body>
-<script src="/common/js/jquery-3.7.1.js"></script>
+<script src="/js/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -41,7 +41,6 @@
 <noscript>자바스크립트를 지원하지 않는 브라우저에서는 일부 기능을 사용하실 수 없습니다.</noscript>
 
 <form name="frm" id="frm" method="post" action="<c:url value="${returnUrl}"/>">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <c:out value='${paramInputs}' escapeXml='false'/>
 </form>
 <!--// footer -->

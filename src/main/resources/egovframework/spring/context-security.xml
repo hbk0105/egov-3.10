@@ -25,6 +25,7 @@
 		<s:intercept-url pattern="/sample/*.do" access="permitAll" />
 		<s:intercept-url pattern="/uploadDynamicFiles.do" access="permitAll"/>
 		<s:intercept-url pattern="/*file*.do" access="permitAll"/>
+		<s:intercept-url pattern="/common/msgForward.do" access="permitAll"/>
 
 		<s:intercept-url pattern="/dbTest" requires-channel="http" access="permitAll" />
 		<!--

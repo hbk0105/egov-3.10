@@ -32,12 +32,13 @@ public class CommonController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/common/msgForward.do")
+	@RequestMapping(value = "/commonMsgForward.do")
 	public String msgForward(HttpServletRequest request, CommandMap commandMap) throws Exception {
 		String paramInputs = "";
 		try {
-				paramInputs = ControllerParamManager.getParamHtmlFormConvert((Map<String, String>) commandMap);
+				paramInputs = ControllerParamManager.getParamHtmlFormConvert((HashMap<String, Object>) commandMap.getMap());
 		} catch (Exception e) {
+			e.printStackTrace();
 			log.error(e.getStackTrace()[0].getClassName() + ":" +  e.getStackTrace()[0].getMethodName() + " ERROR : " + e.getMessage());
 		}
 

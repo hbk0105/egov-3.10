@@ -1,9 +1,6 @@
 package com.web.sample.cntrl;
 
-import com.stn.util.CommandMap;
-import com.stn.util.ExcelDownUtil;
-import com.stn.util.MailUtil;
-import com.stn.util.PageUtil;
+import com.stn.util.*;
 import com.web.sample.cntrl.service.SampleService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +37,11 @@ public class SampleController {
 
     @Resource(name = "sampleService")
     private SampleService sampleService;
+
+
+    @Autowired
+    private FileUtil fileUtil;
+
 
     /**
      * 샘플 메인 페이지
@@ -77,7 +80,7 @@ public class SampleController {
      * @return String
      * @throws Exception
      * */
-    @RequestMapping("/sample/board.do")
+    @RequestMapping("/sample/boardList.do")
     public String board(CommandMap commandMap , ModelMap model , HttpServletRequest req ) {
         HashMap param = (HashMap) commandMap.getMap();
         long pageIndex = commandMap.getMap().get("pageIndex") == null ? 1 : Long.parseLong(String.valueOf(commandMap.getMap().get("pageIndex")));
@@ -102,8 +105,82 @@ public class SampleController {
             e.printStackTrace();
         }
 
-        return "/sample/board";
+        return "/sample/boardList";
     }
+
+    /**
+     * 게시글 상세
+     * @return String
+     * @throws Exception
+     * */
+    @RequestMapping("/sample/boardRead.do")
+    public String read(CommandMap commandMap , ModelMap model , HttpServletRequest req ) {
+        HashMap param = (HashMap) commandMap.getMap();
+        model.addAttribute("result", sampleService.findByOne(param));
+        param.put("boardId",param.get("id").toString());
+        model.addAttribute("fileList", sampleService.fileList(param));
+        model.addAttribute("paramMap",param);
+        return "/sample/boardRead";
+    }
+
+
+    /**
+     * 게시글 작성
+     * @return String
+     * @throws Exception
+     * */
+    @RequestMapping("/sample/boardWrite.do")
+    public String boardWrite(CommandMap commandMap , ModelMap model , HttpServletRequest req ) {
+        HashMap param = (HashMap) commandMap.getMap();
+
+        String id = param.get("id") == null ? "" : param.get("id").toString();
+        String mode = id == null ? "C" : "U";
+
+        // 수정 상태일 경우만 DB 실행
+        if("U".equalsIgnoreCase(mode)){
+            model.addAttribute("result", sampleService.findByOne(param));
+            param.put("boardId",param.get("id").toString());
+            model.addAttribute("fileList", sampleService.fileList(param));
+        }
+
+        model.addAttribute("paramMap",param);
+        return "/sample/boardWrite";
+    }
+
+    /**
+     * 게시글 등록/수정
+     * @return String
+     * @throws Exception
+     * */
+    @RequestMapping("/sample/boardExec.do")
+    public String boardExec(CommandMap commandMap , MultipartHttpServletRequest multipartReq ,  ModelMap model , HttpServletRequest req ) {
+        HashMap param = (HashMap) commandMap.getMap();
+        String msg = "등록 되었습니다.";
+
+        String id = param.get("id") == null ? "" : param.get("id").toString();
+        String mode = id == null || "".equalsIgnoreCase(id) ? "C" : "U";
+        List<Map<String,Object>> fileList = null;
+        try {
+
+            fileList = fileUtil.fileUpload(multipartReq);
+            if("C".equalsIgnoreCase(mode)){ // 등록
+                if(sampleService.save(param) > 0){
+                    if(fileList.size() > 0) sampleService.fileSave(fileList,param);
+                }
+            }else if("U".equalsIgnoreCase(mode)){ // 수정
+
+            }
+        }catch (Exception o_O){
+            o_O.printStackTrace();
+            msg = "게시글 저장 중 오류가 발생했습니다.";
+        }
+
+        req.setAttribute("msg",msg);
+        req.setAttribute("returnUrl","/sample/boardList.do");
+        return "forward:/commonMsgForward.do";
+       // return "/sample/boardList";
+    }
+
 
     @GetMapping("/sample/hello")
     public String hello() throws Exception{

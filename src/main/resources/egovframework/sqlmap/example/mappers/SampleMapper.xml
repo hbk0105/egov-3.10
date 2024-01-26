@@ -44,6 +44,21 @@
 		WHERE ID = #{id} LIMIT 0,1
 	</select>
 
+	<select id="fileList" resultType="hashmap" parameterType="hashmap">
+	/* SampleMapper - fileList */
+	SELECT
+		ID /* 파일 ID */
+		 , BOARD_ID  /* 게시글 ID */
+		 , FILE_NAME         /* 파일명 */
+		 , FILE_SIZE             /* 파일 크기*/
+		 , FILE_TYPE             /* 파일 타입*/
+		 , ORIGINAL_FILE_NAME    /* 원본 파일명*/
+		 , CREATED_AT            /* 업로드 일자*/
+		 , IS_DELETED            /* 삭제 여부*/
+	FROM BOARD_FILES
+	WHERE  BOARD_ID = #{boardId}
+	</select>
+
 	<select id="totalCount" resultType="int" parameterType="hashmap">
 	/* SampleMapper - totalCount */
 	SELECT
@@ -69,7 +84,8 @@
 			    B.*
 			FROM (
 				SELECT
-					 ID				/* 글 ID */
+					ROW_NUMBER() OVER (ORDER BY ID DESC) RNUM
+					 , ID				/* 글 ID */
 					 , TITLE         /* 글제목 */
 					 , CONTENT       /* 글 내용 */
 					 , USER_ID       /* 작성자 ID */
@@ -82,22 +98,59 @@
 		<include refid="searchBoard"></include>
 		) A LIMIT #{startPage},#{pageSize}
 	</select>
+	<select id="selectMaxBoardId" resultType="java.lang.Integer">
+	/* SampleMapper - selectMaxBoardId */
+		SELECT MAX(ID)+1 FROM BOARDS
+	</select>
 
 	<insert id="save" parameterType="hashmap">
+		/* SampleMapper - save */
 	INSERT INTO
-		BOARDS(TITLE, CONTENT, USER_ID, CREATED_AT)
-		VALUES(#{title},#{title},1,sysdate() )
+		BOARDS(ID,TITLE, CONTENT, USER_ID, CREATED_AT)
+		VALUES(#{boardId},#{title},#{title},1,SYSDATE() )
+	</insert>
+
+	<insert id="fileSave" parameterType="hashmap">
+	/* SampleMapper - fileSave */
+	INSERT INTO BOARD_FILES
+	    (
+		 ID
+		 , BOARD_ID
+		 , FILE_NAME
+		 , FILE_SIZE
+		 , FILE_TYPE
+		 , ORIGINAL_FILE_NAME
+		 , CREATED_AT
+		 , IS_DELETED
+		) VALUES (
+	    	(SELECT MAX(ID)+1 FROM BOARD_FILES F WHERE F.board_id = #{boardId})
+	    	, #{boardId}
+			, #{fileName}
+			, #{size}
+			, #{mimeType}
+			, #{origFilename}
+			, SYSDATE()
+			, 0
+		)
+
 	</insert>
 
 	<update id="update" parameterType="hashmap">
+		/* SampleMapper - update */
 	<![CDATA[
 
 	]]>
 	</update>
 
 	<delete id="delete" parameterType="hashmap">
+		/* SampleMapper - delete */
+
 	<![CDATA[
 
 	]]>
+	</delete>
+	<delete id="deleteFile">
+
+
 	</delete>
 </mapper>

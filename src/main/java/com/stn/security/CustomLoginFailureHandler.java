@@ -58,7 +58,7 @@ public class CustomLoginFailureHandler implements AuthenticationFailureHandler{
 		}
 
 		request.setAttribute("returnUrl","/customLogin.do");
-		request.getRequestDispatcher("/common/msgForward.do").forward(request, response);
+		request.getRequestDispatcher("/commonMsgForward.do").forward(request, response);
 	}
 	
 	

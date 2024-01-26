@@ -5,10 +5,12 @@ import com.web.common.cntrl.service.CrudService;
 import com.web.sample.cntrl.mapper.SampleMapper;
 import com.web.sample.cntrl.service.SampleService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("sampleService")
 public class SampleServiceImpl implements SampleService {
@@ -19,6 +21,10 @@ public class SampleServiceImpl implements SampleService {
     @Override
     public HashMap findByOne(HashMap map) {
         return sampleMapper.findByOne(map);
+    }
+    @Override
+    public List<HashMap> fileList(HashMap map) {
+        return sampleMapper.fileList(map);
     }
 
     @Override
@@ -33,7 +39,27 @@ public class SampleServiceImpl implements SampleService {
 
     @Override
     public int save(HashMap map) {
-        return 0;
+        // 롤백 테스트 필수
+        //map.put("boardId2",sampleMapper.selectMaxBoardId());
+         map.put("boardId",sampleMapper.selectMaxBoardId());
+        return sampleMapper.save(map);
+    }
+
+
+    @Override
+    public int fileSave(List<Map<String,Object>> fileList,HashMap map) {
+
+        int su = 0;
+        for(Map<String, Object> m : fileList){
+            m.put("boardId",map.get("boardId"));
+            sampleMapper.fileSave((HashMap) m);
+            su++;
+        }
+        if(su == 0){
+            throw new RuntimeException("게시글 등록 중 오류가 발생했습니다.");
+        }
+        return su;
+        // boardId
     }
 
     @Override
@@ -47,4 +73,8 @@ public class SampleServiceImpl implements SampleService {
     }
 
 
+    @Override
+    public int deleteFile(List<Map<String,Object>> fileList,HashMap map) {
+        return 0;
+    }
 }

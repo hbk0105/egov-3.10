@@ -1,5 +1,6 @@
 package com.stn.util;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ public class ControllerParamManager {
 	 * @param params
 	 * @return
 	 */
-	public static String getParamHtmlFormConvert(Map<String, String> params) {
+	public static String getParamHtmlFormConvert(HashMap<String, Object> params) {
 
 		String form = "";
 

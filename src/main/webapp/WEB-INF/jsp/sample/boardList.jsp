@@ -7,7 +7,6 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ include file="/WEB-INF/jsp/cmmn/header.jsp" %>
-<link href="/common/www/css/sign.css" rel="stylesheet">
 <link href="/css/validate/error.css" rel="stylesheet">
 <style>
     .container.mt-3{
@@ -24,6 +23,7 @@
         <div class="container mt-3">
             <form name="board" id="board">
                 <input type="hidden" name="pageIndex" id="pageIndex" value="${paramMap.pageIndex}">
+                <input type="hidden" name="id" id="id" value="">
                 <div class="input-group">
                     <select name="searchType" id="searchType" class="custom-select col-md-3">
                         <option selected value="">SEARCH SELECT</option>
@@ -73,7 +73,7 @@
             <%@ include file="/WEB-INF/jsp/cmmn/paging.jsp"%>
         </div>
         <%-- container mt-3--%>
-        <button type="button" id="fnWrite" style="float: right;" class="btn btn-custom">Write</button>
+        <button type="button" onclick="fnWriter();" id="fnWrite" style="float: right;" class="btn btn-custom">Write</button>
 
     </div>
 
@@ -92,37 +92,17 @@
 
     function fnSearch(){
         $('#pageIndex').val(1);
-        $('#borad').attr('action','/sample/board.do').submit();
+        $('#board').attr('action','/sample/boardList.do').submit();
     }
 
     function fnView(id){
-        alert(id);
+        $('#id').val(id);
+        $('#board').attr('action','/sample/boardRead.do').submit();
     }
 
-    $(function(){
+    function fnWriter(){
+        $('#board').attr('action','/sample/boardWrite.do').submit();
 
-        // 사용 예시:
-        customRules = {
-            title:  { required : true },
-            content:{ required : true},
-        };
-
-        customMsgs = {
-            title: {required:"제목을 입력해주세요."},
-            content:{ required : "내용을 입력해주세요."},
-        };
-
-        // customModule.updateDefaultRule($('#signUp'),customRules,customMsgs,fnSubmit);
-
-
-        $("#btnSignIn").click(function(){
-            $("#signIn").submit();
-        });
-
-        $("#btnSignUp").click(function(){
-            $("#signUp").submit();
-        });
-    });
-
+    }
 
 </script>
