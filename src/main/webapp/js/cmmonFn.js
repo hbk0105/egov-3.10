@@ -65,8 +65,6 @@ function fnDynamicFormData(options, formData) {
       existingForm.append(input); // 기존 폼
     });
 
-    console.log(form);
-    return;
     form.appendTo('body');
 
     // 폼을 문서에 추가하고 submit
@@ -107,62 +105,68 @@ function fnFormDataToJson(formNm) {
 
 
 
-const fnCreateDynamicAjax = (defaultOptions = {
-    url: '/',
-    method: 'GET',
-    dataType: 'json',  // 기본값으로 'json' 설정
-    processData: true,  // 기본값으로 true 설정
-    contentType: 'application/json',  // 기본값으로 'application/json' 설정
-}) => {
-    let isRequesting = false; // 요청 중 여부를 추적하는 변수
-    let cachedData = null;
+(function() {
+    window.fnCreateDynamicAjax = {
+        init : (defaultOptions = {
+                url: '/',
+                method: 'GET',
+                dataType: 'json',  // 기본값으로 'json' 설정
+                processData: true,  // 기본값으로 true 설정
+                contentType: 'application/json',  // 기본값으로 'application/json' 설정
+            }) => {
+                let isRequesting = false; // 요청 중 여부를 추적하는 변수
+                let cachedData = null;
 
-    const makeRequest = (options, callback) => {
+                const makeRequest = (options, callback) => {
 
-        // 만약 이미 요청 중이라면 새로운 요청을 막음
-        if (isRequesting) {
-            console.log('이미 요청 중입니다.');
-            return;
-        }
+                    // 만약 이미 요청 중이라면 새로운 요청을 막음
+                    if (isRequesting) {
+                        console.log('이미 요청 중입니다.');
+                        return;
+                    }
 
-        // 요청 중 플래그를 설정
-        isRequesting = true;
+                    // 요청 중 플래그를 설정
+                    isRequesting = true;
 
-        const mergedOptions = { ...defaultOptions, ...options };
+                    const mergedOptions = { ...defaultOptions, ...options };
 
-        if (cachedData) {
-            callback(cachedData);
-            return;
-        }
+                    if (cachedData) {
+                        callback(cachedData);
+                        return;
+                    }
 
-        $.ajax({
-            url: mergedOptions.url,
-            method: mergedOptions.method,
-            data: mergedOptions.data,
-            dataType: mergedOptions.dataType,
-            processData: mergedOptions.processData,  // 기본값 사용
-            contentType: mergedOptions.contentType,  // 기본값 사용
-            success: (response) => {
-                cachedData = response;
-                callback(cachedData);
-            },
-            error: (request, status, error) => {
-                console.error("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    $.ajax({
+                        url: mergedOptions.url,
+                        method: mergedOptions.method,
+                        data: mergedOptions.data,
+                        dataType: mergedOptions.dataType,
+                        processData: mergedOptions.processData,  // 기본값 사용
+                        contentType: mergedOptions.contentType,  // 기본값 사용
+                        success: (response) => {
+                            cachedData = response;
+                            callback(cachedData);
+                        },
+                        error: (request, status, error) => {
+                            console.error("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
 
-                // HTTP 상태 코드에 따른 처리 (필요에 따라 추가적인 로직 구현 가능)
-                if (request.status === 404) {
-                    console.log('페이지를 찾을 수 없습니다.');
-                } else if (request.status === 500) {
-                    console.log('서버 내부 오류가 발생하였습니다.');
-                } else {
-                    console.log('오류가 발생하였습니다.');
-                }
-                callback(null);
-            }
-        });
-    };
-    return makeRequest;
-};
+                            // HTTP 상태 코드에 따른 처리 (필요에 따라 추가적인 로직 구현 가능)
+                            if (request.status === 404) {
+                                console.log('페이지를 찾을 수 없습니다.');
+                            } else if (request.status === 500) {
+                                console.log('서버 내부 오류가 발생하였습니다.');
+                            } else {
+                                console.log('오류가 발생하였습니다.');
+                            }
+                            callback(null);
+                        }
+                    });
+                };
+                return makeRequest;
+        },
+    }
+    fnCreateDynamicAjax.init();
+})();
+
 
 
     /* ajax 사용법
@@ -187,6 +191,24 @@ const fnCreateDynamicAjax = (defaultOptions = {
         dynamicAjax(dynamicOptions,myCallback);
     */
 
+function fnFileDownLoad(fileId,boardId){
+    // 동적으로 생성된 폼 데이터
+    let formData = {
+        'id': fileId,
+        'boardId': boardId,
+        // 원하는 데이터 필드를 추가할 수 있습니다.
+    };
+    // 동적으로 설정될 옵션
+    let options = {
+        'formName': 'fileDown',
+        'url': '/samepl/fileDownLoad.do',  // 실제 서버로 데이터를 보낼 URL을 입력하세요.
+        'method': 'POST',  // 데이터 전송 방식 (POST 또는 GET)
+    };
+
+    // 동적으로 생성된 폼 데이터를 받아와서 submit
+    fnDynamicFormData(options, formData);
+
+}
 
 /**
  * 참고 JS / JQUERY

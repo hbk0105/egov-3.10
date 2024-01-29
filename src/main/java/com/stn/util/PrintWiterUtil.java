@@ -15,4 +15,12 @@ public class PrintWiterUtil {
         out.println("<script>alert('"+outMsg+"');window.location.href='/';</script>");
         out.flush();
     }
+
+    public void cmmnMsg2(HttpServletResponse response , String outMsg) throws IOException {
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>alert('"+outMsg+"');history.back();</script>");
+        out.flush();
+    }
 }

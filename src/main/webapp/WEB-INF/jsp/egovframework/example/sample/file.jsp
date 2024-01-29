@@ -47,7 +47,7 @@
 
 
         // AJAX 요청을 수행하는 함수 생성
-        const dynamicAjax = fnCreateDynamicAjax();
+        const dynamicAjax = fnCreateDynamicAjax.init();
 
         const dynamicOptions = {
             url: '/uploadDynamicFiles.do',
@@ -86,7 +86,7 @@
     function fnXss(){
 
         // AJAX 요청을 수행하는 함수 생성
-        let dynamicAjax = fnCreateDynamicAjax();
+        let dynamicAjax = fnCreateDynamicAjax.init();
 
         let dynamicOptions = {
             url: '/ajax/List.do',

@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,6 +32,7 @@ import java.util.*;
  *
  */
 @Component
+@PropertySource("classpath:/egovframework/egovProps/globals.properties")
 public class FileUtil {
 
     private Logger log = LogManager.getLogger(this.getClass());
@@ -44,7 +46,6 @@ public class FileUtil {
         while (iter.hasNext()) {
             MultipartFile item = request.getFile(iter.next());
             String fieldName = item.getName();
-            log.debug("### fieldName -- >"  + fieldName);
             if(item.getSize() == 0) continue;
             String path = "files";
             fileList.add(fileUpload(item,path));
@@ -158,6 +159,38 @@ public class FileUtil {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", String.valueOf(MediaType.valueOf(new Tika().detect(new File(f.getAbsolutePath())))));
         return new ResponseEntity<byte[]>(outputStream.toByteArray(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * 첨부파일 삭제
+     * @param fullPathAndNm [ 첨부파일 경로+파일명 ]
+     * @return int [ 1 : 삭제 성공 , -99 : 삭제 실패 , 0 : 파일이 존재하지 않음 ]
+     * @throws IOException
+     */
+    public int fileDelete(String fullPathAndNm){
+        int result =  -99;
+
+        System.out.println("### fullPathAndNm --> " +fullPathAndNm);
+        // 파일 객체 생성
+        File file = new File(fullPathAndNm);
+
+        System.out.println(file.exists());
+        System.out.println(file.delete());
+
+        // 파일이 존재하는지 확인 후 삭제
+        if (file.exists()) {
+            if (file.delete()) {
+                result = 1;
+                log.info("DELETE SUCCESS");
+            }else{
+                log.error("DELETE FAIL");
+            }
+        } else {
+            log.error("NOT FILE");
+            result =  1;
+        }
+        return result;
+
     }
 
 }

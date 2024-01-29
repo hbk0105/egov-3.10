@@ -68,7 +68,7 @@
 			  TITLE         /* 글제목 */
 			 , CONTENT       /* 글 내용 */
 			 , (SELECT USERNAME FROM USERS U WHERE U.ID = USER_ID) AS USERNAME       /* 작성자 ID */
-		FROM BOARDS
+		FROM BOARDS WHERE IS_DELETED != 1
 	) A
 	WHERE 1 = 1
 	<include refid="searchBoard"></include>
@@ -94,7 +94,7 @@
 					 , DATE_FORMAT(UPDATED_AT, '%Y-%m-%d %H:%i:%S') AS UPDATED_AT    /* 수정일자 */
 					 , IS_DELETED    /* 삭제 여부 */
 				FROM BOARDS
-			) B WHERE 1 = 1
+			) B WHERE IS_DELETED != 1
 		<include refid="searchBoard"></include>
 		) A LIMIT #{startPage},#{pageSize}
 	</select>
@@ -117,15 +117,17 @@
 		 ID
 		 , BOARD_ID
 		 , FILE_NAME
+		 , FILE_PATH
 		 , FILE_SIZE
 		 , FILE_TYPE
 		 , ORIGINAL_FILE_NAME
 		 , CREATED_AT
 		 , IS_DELETED
 		) VALUES (
-	    	(SELECT MAX(ID)+1 FROM BOARD_FILES F WHERE F.board_id = #{boardId})
+	    	(SELECT MAX(ID)+1 FROM BOARD_FILES F WHERE F.BOARD_ID = #{boardId})
 	    	, #{boardId}
 			, #{fileName}
+			, #{filePath}
 			, #{size}
 			, #{mimeType}
 			, #{origFilename}
@@ -138,19 +140,44 @@
 	<update id="update" parameterType="hashmap">
 		/* SampleMapper - update */
 	<![CDATA[
-
+		UPDATE BOARDS
+			SET TITLE = #{title}
+				, CONTENT = #{content}
+				, UPDATED_AT = SYSDATE()
+		WHERE ID = #{id}
 	]]>
 	</update>
 
-	<delete id="delete" parameterType="hashmap">
-		/* SampleMapper - delete */
-
-	<![CDATA[
-
-	]]>
+	<update id="delete" parameterType="hashmap">
+	/* SampleMapper - delete */
+	UPDATE BOARDS
+		SET IS_DELETED = 1
+	WHERE ID = #{id}
+	</update>
+	<delete id="deleteFile" parameterType="hashmap">
+	/* SampleMapper - deleteFile */
+		DELETE FROM BOARD_FILES WHERE ID = #{id} AND BOARD_ID = #{boardId}
 	</delete>
-	<delete id="deleteFile">
 
-
-	</delete>
+	<select id="fileMap" resultType="java.util.HashMap" parameterType="hashmap">
+	/* SampleMapper - fileMap */
+	SELECT
+		ID
+		 , BOARD_ID
+		 , FILE_NAME
+		 , FILE_PATH
+		 , FILE_SIZE
+		 , FILE_TYPE
+		 , ORIGINAL_FILE_NAME
+		 , CREATED_AT
+		 , IS_DELETED
+	FROM BOARD_FILES
+	WHERE 1 = 1
+	<if test="id != null and id != '' ">
+		AND ID = #{id}
+	</if>
+	<if test="boardId != null and boardId != '' ">
+		AND BOARD_ID = #{boardId}
+	</if>
+	</select>
 </mapper>

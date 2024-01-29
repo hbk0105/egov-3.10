@@ -9,9 +9,8 @@ import java.util.Map;
 public interface SampleService extends CrudService {
 
     public List<HashMap> fileList(HashMap map);
-
-    int fileSave(List<Map<String,Object>> fileList,HashMap map) throws Exception;
-    int deleteFile(List<Map<String,Object>> fileList,HashMap map);
+    int deleteFile(HashMap map);
+    HashMap fileMap(HashMap map);
 
 
 }

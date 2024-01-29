@@ -26,4 +26,7 @@ public interface SampleMapper {
 
     int fileSave(HashMap map);
     int deleteFile(HashMap map);
+
+    HashMap fileMap(HashMap map);
+
 }

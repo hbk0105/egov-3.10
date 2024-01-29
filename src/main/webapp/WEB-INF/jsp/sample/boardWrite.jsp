@@ -70,7 +70,14 @@
                 <div class="form-group mb-lg-5 filebox">
                     <c:choose>
                         <c:when test="${fn:length(fileList) > 0}">
-
+                            <ul class="list-group">
+                                <c:forEach var="result" items="${fileList}" varStatus="st">
+                                    <li class="list-group-item">
+                                        <a href="#" onclick="fnFileDownLoad('${result.ID}','${result.BOARD_ID}')">${result.ORIGINAL_FILE_NAME}</a>
+                                        <button type="button" onclick="fnDel('${result.ID}','${result.BOARD_ID}');" class="btn btn-danger btn-sm">X</button>
+                                    </li>
+                                </c:forEach>
+                            </ul>
                         </c:when>
                         <c:otherwise>
                             <input class="upload-name" value="첨부파일" placeholder="첨부파일">
@@ -82,6 +89,9 @@
 
                 <div class="form-group">
                     <button type="button" onclick="fnList();" class="btn btn-outline-dark">LIST</button>
+                    <c:if test="${ not empty result.ID}">
+                        <button type="button" onclick="fnDelete('${result.ID}');" class="btn btn-outline-danger">DELETE</button>
+                    </c:if>
                     <button type="button" id="btnSave" class="btn btn-outline-primary">SAVE</button>
                 </div>
             </form>
@@ -96,15 +106,83 @@
 <link rel="stylesheet" type="text/css" media="screen" href="/common/bootstrap/css/bootstrap.min.css">--%>
 
 <script src="/common/www/bootstrap/js/bootstrap.min.js"></script>
-
 <script src="/js/validate/validate.js" ></script>
 <script src="/js/validate/validateMin.js" ></script>
 <script src="/js/validate/customModule.js" ></script>
 <script type="text/javascript">
 
+    var html = '';
+   html += '<input class="upload-name" value="첨부파일" placeholder="첨부파일"> ';
+   html += '<label for="file" style="margin-bottom: 0px;">파일찾기</label>';
+   html += '<input type="file" name="file" id="file">';
+
     function fnList(){
         $('#pageIndex').val(1);
         $('#board').attr('action','/sample/boardList.do').submit();
+    }
+
+    function fnDel(id , boardId){
+
+        if(confirm("파일을 삭제 하시겠습니까?")){
+
+            // AJAX 요청을 수행하는 함수 생성
+            const dynamicAjax = fnCreateDynamicAjax.init();
+
+            const dynamicOptions = {
+                url: '/samepl/ajaxFileDelete.do',
+                method: 'POST',
+                data: {id : id , boardId : boardId},
+                contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+            };
+
+            dynamicAjax(dynamicOptions, (response) => {
+                console.log(response.msg);
+                if(response.msg === 'SUCCESS'){
+                    alert('삭제 되었습니다.');
+                    $('.filebox').html('');
+                    $('.filebox').html(html);
+                }else{
+                    alert('파일 삭제 중 오류가 발생하였습니다.');
+                }
+            });
+
+            /*
+             // 콜백 함수 정의
+            const myCallback = (response) => {
+                // 동적으로 설정된 옵션으로 AJAX 요청을 보냈을 때의 콜백 동작
+                console.log(response);
+            };
+            dynamicAjax(dynamicOptions,myCallback);
+
+            */
+        }
+    }
+
+    function fnDelete(id){
+        if(confirm("게시글을 삭제 하시겠습니까?")){
+
+            // AJAX 요청을 수행하는 함수 생성
+            const dynamicAjax = fnCreateDynamicAjax.init();
+
+            const dynamicOptions = {
+                url: '/samepl/ajaxBoardDelete.do',
+                method: 'POST',
+                data : {id : id},
+                contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+            };
+
+            const fnCallback = (response) => {
+                // 동적으로 설정된 옵션으로 AJAX 요청을 보냈을 때의 콜백 동작
+                if(response.msg === 'SUCCESS'){
+                    alert('삭제 되었습니다.');
+                }else{
+                    alert('삭제 중 오류가 발생하였습니다.');
+                }
+                fnList();
+            };
+            dynamicAjax(dynamicOptions,fnCallback);
+
+        }
     }
 
 

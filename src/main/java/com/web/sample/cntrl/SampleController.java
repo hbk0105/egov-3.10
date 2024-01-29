@@ -5,8 +5,11 @@ import com.web.sample.cntrl.service.SampleService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +18,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,12 +40,11 @@ public class SampleController {
     @Autowired
     JavaMailSender javaMailSender;
 
-    @Resource(name = "sampleService")
-    private SampleService sampleService;
-
-
     @Autowired
     private FileUtil fileUtil;
+
+    @Resource(name = "sampleService")
+    private SampleService sampleService;
 
 
     /**
@@ -159,16 +163,13 @@ public class SampleController {
 
         String id = param.get("id") == null ? "" : param.get("id").toString();
         String mode = id == null || "".equalsIgnoreCase(id) ? "C" : "U";
-        List<Map<String,Object>> fileList = null;
         try {
-
-            fileList = fileUtil.fileUpload(multipartReq);
+            param.put("multipartReq",multipartReq);
             if("C".equalsIgnoreCase(mode)){ // 등록
-                if(sampleService.save(param) > 0){
-                    if(fileList.size() > 0) sampleService.fileSave(fileList,param);
-                }
+                sampleService.save(param);
             }else if("U".equalsIgnoreCase(mode)){ // 수정
-
+                msg = "수정 되었습니다.";
+                sampleService.update(param);
             }
         }catch (Exception o_O){
             o_O.printStackTrace();
@@ -179,6 +180,71 @@ public class SampleController {
         req.setAttribute("returnUrl","/sample/boardList.do");
         return "forward:/commonMsgForward.do";
        // return "/sample/boardList";
+    }
+
+
+    /**
+     * 파일 삭제
+     * @param req
+     * @return String
+     * @throws Exception
+     */
+    @RequestMapping(value = "/samepl/ajaxFileDelete.do")
+    public String ajaxFileDelete(CommandMap commandMap , HttpServletRequest req , Model model){
+        HashMap param = (HashMap) commandMap.getMap();
+
+        String resultCode = "SUCCESS";
+        HashMap fileMap = sampleService.fileMap(param);
+        if(fileMap == null){
+            resultCode = "FILE NOT FOUND";
+        }else{
+            if(fileUtil.fileDelete(fileMap.get("FILE_PATH").toString()) == 1) {
+                sampleService.deleteFile(param);
+            }else{
+                resultCode = "FILE DELETE ERROR";
+            }
+        }
+        model.addAttribute("msg",resultCode);
+        return "jsonView";
+    }
+
+
+    /**
+     * 게시글 삭제
+     * @param req
+     * @return String
+     * @throws Exception
+     */
+    @RequestMapping(value = "/samepl/ajaxBoardDelete.do")
+    public String ajaxBoardDelete(CommandMap commandMap , HttpServletRequest req , Model model){
+        HashMap param = (HashMap) commandMap.getMap();
+        String msg = "FAIL";
+        if(sampleService.delete(param) > 0){
+            msg = "SUCCESS";
+        }
+        model.addAttribute("msg",msg);
+        return "jsonView";
+    }
+
+
+
+    /**
+     * 파일 조회
+     * @param req
+     * @return ResponseEntity<byte[]>
+     * @throws Exception
+     */
+    @RequestMapping("/samepl/fileDownLoad.do")
+    @Consumes(MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<byte[]> downloadDocument(CommandMap commandMap , HttpServletRequest req , HttpServletResponse response) throws Exception {
+        HashMap param = (HashMap) commandMap.getMap();
+        HashMap fileMap = sampleService.fileMap(param);
+        if(fileMap == null){
+            new PrintWiterUtil().cmmnMsg2(response,"첨부파일이 없습니다.");
+        }else{
+            return  fileUtil.fileDownload( fileMap.get("ORIGINAL_FILE_NAME").toString() , new File(fileMap.get("FILE_PATH").toString()) , req);
+        }
+        return null;
     }
 
 

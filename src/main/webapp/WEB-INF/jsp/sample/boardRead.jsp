@@ -35,17 +35,16 @@
                     <label>FILE</label>
                     <c:choose>
                         <c:when test="${fn:length(fileList) > 0}">
-
+                            <ul class="list-group">
+                                <c:forEach var="result" items="${fileList}" varStatus="st">
+                                    <li class="list-group-item">
+                                        <a href="#" onclick="fnFileDownLoad('${result.ID}','${result.BOARD_ID}')">${result.ORIGINAL_FILE_NAME}</a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
                         </c:when>
                     </c:choose>
                 </div>
-                <%--
-                <div class="filebox">
-                    <input class="upload-name" value="첨부파일" placeholder="첨부파일">
-                    <label for="file">파일찾기</label>
-                    <input type="file" id="file">
-                </div>
---%>
                 <div class="form-group">
                     <button type="button" onclick="fnList();" class="btn btn-outline-dark">LIST</button>
                     <button type="button" onclick="fnModify();" class="btn btn-outline-primary">MODIFY</button>
@@ -58,16 +57,12 @@
 
 </div>
 <%@ include file="/WEB-INF/jsp/cmmn/footer.jsp" %>
+<script src="/js/cmmonFn.js"></script>
 <%--
 <link rel="stylesheet" type="text/css" media="screen" href="/common/bootstrap/css/bootstrap.min.css">--%>
 
 <script src="/common/www/bootstrap/js/bootstrap.min.js"></script>
-
-<script src="/js/validate/validate.js" ></script>
-<script src="/js/validate/validateMin.js" ></script>
-<script src="/js/validate/customModule.js" ></script>
 <script type="text/javascript">
-
     function fnList(){
         $('#pageIndex').val(1);
         $('#board').attr('action','/sample/boardList.do').submit();
