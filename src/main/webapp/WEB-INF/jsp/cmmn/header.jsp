@@ -125,7 +125,7 @@
                             <a href="javascript:void(0)" class="dropdown-item">Schedule Booking</a>
                         </div>
                     </div>
-                    <a href="/sample/boardList.do" class="nav-item nav-link">Contact</a>
+                    <a href="/sample/boardList.do" class="nav-item nav-link">Notice</a>
                 </div>
                 <div class="ml-auto">
                     <a class="btn btn-custom" href="/sample/login.do">Sing In/Up</a>

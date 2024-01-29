@@ -8,7 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ include file="/WEB-INF/jsp/cmmn/header.jsp" %>
 <link href="/common/www/css/sign.css" rel="stylesheet">
-<link href="/css/validate/error.css" rel="stylesheet">
+<link href="/css/validate/siupError.css" rel="stylesheet">
 
 <%--
 개인정보 암복호화 tld 예제

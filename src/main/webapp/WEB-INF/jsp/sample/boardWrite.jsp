@@ -9,6 +9,8 @@
 <%@ include file="/WEB-INF/jsp/cmmn/header.jsp" %>
 <link href="/css/validate/error.css" rel="stylesheet">
 <style>
+
+
     .filebox .upload-name {
         display: inline-block;
         height: 40px;
@@ -117,8 +119,19 @@
    html += '<input type="file" name="file" id="file">';
 
     function fnList(){
-        $('#pageIndex').val(1);
-        $('#board').attr('action','/sample/boardList.do').submit();
+        // 동적으로 생성된 폼 데이터
+        let formData = {
+            'pageIndex': 1,
+        };
+        // 동적으로 설정될 옵션
+        let options = {
+            'formName': 'fnList',
+            'url': '/sample/boardList.do',  // 실제 서버로 데이터를 보낼 URL을 입력하세요.
+        };
+        // 동적으로 생성된 폼 데이터를 받아와서 submit
+        fnDynamicFormData(options, formData);
+
+
     }
 
     function fnDel(id , boardId){

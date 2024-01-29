@@ -43,9 +43,6 @@ function fnDynamicFormData(options, formData) {
     //options = $.extend({}, defaultOptions, options);
     options = { ...defaultOptions, ...options };
 
-    // 기존 폼 선택
-    let existingForm = $('#existingForm');
-
     // 폼을 동적으로 생성
     let form = $('<form>').attr({
       'id': options.formName + '_form',
@@ -62,7 +59,6 @@ function fnDynamicFormData(options, formData) {
         'value': value,
       });
       form.append(input); // 동적 폼
-      existingForm.append(input); // 기존 폼
     });
 
     form.appendTo('body');

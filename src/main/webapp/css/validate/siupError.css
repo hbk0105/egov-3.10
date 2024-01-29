@@ -1,0 +1,16 @@
+div.error{
+    position:absolute;
+    margin-top:-42px;
+    margin-left:120px;
+    /* border:1px solid red;*/
+    /*background-color:rgba(40,57,101,.9);*/ /*#fff*/;
+    color:white;
+    padding:3px;
+    text-align:left;
+    z-index:1;
+    color:gold;
+    font:100% arial,helvetica,clean,sans-serif;
+    font-size:15px;
+    font-weight:bold;
+    white-space: nowrap;
+}

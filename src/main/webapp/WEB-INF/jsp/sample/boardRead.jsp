@@ -7,7 +7,7 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ include file="/WEB-INF/jsp/cmmn/header.jsp" %>
-<link href="/css/validate/error.css" rel="stylesheet">
+<link href="/css/validate/siupError.css" rel="stylesheet">
 <div class="contact">
     <div class="container">
         <div class="section-header text-center">
