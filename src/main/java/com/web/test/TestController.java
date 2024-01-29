@@ -77,14 +77,16 @@ public class TestController {
         return "redirect:/";
     }
 
+    /* notifications 알림 조회 */
     @GetMapping("/sse/test.do")
     public String list(CommandMap commandMap , HttpServletResponse response) throws IOException {
-       return "sse/sse";
+       return "egovframework/example/sse/sse";
     }
 
+    /* notifications 알림 추가 */
     @GetMapping("/sse/add.do")
     public String add(CommandMap commandMap , HttpServletResponse response) throws IOException {
-        return "sse/add";
+        return "egovframework/example/sse/add";
     }
 
 
