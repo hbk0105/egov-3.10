@@ -51,13 +51,8 @@ public class SampleServiceImpl implements SampleService {
 
         if(sampleMapper.save(map) > 0){
             succ++;
-            MultipartHttpServletRequest multipartReq = (MultipartHttpServletRequest) map.get("multipartReq");
             try {
-                List<Map<String,Object>>  fileList = fileUtil.fileUpload(multipartReq);
-                for(Map<String, Object> m : fileList){
-                    m.put("boardId",map.get("boardId"));
-                    sampleMapper.fileSave((HashMap) m);
-                }
+                fileSave(map);
             }catch (Exception e){
                 e.printStackTrace();
                 throw new RuntimeException("게시글 등록 중 오류가 발생했습니다.");
@@ -74,13 +69,8 @@ public class SampleServiceImpl implements SampleService {
         map.put("boardId",map.get("id").toString());
         if(sampleMapper.update(map) > 0){
             succ++;
-            MultipartHttpServletRequest multipartReq = (MultipartHttpServletRequest) map.get("multipartReq");
             try {
-                List<Map<String,Object>>  fileList = fileUtil.fileUpload(multipartReq);
-                for(Map<String, Object> m : fileList){
-                    m.put("boardId",map.get("boardId"));
-                    sampleMapper.fileSave((HashMap) m);
-                }
+                fileSave(map);
             }catch (Exception e){
                 e.printStackTrace();
                 throw new RuntimeException("게시글 수정 중 오류가 발생했습니다.");
@@ -89,9 +79,17 @@ public class SampleServiceImpl implements SampleService {
         return succ;
     }
 
+    private void fileSave(HashMap map) throws Exception{
+        MultipartHttpServletRequest multipartReq = (MultipartHttpServletRequest) map.get("multipartReq");
+        List<Map<String,Object>>  fileList = fileUtil.fileUpload(multipartReq);
+        for(Map<String, Object> m : fileList){
+            m.put("boardId",map.get("boardId"));
+            sampleMapper.fileSave((HashMap) m);
+        }
+    }
+
     @Override
     @Transactional
-
     public int delete(HashMap map) {
         int succ = 0;
         if(sampleMapper.delete(map) > 0){

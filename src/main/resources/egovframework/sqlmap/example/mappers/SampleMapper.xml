@@ -102,7 +102,7 @@
 	</select>
 	<select id="selectMaxBoardId" resultType="java.lang.Integer">
 	/* SampleMapper - selectMaxBoardId */
-		SELECT MAX(ID)+1 FROM BOARDS
+	SELECT IFNULL(MAX(ID),0)+1 FROM BOARDS
 	</select>
 
 	<insert id="save" parameterType="hashmap">

@@ -218,10 +218,12 @@
             $("#board").submit();
         });
 
-        $("#file").on('change',function(){
-            var fileName = $("#file").val();
-            $(".upload-name").val(fileName);
+        $(document).on('change', '.filebox [id=file]', function(event) {
+            let buttonId = event.target.id;
+            $(this).siblings('.upload-name').val($(this).val());
+
         });
+
 
     });
 
