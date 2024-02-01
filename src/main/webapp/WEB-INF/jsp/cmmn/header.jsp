@@ -11,9 +11,21 @@
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="custom" uri="/WEB-INF/tlds/customHtml.tld"%>
-<%@ taglib prefix="encryp" uri="/WEB-INF/tlds/AESEncryption.tld"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="encryp" uri="/WEB-INF/tlds/AESEncryption.tld"%>
+<%--
+개인정보 암복호화 tld 예제
+<encryp:AESEncryp value="Hello, AES Encryption!" mode="enc" var="encryptedData"/>
+Encrypted Data: ${encryptedData}
+<br><br>
+<encryp:AESEncryp value="${encryptedData}" mode="dec" var="decryptedData"/>
+Decrypted Data: ${decryptedData}
+--%>
+<%@ taglib prefix="mask" uri="/WEB-INF/tlds/MaskingTag.tld"%>
+<%-- 마스킹 예제
+<mask:masking value="오바마" se="name" var="maskVar"/>
+${maskVar}
+--%>
 
 <!DOCTYPE html>
 <html lang="ko">
