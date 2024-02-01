@@ -103,12 +103,12 @@ Decrypted Data: ${decryptedData}
                                         <input id="email" name="email" type="text" class="input">
                                     </div>
                                     <div class="group">
-                                        <label for="passwordCh" class="label">password</label>
-                                        <input id="passwordCh" name="passwordCh" type="password" class="input" data-type="password">
+                                        <label for="password1" class="label">password</label>
+                                        <input id="password1" name="password1" type="password" class="input" data-type="password">
                                     </div>
                                     <div class="group">
-                                        <label for="passwordVerify" class="label">Password Verify</label>
-                                        <input id="passwordVerify" name="passwordVerify" type="password" class="input" data-type="password">
+                                        <label for="password2" class="label">Password Verify</label>
+                                        <input id="password2" name="password2" type="password" class="input" data-type="password">
                                     </div>
                                     <div class="group">
                                         <button type="button" id="btnSignUp" class="button" value="Sign Up">Sign Up</button>
@@ -186,14 +186,29 @@ Decrypted Data: ${decryptedData}
         customModule.init($('#signIn'),null,null,fnSubmit);
 
 
+
+        $.validator.addMethod("passwordMatch", function(value, element, params) {
+            // 여기에 사용자 정의 규칙의 로직을 구현합니다.
+            // params는 추가적인 매개변수를 전달하는 데 사용됩니다.
+            var dependentValue = $(params).val(); // 의존하는 필드의 값 가져오기
+            return value === dependentValue;
+        }, "값이 일치하지 않습니다.");
+
         // 사용 예시:
         customRules = {
             username:  { required : true, regex : /^[가-힣]{2,10}$/ },
+            password1:{ required : true, maxlength:16, regex : /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/},
+            password2: {required : true, passwordMatch : "#password1"} // fieldB는 fieldA에 의존함}
         };
 
         customMsgs = {
             username: {required:"이름을 입력해주세요.", regex : "한글 2글자 이상 10글자 미만으로 작성하세요."},
+            password1:{required:"비밀번호를 입력해주세요.", regex : "비밀번호는 숫자+대소문자+특수문자 포함 8~16자 내로 입력해주세요."},
+            password2: {required:"비밀번호 확인을 입력해주세요.", passwordMatch : "값이 일치하지 않습니다." },// fieldB는 fieldA에 의존함}
         };
+
+
+
 
         //customModule.init($('#signUp'),null,null,fnSubmit);
 
