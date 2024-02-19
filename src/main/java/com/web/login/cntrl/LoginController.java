@@ -12,6 +12,8 @@ import com.web.user.vo.user.UserDetailsVO;
 import org.apache.log4j.Logger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,7 +53,7 @@ public class LoginController {
         if(logout != null) {
             model.addAttribute("logoutMsg", "You have been logged out successfully");
         }
-        return "login/login"; // login.jsp(Custom Login Page)
+        return "/egovframework/example/login/login"; // login.jsp(Custom Login Page)
     }    
 	
 	
@@ -67,12 +69,31 @@ public class LoginController {
 		return "redirect:/customLogin.do";
 	} 
 
-	@GetMapping("/member/test.do")
-	public void doMember() {
+	@GetMapping("/member/member.do")
+	public void doMember(Authentication authentication, Model model , CommandMap commandMap) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UserDetailsVO vo = (UserDetailsVO) auth.getPrincipal();
 		log.debug("auth -- > " + vo.toString());
 		log.info("logined member");
+
+		try {
+			if (authentication != null) {
+				System.out.println("타입정보 : " + authentication.getClass());
+
+				// 세션 정보 객체 반환
+				WebAuthenticationDetails web = (WebAuthenticationDetails)authentication.getDetails();
+				System.out.println("세션ID : " + web.getSessionId());
+				System.out.println("접속IP : " + web.getRemoteAddress());
+
+				// UsernamePasswordAuthenticationToken에 넣었던 UserDetails 객체 반환
+				UserDetails userVO = (UserDetails) authentication.getPrincipal();
+				System.out.println("ID정보 : " + userVO.getUsername());
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		model.addAttribute("vo",vo);
+
 	}
 	
 	@GetMapping("/admin/test.do")
@@ -92,7 +113,7 @@ public class LoginController {
 		log.info("access Denied : "+ auth);
 		model.addAttribute("msg", "접근권한이 없습니다."); 
 		
-		return "login/accessError";
+		return "/egovframework/example/login/accessError";
 	}
 	
 	@SuppressWarnings("unchecked")

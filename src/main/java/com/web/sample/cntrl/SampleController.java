@@ -20,10 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class SampleController {
@@ -87,6 +84,11 @@ public class SampleController {
     @RequestMapping("/sample/boardList.do")
     public String board(CommandMap commandMap , ModelMap model , HttpServletRequest req ) {
         HashMap param = (HashMap) commandMap.getMap();
+
+        /*
+        name이 a1로 여러개 들어올 때 출력 방법
+        System.out.println("## param --> " + Arrays.deepToString((Object[]) param.get("a1")));
+         */
         long pageIndex = commandMap.getMap().get("pageIndex") == null ? 1 : Long.parseLong(String.valueOf(commandMap.getMap().get("pageIndex")));
 
         int totCnt = 0;
