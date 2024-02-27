@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
+
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 
@@ -16,7 +18,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ModelAndView Exception(HttpServletRequest req, Exception ex) {
         return createErrorModelAndView(req.getRequestURI() , "Exception [msg] : " + ex.getMessage());
+    }
 
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ModelAndView NoHandlerFoundException(HttpServletRequest req, Exception ex) {
+        return createErrorModelAndView(req.getRequestURI() , "NoHandlerFoundException [msg] : " + ex.getMessage());
     }
 
     @ExceptionHandler(RuntimeException.class)

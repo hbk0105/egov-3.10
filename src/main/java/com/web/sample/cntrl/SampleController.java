@@ -251,14 +251,9 @@ public class SampleController {
 
 
     @GetMapping("/sample/hello")
-    public String hello() throws Exception{
+    public String hello() {
         // 예외 발생 시뮬레이션
-        try{
-            throw new RuntimeException("서버에서 예외가 발생했습니다.");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return "";
+        throw new RuntimeException("서버에서 예외가 발생했습니다.");
 
     }
 
