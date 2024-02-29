@@ -62,10 +62,10 @@
         <property name="defaultErrorView" value="cmmn/egovError"/>
         <property name="exceptionMappings">
             <props>
-                <prop key="org.springframework.dao.DataAccessException">cmmn/dataAccessFailure</prop>
-                <prop key="org.springframework.transaction.TransactionException">cmmn/transactionFailure</prop>
-                <prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">cmmn/egovError</prop>
-                <prop key="org.springframework.security.AccessDeniedException">cmmn/egovError</prop>
+                <prop key="org.springframework.dao.DataAccessException">egovframework/example/cmmn/dataAccessFailure</prop>
+                <prop key="org.springframework.transaction.TransactionException">egovframework/example/cmmn/transactionFailure</prop>
+                <prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">egovframework/example/cmmn/egovError</prop>
+                <prop key="org.springframework.security.AccessDeniedException">egovframework/example/cmmn/egovError</prop>
             </props>
         </property>
     </bean>

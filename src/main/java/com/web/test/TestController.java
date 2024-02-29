@@ -5,10 +5,14 @@ import com.stn.util.SessionConst;
 import com.stn.util.SessionUtil;
 import com.web.user.vo.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -104,6 +108,27 @@ public class TestController {
         model.addAttribute("result",listMap);
 
         return "jsonView";
+    }
+
+    @GetMapping("/example")
+    public ResponseEntity<String> example(Map data) {
+        // 요청 본문의 JSON 데이터가 MyObject로 매핑됨
+        // ...
+
+        System.out.println("@@ data --> " + data);
+
+        return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
+    @GetMapping("/example2")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> example2(HashMap data) {
+        System.out.println("@@ data --> " + data);
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("code", "1");
+        responseData.put("message", "OK");
+
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 
     // return Map<?,?>

@@ -85,11 +85,32 @@
 
     function fnXss(){
 
+
+        $.ajax({
+            url:"/phoneCheck.do",
+            data:{phone:'123-456'},
+            type:"post",
+            success:function(data){
+                console.log(data);
+
+            },
+            error:function(jqxhr, textStatus, errorThrown){
+                console.log("ajax 처리 실패");
+
+                // 에러 로그
+                console.log(jqxhr);
+                console.log(textStatus);
+                console.log(errorThrown);
+            }
+        });
+
+        return;
+
         // AJAX 요청을 수행하는 함수 생성
         let dynamicAjax = fnCreateDynamicAjax.init();
 
         let dynamicOptions = {
-            url: '/ajax/List.do',
+            url: '/example',
             dataType:'text'
         };
 
@@ -99,7 +120,8 @@
             console.log(response);
         };
 
-        //dynamicAjax(dynamicOptions,myCallback);
+        // dynamicAjax(dynamicOptions,myCallback);
+
 
         var params = {
             name: $('#inputMsg').val(),
