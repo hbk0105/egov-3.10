@@ -12,8 +12,9 @@
 <%@ taglib prefix="ui"     uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="encryp" uri="/WEB-INF/tlds/AESEncryption.tld"%>
+
 <%--
+<%@ taglib prefix="encryp" uri="/WEB-INF/tlds/AESEncryption.tld"%>
 개인정보 암복호화 tld 예제
 <encryp:AESEncryp value="Hello, AES Encryption!" mode="enc" var="encryptedData"/>
 Encrypted Data: ${encryptedData}
@@ -21,8 +22,9 @@ Encrypted Data: ${encryptedData}
 <encryp:AESEncryp value="${encryptedData}" mode="dec" var="decryptedData"/>
 Decrypted Data: ${decryptedData}
 --%>
-<%@ taglib prefix="mask" uri="/WEB-INF/tlds/MaskingTag.tld"%>
+
 <%-- 마스킹 예제
+<%@ taglib prefix="mask" uri="/WEB-INF/tlds/MaskingTag.tld"%>
 <mask:masking value="오바마" se="name" var="maskVar"/>
 ${maskVar}
 --%>
@@ -37,7 +39,7 @@ ${maskVar}
     <meta content="Free Website Template" name="description">
 
     <!-- Favicon -->
-    <link href="/common/www/bootstrap/lib/img/favicon.ico" rel="icon">
+    <link rel="shortcut icon" href="#">
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap"
