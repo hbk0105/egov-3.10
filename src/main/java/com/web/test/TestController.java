@@ -1,8 +1,6 @@
 package com.web.test;
 
-import com.stn.util.CommandMap;
-import com.stn.util.SessionConst;
-import com.stn.util.SessionUtil;
+import com.stn.util.*;
 import com.web.user.vo.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,18 +29,18 @@ public class TestController {
     public String test( Model model) {
 
         //세션에 회원 데이터가 없으면 home
-       /* if (SessionUtil.getAttribute(SessionConst.LOGIN_USER) == null) {
-            return "user/login";
-        }*/
+        if (SessionUtil.getAttribute(SessionConst.LOGIN_USER) == null) {
+            return "/egovframework/example/user/login";
+        }
         UserEntity userEntity = (UserEntity) SessionUtil.getAttribute(SessionConst.LOGIN_USER);
         System.out.println("### userEntity " + userEntity);
         //세션이 유지되면 로그인으로 이동
         model.addAttribute("userEntity", userEntity);
-        return "user/userList";
+        return "/egovframework/example/user/userList";
     }
 
     @RequestMapping("/login.do")
-    public String login(HttpSession session, Model model) {
+    public String login(HttpSession session, Model model , HttpServletRequest request) throws Exception {
         // id와 password를 사용하여 사용자 인증을 수행
         // 예를 들어, 데이터베이스에서 해당 id로 사용자 정보를 조회하고, 비밀번호 일치 여부를 확인하는 로직
         // 인증 성공
@@ -50,23 +48,30 @@ public class TestController {
         try{
             if (true) {
                 UserEntity userEntity = new UserEntity();
-                userEntity.setId((long)(Math.random()*10));
+                userEntity.setId(1L);
                 userEntity.setUsername("michael"+(long)(Math.random()*10));
                 userEntity.setEmail("michael@sangs.co.rk"+(long)(Math.random()*10));
                 userEntity.setPassword("1234"+(long)(Math.random()*10));
 
                 System.out.println("### userEntity --> " + userEntity);
                 SessionUtil.setAttribute(SessionConst.LOGIN_USER, userEntity); // 세션에 로그인 정보 저장
+
+                //로그인 성공 후 호출
+                session = request.getSession();
+                MySessionManager.instance().loginProcess(userEntity.getId().toString(), session);
+
+
                 model.addAttribute("userEntity", userEntity);
                 //return "loginHome"; // 로그인 홈 화면으로 이동
-                rt =  "/user/success";
+                rt =  "/egovframework/example/user/success";
             } else {
                 model.addAttribute("error", "아이디 또는 비밀번호가 올바르지 않습니다.");
                 // return "loginForm"; // 로그인 폼 화면으로 이동
-                rt =  "user/fail";
+                rt =  "/egovframework/example/user/fail";
             }
         }catch (Exception e){
             e.printStackTrace();
+            throw new Exception("login.do에서 에러발생");
         }
         return rt;
     }

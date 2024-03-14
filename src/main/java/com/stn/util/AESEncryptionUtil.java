@@ -29,21 +29,4 @@ public class AESEncryptionUtil {
         return new String(decryptedBytes, StandardCharsets.UTF_8);
     }
 
-    public static void main(String[] args) {
-        try {
-
-           String originalData = "01072051652";
-
-            // 암호화
-            String encryptedData = encrypt(originalData);
-            System.out.println("Encrypted Data: " + encryptedData);
-
-            // 복호화
-            String decryptedData = decrypt(encryptedData);
-            System.out.println("Decrypted Data: " + decryptedData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }

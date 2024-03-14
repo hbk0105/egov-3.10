@@ -82,3 +82,14 @@ CREATE TABLE RoleMenuT (
 
 -- #  ID Generation
 https://egovframe.go.kr/wiki/doku.php?id=egovframework:rte:sample:cvpl:id_generation
+
+
+-- 소나큐브
+https://m.blog.naver.com/hiek2001/222861307259
+
+소나큐브 , 소나스캐너
+
+The issue is valid but does not need fixing
+it represents accepted technical debt.
+
+The issue is raised unexpectedly on code that should not trigger an issue.

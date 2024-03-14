@@ -1,15 +1,11 @@
 package com.stn.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TagSupport;
 
 public class AESEncryptionTag extends TagSupport {
 
-    @Autowired
-    AESEncryptionUtil aesEncryptionUtil;
 
     private String value;
 
@@ -38,9 +34,9 @@ public class AESEncryptionTag extends TagSupport {
             String result = null;
             if (value != null && mode != null) {
                 if("enc".equalsIgnoreCase(mode)){
-                    result = aesEncryptionUtil.encrypt(value);
+                    result = AESEncryptionUtil.encrypt(value);
                 }else if("dec".equalsIgnoreCase(mode)){
-                    result = aesEncryptionUtil.decrypt(value);
+                    result = AESEncryptionUtil.decrypt(value);
                 }
             }
 

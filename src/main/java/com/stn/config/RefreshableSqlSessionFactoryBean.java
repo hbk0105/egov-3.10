@@ -119,7 +119,7 @@ public class RefreshableSqlSessionFactoryBean extends SqlSessionFactoryBean impl
 
             private boolean findModifiedResource(Resource resource) {
                 boolean retVal = false;
-                List<String> modifiedResources = new ArrayList<String>();
+                List<String> modifiedResources = new ArrayList<>();
 
                 try {
                     long modified = resource.lastModified();
