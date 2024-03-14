@@ -3,6 +3,7 @@ package com.stn.util;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
@@ -36,10 +37,10 @@ public class MySessionManager implements HttpSessionListener {
         return sessionManager;
     }
 
-    private Hashtable<String, HttpSession> useridHash;//유저 아이디 : 세션
+    private ConcurrentHashMap<String, HttpSession> useridHash;//유저 아이디 : 세션
 
     public MySessionManager() {
-        useridHash = new Hashtable<String, HttpSession>();
+        useridHash = new ConcurrentHashMap<String, HttpSession>();
     }
 
     public void sessionCreated(HttpSessionEvent se)  {
@@ -97,16 +98,16 @@ public class MySessionManager implements HttpSessionListener {
         System.out.printf("loginProcess() : %s[getId(): %s][count: %d] \n", userid, session.getId(), useridHash.size());
     }
 
-    public boolean sessionIdDuplCheck(String userid){
+    public boolean sessionIdDuplCheck(String userid , HttpSession session){
         boolean result = false;
         if(useridHash.containsKey(userid)) {
             HttpSession prvSession = useridHash.get(userid);
             String idKey = (String)prvSession.getAttribute("idKey");
             //현재 정상적으로 로그인이 된 상태라면
-            if(idKey != null && idKey.length() > 0) {
-                prvSession.invalidate();
-                result = true;
+            if(idKey != null && idKey.length() > 0 && !(prvSession.getId().equals(session.getId()))) {
+                session.invalidate();
                 System.out.printf("loginProcess() : 기존세션 종료처리 \n");
+                return true;
             }
         }
         return result;

@@ -32,19 +32,19 @@ public class AuthInterceptor extends HandlerInterceptorAdapter  {
         
         log.debug("########## LoggerInterceptor 시작  ##########");
 
+        HttpSession session = request.getSession();
 
-
+        //if(session.getAttribute("idKey") == null){
         if(SessionUtil.getAttribute(SessionConst.LOGIN_USER) == null){
             new PrintWiterUtil().cmmnMsg(response,"로그인이 필요합니다.");
             re = false;
-        }else{
+            return false;
+        }
 
-            HttpSession session = request.getSession();
-            if(MySessionManager.instance().sessionIdDuplCheck(session.getAttribute("idKey").toString())){
-                new PrintWiterUtil().cmmnMsg(response,"중복로그인으로 로그아웃 되었습니다.");
-                re = false;
-            }
-
+        if(session.getAttribute("idKey") != null && MySessionManager.instance().sessionIdDuplCheck(session.getAttribute("idKey").toString(), session)) {
+            new PrintWiterUtil().cmmnMsg(response,"중복로그인으로 로그아웃 되었습니다.");
+            re = false;
+            return false;
         }
 
         if( re ) {
@@ -52,12 +52,13 @@ public class AuthInterceptor extends HandlerInterceptorAdapter  {
             /* CSRF 대응 로직 시작 */
 
             /* 보통은 아래 로직으로 충분히 가능, 추가로 진행 하고 싶을 경우, csrf token 사용 */
-           /* String referer = request.getHeader("Referer"); // 요청을 보내기 전 페이지
+            /*
+            String referer = request.getHeader("Referer"); // 요청을 보내기 전 페이지
             String host = request.getHeader("host"); // 도메인 호스트 (ex : www.naver.com)
             if (referer == null || !referer.contains(host)) {
                 new PrintWiterUtil().cmmnMsg(response,"CSRF 공격이 감지되었습니다.");
                 re = false;
-            }*/
+            }
 
             String headerToken = request.getHeader("X-CSRF-HEADER");
             String paramToken = request.getParameter("CSRF_TOKEN");
@@ -78,10 +79,12 @@ public class AuthInterceptor extends HandlerInterceptorAdapter  {
                 new PrintWiterUtil().cmmnMsg(response,"CSRF 공격이 감지되었습니다.");
                 re = false;
             }
+            */
             /* CSRF 대응 로직 종료 */
 
             log.debug("########## LoggerInterceptor 종료  ##########");
         }
+        System.out.println("## re :: " + re);
 
         return re; // 반환이 false라면 controller로 요청을 안함
     }

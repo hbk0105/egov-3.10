@@ -100,12 +100,12 @@ public class LoginController {
 	public void doAdmin() {
 		log.info("admin only");
 	}
-	
+	/*
 	@RequestMapping(value = "/test.do", method = RequestMethod.GET)
 	public void errorTest(HttpServletRequest request, Model model) throws Exception {
         throw new Exception("test.do에서 에러발생");    
     }
-
+*/
 
 	
 	@GetMapping("/accessError.do")

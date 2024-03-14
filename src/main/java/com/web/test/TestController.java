@@ -39,6 +39,13 @@ public class TestController {
         return "/egovframework/example/user/userList";
     }
 
+    @RequestMapping("/user.do")
+    public String user( Model model ,  HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        request.setAttribute("userId",session.getAttribute("idKey"));
+        return "/egovframework/example/user/userList";
+    }
+
     @RequestMapping("/login.do")
     public String login(HttpSession session, Model model , HttpServletRequest request) throws Exception {
         // id와 password를 사용하여 사용자 인증을 수행
