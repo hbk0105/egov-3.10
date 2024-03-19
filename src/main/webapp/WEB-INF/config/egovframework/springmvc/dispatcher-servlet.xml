@@ -31,8 +31,6 @@
      -->
     <context:property-placeholder location="classpath:egovframework/egovProps/globals.properties" />
 
-    <!-- https://zoou.tistory.com/21 , ajax xss filtier 처리 -->
-    <bean id="htmlEscapingObjectMapper" class="com.stn.xss.HtmlEscapingObjectMapperFactory" />
 
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="webBindingInitializer">
@@ -48,6 +46,7 @@
             </list>
         </property>
 
+        <!-- https://www.egovframe.go.kr/home/qainfo/qainfoRead.do?menuNo=69&qaId=QA_00000000000016748 -->
         <property name="messageConverters">
             <list>
                 <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
@@ -122,7 +121,8 @@
         <property name="contentType" value="application/json;charset=UTF-8"/>
     </bean>
 
-
+    <!-- https://zoou.tistory.com/21 , ajax xss filtier 처리 -->
+    <bean id="htmlEscapingObjectMapper" class="com.stn.xss.HtmlEscapingObjectMapperFactory" />
     <!--
     <mvc:annotation-driven>
         <mvc:message-converters>
@@ -140,6 +140,25 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
     -->
+    <!-- Usage 2. -->
+    <!--
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                    <property name="objectMapper" ref="htmlEscapingObjectMapper"/>
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html; charset=UTF-8</value>
+                            <value>application/json;charset=UTF-8</value>
+                            <value>application/x-www-form-urlencoded;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+-->
 
 
 
