@@ -1,10 +1,12 @@
 package com.web.test;
 
-import com.stn.util.*;
+import com.stn.util.CommandMap;
+import com.stn.util.MySessionManager;
+import com.stn.util.SessionConst;
+import com.stn.util.SessionUtil;
 import com.web.user.vo.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -156,12 +159,35 @@ public class TestController {
     }
 
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws NoSuchAlgorithmException {
         UserEntity userEntity = new UserEntity();
         userEntity.setId((long)(Math.random()*10));
         userEntity.setUsername("michael"+(long)(Math.random()*10));
         userEntity.setEmail("michael@sangs.co.rk"+(long)(Math.random()*10));
         userEntity.setPassword("1234"+(long)(Math.random()*10));
         System.out.println(userEntity.toString());
+
     }
+
+
+    private static String extractSalt(String encodedPassword) {
+        return encodedPassword.substring(0, 10);
+    }
+
+    @GetMapping(value = "/body.do")
+    @ResponseBody
+    public HashMap<String, Object> testCall(HttpServletRequest request){
+        HashMap<String, Object> result = new HashMap<String, Object>();
+        try {
+            result.put("test1", "test1");
+            result.put("test2", "test2");
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }
+        return result;
+    }
+
+
 }
