@@ -106,9 +106,9 @@ function fnFormDataToJson(formNm) {
         init : (defaultOptions = {
                 url: '/',
                 method: 'GET',
-                dataType: 'json',  // 기본값으로 'json' 설정
+                dataType: 'json',  // 기본값으로 'json' 설정 [서버에서 어떤 타입을 받을 것인지를 의미]
                 processData: true,  // 기본값으로 true 설정
-                contentType: 'application/json',  // 기본값으로 'application/json' 설정
+                contentType: 'application/json',  // 기본값으로 'application/json' 설정 [ 서버로 데이터를 보낼때에 어떤타입으로 보낼것인지 ]
             }) => {
                 let isRequesting = false; // 요청 중 여부를 추적하는 변수
                 let cachedData = null;
