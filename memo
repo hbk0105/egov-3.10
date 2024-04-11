@@ -93,3 +93,9 @@ The issue is valid but does not need fixing
 it represents accepted technical debt.
 
 The issue is raised unexpectedly on code that should not trigger an issue.
+
+
+
+# favicon.ico 없으면 로그 여러번 출력됨
+
+https://www.inflearn.com/questions/765181/interceptor-%EC%97%AC%EB%9F%AC%EB%B2%88-%ED%98%B8%EC%B6%9C

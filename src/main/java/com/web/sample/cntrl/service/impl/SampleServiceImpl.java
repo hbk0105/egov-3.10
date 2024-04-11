@@ -1,8 +1,6 @@
 package com.web.sample.cntrl.service.impl;
 
-import com.stn.util.CommandMap;
 import com.stn.util.FileUtil;
-import com.web.common.cntrl.service.CrudService;
 import com.web.sample.cntrl.mapper.SampleMapper;
 import com.web.sample.cntrl.service.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +79,7 @@ public class SampleServiceImpl implements SampleService {
 
     private void fileSave(HashMap map) throws Exception{
         MultipartHttpServletRequest multipartReq = (MultipartHttpServletRequest) map.get("multipartReq");
-        List<Map<String,Object>>  fileList = fileUtil.fileUpload(multipartReq);
+        List<Map<String,Object>>  fileList = fileUtil.fileUpload(multipartReq,"");
         for(Map<String, Object> m : fileList){
             m.put("boardId",map.get("boardId"));
             sampleMapper.fileSave((HashMap) m);

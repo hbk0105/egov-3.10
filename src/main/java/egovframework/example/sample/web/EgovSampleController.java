@@ -15,8 +15,6 @@
  */
 package egovframework.example.sample.web;
 
-import java.io.File;
-import java.util.*;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -30,10 +28,6 @@ import egovframework.example.sample.service.SampleDefaultVO;
 import egovframework.example.sample.service.SampleVO;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.Consumes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +39,17 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springmodules.validation.commons.DefaultBeanValidator;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Class Name : EgovSampleController.java
@@ -273,7 +275,7 @@ public class EgovSampleController {
 	@PostMapping("/uploadDynamicFiles.do" )
 	public String handleDynamicFileUpload(HttpServletRequest req ,  MultipartHttpServletRequest  multipartReq , HttpServletResponse response) throws Exception {
 		try {
-			System.out.println(fileUtil.fileUpload(multipartReq));
+			System.out.println(fileUtil.fileUpload(multipartReq,""));
 		}catch (Exception e){
 			e.printStackTrace();
 		}

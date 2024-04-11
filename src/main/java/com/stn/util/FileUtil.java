@@ -39,7 +39,7 @@ public class FileUtil {
     @Value("${Globals.file.uploadDir}")
     private String uploadDir;
 
-    public List<Map<String,Object>> fileUpload(MultipartHttpServletRequest request) throws Exception {
+    public List<Map<String,Object>> fileUpload(MultipartHttpServletRequest request,String folder) throws Exception {
         List<Map<String,Object>> fileList = new ArrayList<>();
         //MultipartHttpServletRequest mRequest = request;
         Iterator<String> iter = request.getFileNames();
@@ -47,7 +47,7 @@ public class FileUtil {
             MultipartFile item = request.getFile(iter.next());
             String fieldName = item.getName();
             if(item.getSize() == 0) continue;
-            String path = "files";
+            String path = folder == null || "".equals(folder) ? "file"  : folder;
             fileList.add(fileUpload(item,path));
         }
         return fileList;
@@ -73,8 +73,11 @@ public class FileUtil {
             if(fileName.contains("..")){
                 throw new Exception("invalid path : "+fileName );
             }
-
             String savePath = uploadDir + "\\"+path;
+            if(path.equalsIgnoreCase("smartEditor") && !isPermisionFileMimeType(file.getContentType())){
+                throw new Exception("invalid img : "+fileName );
+            }
+
             /* 파일이 저장되는 폴더가 없으면 폴더를 생성합니다. */
             if(new File(savePath).exists() == false){ new File(savePath).mkdirs(); }
 
@@ -86,12 +89,37 @@ public class FileUtil {
             map.put("fileName",fileName);
             map.put("filePath",filePath);
             map.put("size",file.getSize());
+            map.put("savePath",savePath);
             map.put("mimeType",new Tika().detect(destinationFile));
 
         }catch (Exception e){
             e.printStackTrace();
         }
         return map;
+    }
+
+    private boolean isPermisionFileMimeType( String contentType ) throws Exception {
+
+        String originalFileExtensionBack = null;
+        if(contentType.contains("image/jpeg")){
+            originalFileExtensionBack = ".jpg";
+            return true;
+        }
+        else if(contentType.contains("image/png")){
+            originalFileExtensionBack = ".png";
+            return true;
+        }
+        else if(contentType.contains("image/gif")){
+            originalFileExtensionBack = ".gif";
+            return true;
+        }
+        else if(contentType.contains("image/bmp")){
+            originalFileExtensionBack = ".bmp";
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     /**
