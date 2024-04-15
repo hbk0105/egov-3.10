@@ -390,6 +390,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome</artifactId>
+            <version>1.13.1</version>
+        </dependency>
+
 
     </dependencies>
 

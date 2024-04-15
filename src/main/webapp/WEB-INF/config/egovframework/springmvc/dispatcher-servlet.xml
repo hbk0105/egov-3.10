@@ -162,7 +162,9 @@
         </property>
     </bean>
 -->
-
+    <!-- RSS VIEWER -->
+    <bean class = "org.springframework.web.servlet.view.BeanNameViewResolver" />
+    <bean id = "rssViewer" class = "com.web.common.cntrl.RSSFeedViewer" />
 
 
     <!-- 권한 체크 인터셉터  -->
