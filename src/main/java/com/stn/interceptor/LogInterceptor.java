@@ -31,9 +31,9 @@ public class LogInterceptor implements Interceptor {
         try {
             sql = bindSql(handler); // SQL추출
 
-            log.debug("=====================================================================");
+           /* log.debug("=====================================================================");
             log.debug(sql);
-            log.debug("=====================================================================");
+            log.debug("=====================================================================");*/
 
         } catch (Exception e){
             log.error("LogInterceptor - intercept" + e.getMessage());

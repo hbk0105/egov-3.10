@@ -5,7 +5,8 @@
 <!--
             <PatternLayout pattern="%d %5p (%13F:%L) | %m%n" />
 -->
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>-->
+            <PatternLayout pattern="%d %5p [%c] %m%n"/>
 
         </Console>
 
@@ -42,6 +43,36 @@
             <AppenderRef ref="console" />
             <AppenderRef ref="file" />
         </Logger>
+
+        <!-- SQL 로그 출력 -->
+        <!--  SQL 쿼리 문장 -->
+
+        <Logger name="java.sql" level="ERROR" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+
+        <Logger name="jdbc.sqlonly" level="ERROR" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+
+        <!-- log SQL with timing information, post execution -->
+        <Logger name="jdbc.sqltiming" level="INFO" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+
+        <Logger name="jdbc.audit" level="WARN" additivity="false">
+            <appender-ref ref="console"/>
+        </Logger>
+
+        <Logger name="jdbc.resultset" level="WARN" additivity="false">
+            <appender-ref ref="console"/>
+        </Logger>
+
+        <Logger name="jdbc.resultSettable" level="INFO" additivity="false">
+            <appender-ref ref="console"/>
+        </Logger>
+
+
         <Root level="DEBUG">
             <AppenderRef ref="console" />
             <AppenderRef ref="file" />

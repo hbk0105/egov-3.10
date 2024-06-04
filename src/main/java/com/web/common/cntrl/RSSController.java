@@ -6,8 +6,6 @@ import org.jdom.CDATA;
 import org.jdom.Namespace;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +18,6 @@ import org.w3c.dom.NodeList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
@@ -29,7 +26,6 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.StringReader;
 import java.util.*;
 
 /*
@@ -226,42 +222,4 @@ public class RSSController {
         serializer.output(doc,out);
     }
 
-
-    @RequestMapping(value = "/getCodeList2.xml", method = {RequestMethod.GET, RequestMethod.POST})
-    private void  getCodeList2(Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        response.setHeader("Content-Type", "application/xml");
-        response.setHeader("Content-xml","attachment; filename=encode.xml");
-        response.setContentType("text/xml;charset=UTF-8");
-
-        try {
-
-            SAXBuilder sax = new SAXBuilder();
-
-            // https://rules.sonarsource.com/java/RSPEC-2755
-            // prevent xxe
-            sax.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-            sax.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
-
-
-            String xml = "<root><child id=\"100\">mkyong</child></root>";
-            // XML is a local file
-
-            SAXBuilder sb = new SAXBuilder();
-            org.jdom2.Document doc = sax.build(new StringReader(xml));
-
-            org.jdom2.Element rootNode = doc.getRootElement();
-            List<org.jdom2.Element> list = rootNode.getChildren("staff");
-
-            org.jdom2.output.XMLOutputter xmlOutputter = new org.jdom2.output.XMLOutputter(org.jdom2.output.Format.getPrettyFormat());
-
-            // output to console
-            xmlOutputter.output(doc, System.out);
-
-        } catch (IOException | JDOMException e) {
-            e.printStackTrace();
-        }
-
-
-    }
 }
