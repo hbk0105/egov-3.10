@@ -62,6 +62,15 @@
             </params>
         </url-rule>
 
+        <url-rule>
+            <url>/sample/boardExec.do</url>
+            <params>
+                <param name="content" useDefender="true">>
+                    <defender>xssSaxFilterDefender</defender>
+                </param>
+            </params>
+        </url-rule>
+
        <!-- <url-rule>
             <url>/xss/jsonFilter.do</url>
             <params>

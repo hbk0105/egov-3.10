@@ -1,7 +1,9 @@
 package com.stn.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
@@ -9,12 +11,9 @@ import java.sql.Clob;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringUtil {
 
@@ -407,22 +406,58 @@ public class StringUtil {
 
         String ret = data;
 
-        ret = ret.replaceAll("<(S|s)(C|c)(R|r)(I|i)(P|p)(T|t)", "&lt;script");
-        ret = ret.replaceAll("</(S|s)(C|c)(R|r)(I|i)(P|p)(T|t)", "&lt;/script");
+        ret = ret.replaceAll("(?i)<(S|s)(C|c)(R|r)(I|i)(P|p)(T|t)", "&lt;script");
+        ret = ret.replaceAll("(?i)</(S|s)(C|c)(R|r)(I|i)(P|p)(T|t)", "&lt;/script");
 
-        ret = ret.replaceAll("<(O|o)(B|b)(J|j)(E|e)(C|c)(T|t)", "&lt;object");
-        ret = ret.replaceAll("</(O|o)(B|b)(J|j)(E|e)(C|c)(T|t)", "&lt;/object");
+        ret = ret.replaceAll("(?i)<(O|o)(B|b)(J|j)(E|e)(C|c)(T|t)", "&lt;object");
+        ret = ret.replaceAll("(?i)</(O|o)(B|b)(J|j)(E|e)(C|c)(T|t)", "&lt;/object");
 
-        ret = ret.replaceAll("<(A|a)(P|p)(P|p)(L|l)(E|e)(T|t)", "&lt;applet");
-        ret = ret.replaceAll("</(A|a)(P|p)(P|p)(L|l)(E|e)(T|t)", "&lt;/applet");
+        ret = ret.replaceAll("(?i)<(A|a)(P|p)(P|p)(L|l)(E|e)(T|t)", "&lt;applet");
+        ret = ret.replaceAll("(?i)</(A|a)(P|p)(P|p)(L|l)(E|e)(T|t)", "&lt;/applet");
 
-        ret = ret.replaceAll("<(E|e)(M|m)(B|b)(E|e)(D|d)", "&lt;embed");
-        ret = ret.replaceAll("</(E|e)(M|m)(B|b)(E|e)(D|d)", "&lt;embed");
+        ret = ret.replaceAll("(?i)<(E|e)(M|m)(B|b)(E|e)(D|d)", "&lt;embed");
+        ret = ret.replaceAll("(?i)</(E|e)(M|m)(B|b)(E|e)(D|d)", "&lt;embed");
 
-        ret = ret.replaceAll("<(F|f)(O|o)(R|r)(M|m)", "&lt;form");
-        ret = ret.replaceAll("</(F|f)(O|o)(R|r)(M|m)", "&lt;form");
+        ret = ret.replaceAll("(?i)<(F|f)(O|o)(R|r)(M|m)", "&lt;form");
+        ret = ret.replaceAll("(?i)</(F|f)(O|o)(R|r)(M|m)", "&lt;form");
+
+
+        ret = ret.trim();
 
         return ret;
+    }
+    public static String unscript2(String data) {
+        String ret = data;
+        // ret = ret.replaceAll("(?i)\\b(a|A)(l|L)(e|E)(r|R)(t|T)\\b", "");
+
+        // 2023-06-01 웹 취약점 조치
+        ret = ret.replaceAll("<(I|i)(F|f)(A|a)(M|m)(E|e)", "&lt;iframe");
+        ret = ret.replaceAll("</(I|i)(F|f)(A|a)(M|m)(E|e)", "&lt;iframe");
+
+        ret = ret.replaceAll("(&#x61|&#x61;)(&#x6c|&#x6c;)(&#x65|&#x65;)(&#x72|&#x72;)(&#x74|&#x74;)", ""); // alert
+        ret = ret.replaceAll("(&#x41|&#x41;)(&#x4c|&#x4c;)(&#x45|&#x45;)(&#x52|&#x52;)(&#x54|&#x54;)", ""); // ALERT
+
+        ret = ret.replaceAll("(&#x6a|&#x6a;)(&#x61|&#x61;)(&#x76|&#x76;)(&#x61|&#x61;)(&#x73|&#x73;)(&#x63|&#x63;)(&#x72|&#x72;)(&#x69|&#x69;)(&#x70|&#x70;)(&#x74|&#x74;)", ""); // javascript
+        ret = ret.replaceAll("(&#x4a|&#x4a;)(&#x41|&#x41;)(&#x56|&#x56;)(&#x41|&#x41;)(&#x53|&#x53;)(&#x43|&#x43;)(&#x52|&#x52;)(&#x49|&#x49;)(&#x50|&#x50;)(&#x54|&#x54;)", ""); // JAVASCRIPT
+
+        ret = ret.replaceAll("(&#60|&#60;|<)", "&lt;");
+        ret = ret.replaceAll("(&#62|&#62;|>)", "&gt;");
+
+        /* 2024-06-21 XSS 취약점 - on으로 시작하는 이벤트 조치 */
+        //ret = ret.replaceAll("(?i)\\s*on\\w+\\s*=\\s*(\"[^\"]*\"|'[^']*'|[^\\s>]+)", "");
+        ret = htmlXssFileter(ret);
+
+        return ret;
+    }
+
+
+    public static String htmlXssFileter(String htmlString) {
+        // 정규 표현식을 사용하여 XSS 공격에 취약한 요소들을 제거합니다.
+        Pattern pattern = Pattern.compile("(?i)<(script|style|svg|details|applet|audio|basefont|bgsound|blink|body|embed|frame|frameset|head|html|ilayer|img|layer|link|meta|object|plaintext|style|title|video|xml)[^>]*>[\\s\\S]*?</\\1>|javascript:|data:|on\\w+\\s*=\\s*(['\"]?)\\s*");
+        Matcher matcher = pattern.matcher(htmlString);
+        String sanitizedHtml = matcher.replaceAll("");
+
+        return sanitizedHtml;
     }
 
     public static String clobToString(Clob data) {

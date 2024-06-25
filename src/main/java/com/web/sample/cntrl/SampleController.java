@@ -166,6 +166,9 @@ public class SampleController {
         String id = param.get("id") == null ? "" : param.get("id").toString();
         String mode = id == null || "".equalsIgnoreCase(id) ? "C" : "U";
         try {
+
+            param.put("content",StringUtil.unscript2(StringUtil.unscript(param.get("content").toString())));
+
             param.put("multipartReq",multipartReq);
             if("C".equalsIgnoreCase(mode)){ // 등록
                 sampleService.save(param);

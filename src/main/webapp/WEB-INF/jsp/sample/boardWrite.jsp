@@ -116,10 +116,10 @@
 <!-- SmartEditor2 텍스트편집기 -->
 <script src="/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script>
+    var oEditors = [];
     $(document).ready(function () {
 
         <!-- SmartEditor2 텍스트편집기 -->
-        var oEditors = [];
         function smartEditorIFrame() {
 
             nhn.husky.EZCreator.createInIFrame({
@@ -245,6 +245,7 @@
         customModule.updateDefaultRule($('#board'),customRules,customMsgs,null);
 
         $("#btnSave").click(function(){
+            oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
             $("#board").submit();
         });
 
@@ -257,5 +258,8 @@
 
     });
 
+    window.onbeforeunload = function(){
+        //초기화
+    };
 
 </script>
