@@ -38,6 +38,12 @@ ${maskVar}
     <meta content="Free Website Template" name="keywords">
     <meta content="Free Website Template" name="description">
 
+
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
+
+
     <!-- Favicon -->
 <%--    <link rel="shortcut icon" href="#">--%>
 

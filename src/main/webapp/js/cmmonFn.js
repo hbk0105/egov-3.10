@@ -138,6 +138,18 @@ function fnFormDataToJson(formNm) {
                         dataType: mergedOptions.dataType,
                         processData: mergedOptions.processData,  // 기본값 사용
                         contentType: mergedOptions.contentType,  // 기본값 사용
+                        //추가해야 하는 부분
+                        beforeSend: function(xhr) {
+
+                            const token = $("meta[name='_csrf']").attr("content")
+                            const header = $("meta[name='_csrf_header']").attr("content");
+
+                            // header와 token 값이 not null일 때만 설정
+                            if (header !== null && token !== null) {
+                                xhr.setRequestHeader(header, token);
+                            }
+                        },
+
                         success: (response) => {
                             cachedData = response;
                             callback(cachedData);
