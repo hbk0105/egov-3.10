@@ -23,6 +23,11 @@
 
 		<s:intercept-url pattern="/notifications/**" access="permitAll" />
 		<s:intercept-url pattern="/sample/*.do" access="permitAll" />
+<!--
+		<s:intercept-url pattern="/sample/**" access="authenticated"/>
+		<s:intercept-url pattern="/sample/**" method="GET" access="permitAll"/>-->
+
+
 		<s:intercept-url pattern="/uploadDynamicFiles.do" access="permitAll"/>
 		<s:intercept-url pattern="/*file*.do" access="permitAll"/>
 		<s:intercept-url pattern="/commonMsgForward.do" access="permitAll"/>
@@ -67,9 +72,46 @@
 		<!-- 권한이 없어서 금지된 URI 접속할 때 보여줄 페이지(403 에러 페이지 대체) -->
 		<s:access-denied-handler ref="customAccessDenied"/>
 
-		<s:csrf disabled="true"/>
+		<!--<s:csrf disabled="true"/>-->
+
+		<s:csrf token-repository-ref="csrfTokenRepository"/>
+
+		<s:csrf request-matcher-ref="csrfRequestMatcher"/>
 
 	</s:http>
+
+	<!-- CSRF 토큰 저장소 설정 -->
+	<bean id="csrfTokenRepository" class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository">
+		<property name="headerName" value="X-CSRF-TOKEN"/>
+	</bean>
+
+	<bean id="csrfRequestMatcher" class="org.springframework.security.web.util.matcher.OrRequestMatcher">
+		<constructor-arg>
+			<list>
+				<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+					<constructor-arg value="/"/>
+				</bean>
+				<!--<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+					<constructor-arg value="/sample/**"/>
+				</bean>-->
+				<!-- POST, PUT, DELETE 메서드에 대한 CSRF 토큰 검사 -->
+				<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+					<constructor-arg value="/sample/**"/>
+				</bean>
+				<!-- GET 메서드에 대해 CSRF 토큰 검사 제외 -->
+				<bean class="org.springframework.security.web.util.matcher.NegatedRequestMatcher">
+					<constructor-arg>
+						<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+							<constructor-arg value="/sample/**"/>
+							<constructor-arg value="GET"/>
+						</bean>
+					</constructor-arg>
+				</bean>
+
+				<!-- 추가적인 URL 패턴을 여기다 더 추가할 수 있습니다 -->
+			</list>
+		</constructor-arg>
+	</bean>
 
 
 	<!-- SHA256 적용 -->

@@ -52,6 +52,7 @@
         <div class="comment-form">
             <h2>Board Read Page</h2>
             <form name="board" id="board" action="/sample/boardExec.do" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <input type="hidden" name="pageIndex" id="pageIndex" value="${paramMap.pageIndex}">
                 <input type="hidden" name="id" id="id" value="${paramMap.id}">
                 <div class="form-group">

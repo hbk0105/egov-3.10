@@ -1,12 +1,5 @@
 package com.web.login.cntrl;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.stn.util.CommandMap;
 import com.web.user.vo.user.UserDetailsVO;
 import org.apache.log4j.Logger;
@@ -17,11 +10,13 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 //import com.nhncorp.lucy.security.xss.XssPreventer;
 
@@ -108,10 +103,11 @@ public class LoginController {
 */
 
 	
-	@GetMapping("/accessError.do")
-	public String accessDenied(Authentication auth, Model model) { 
+	@RequestMapping("/accessError.do")
+	public String accessDenied(Authentication auth, HttpServletRequest request, Model model) {
 		log.info("access Denied : "+ auth);
-		model.addAttribute("msg", "접근권한이 없습니다."); 
+		log.info("access Denied : "+ request.getAttribute("errMsg"));
+		model.addAttribute("msg", "Access Denied");
 		
 		return "/egovframework/example/login/accessError";
 	}
