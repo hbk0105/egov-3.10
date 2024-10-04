@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.*;
 
 /**
@@ -176,6 +177,31 @@ public class FileUtil {
      */
     // TODO: 이미지 출력
     public ResponseEntity<byte[]> getImage(File f) throws IOException {
+
+        try (InputStream inputImage = new FileInputStream(f);
+             ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputImage.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, length);
+            }
+
+            HttpHeaders headers = new HttpHeaders();
+            String mimeType = new Tika().detect(f);
+            headers.setContentType(MediaType.valueOf(mimeType));
+
+            headers.add("Content-Type", Files.probeContentType(f.toPath()));
+
+            return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
+        } catch (FileNotFoundException e) {
+            // 파일이 없는 경우
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (IOException e) {
+            // 기타 IO 예외 처리
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+        /*
         InputStream inputImage = new FileInputStream(f.getAbsolutePath());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
@@ -186,7 +212,7 @@ public class FileUtil {
         }
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", String.valueOf(MediaType.valueOf(new Tika().detect(new File(f.getAbsolutePath())))));
-        return new ResponseEntity<byte[]>(outputStream.toByteArray(), headers, HttpStatus.OK);
+        return new ResponseEntity<byte[]>(outputStream.toByteArray(), headers, HttpStatus.OK);*/
     }
 
     /**
