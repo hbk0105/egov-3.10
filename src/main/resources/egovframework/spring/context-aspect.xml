@@ -54,6 +54,7 @@
 	</bean>
 
 	<bean id="egovHandler" class="egovframework.example.cmmn.EgovSampleExcepHndlr" />
-	<bean id="otherHandler" class="egovframework.example.cmmn.EgovSampleOthersExcepHndlr" />	
-	
+	<bean id="otherHandler" class="egovframework.example.cmmn.EgovSampleOthersExcepHndlr" />
+	<aop:aspectj-autoproxy />
+
 </beans>

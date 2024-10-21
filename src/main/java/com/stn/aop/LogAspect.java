@@ -1,15 +1,15 @@
 package com.stn.aop;
 
+import org.apache.logging.log4j.LogManager;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
@@ -20,22 +20,23 @@ import java.util.HashMap;
 @Component
 public class LogAspect {
 
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    // private Logger log = LoggerFactory.getLogger(this.getClass());
+    private org.apache.logging.log4j.Logger log = LogManager.getLogger(this.getClass());
     // https://kingjakeu.github.io/springboot/2021/02/02/spring-aop/
     /* // 패키지 범위 설정 */
-    @Pointcut("@annotation(RequestingPayment)")
+    @Pointcut("@annotation(com.stn.aop.RequestingPayment)")
     public void cut() {}
 
     // Joint Point가 실행되기 전(결제 추가 인증)
     @Before("cut()")
     public void onBefore(JoinPoint joinPoint) {
 
-        log.debug("--------- onBefore START ---------");
+        log.info("--------- onBefore START ---------");
 
         HashMap<String, Object> param = getParam();
-        log.debug("onBefore[param] :: -> " + param);
+        log.info("onBefore[param] :: -> " + param);
 
-        log.debug("--------- onBefore END ---------");
+        log.info("--------- onBefore END ---------");
 
     }
 
@@ -44,15 +45,15 @@ public class LogAspect {
     public void onAfterReturning(JoinPoint joinPoint, Object returnObj){
         // 메서드 정보 받아오기
         Method method = getMethod(joinPoint);
-        log.debug("--------- onAfterReturning START ---------");
-        log.debug("======= method name = {} =======", method.getName());
-        log.debug("AfterAllMethod = {}", joinPoint.getSignature());
-        log.debug("return value = {}", returnObj);
+        log.info("--------- onAfterReturning START ---------");
+        log.info("======= method name = {} =======", method.getName());
+        log.info("AfterAllMethod = {}", joinPoint.getSignature());
+        log.info("return value = {}", returnObj);
 
         HashMap<String, Object> param = getParam();
-        log.debug("onAfterReturning[param] :: -> " + param);
+        log.info("onAfterReturning[param] :: -> " + param);
 
-        log.debug("--------- onAfterReturning END ---------");
+        log.info("--------- onAfterReturning END ---------");
 
     }
 
@@ -66,7 +67,7 @@ public class LogAspect {
     // JointPoint 실행 전, 후
     @Around("cut()")
     public void around(ProceedingJoinPoint joinPoint) throws Throwable {
-        log.debug("--------- around START ---------");
+        log.info("--------- around START ---------");
 
         //메서드 시작 전
         StopWatch stopWatch = new StopWatch();
@@ -91,18 +92,18 @@ public class LogAspect {
         log.info(" Total Running Time : " + stopWatch.getTotalTimeSeconds());
 
 
-        log.debug("--------- around END ---------");
+        log.info("--------- around END ---------");
     }
 
     /* 오류 발생 시 */
     @AfterThrowing(pointcut = "cut()", throwing = "e")
     public void afterThrowingLogging(JoinPoint joinPoint, Exception e) {
-        log.debug("--------- onAfterTrowing START ---------");
+        log.info("--------- onAfterTrowing START ---------");
 
         log.error("### Occured error in request {}", joinPoint.getSignature().toShortString());
         log.error("\t{}", e.getMessage());
 
-        log.debug("--------- onAfterTrowing END ---------");
+        log.info("--------- onAfterTrowing END ---------");
 
     }
 
@@ -123,6 +124,7 @@ public class LogAspect {
         return param;
     }
 
+    /* <aop:aspectj-autoproxy /> 설정 필수 */
 
 
 }

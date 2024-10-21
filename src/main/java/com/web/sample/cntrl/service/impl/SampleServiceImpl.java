@@ -1,5 +1,6 @@
 package com.web.sample.cntrl.service.impl;
 
+import com.stn.aop.RequestingPayment;
 import com.stn.util.FileUtil;
 import com.web.sample.cntrl.mapper.SampleMapper;
 import com.web.sample.cntrl.service.SampleService;
@@ -37,6 +38,7 @@ public class SampleServiceImpl implements SampleService {
     }
 
     @Override
+    @RequestingPayment
     public List<HashMap<String, Object>> findAll(HashMap map) {
         return sampleMapper.findAll(map);
     }
