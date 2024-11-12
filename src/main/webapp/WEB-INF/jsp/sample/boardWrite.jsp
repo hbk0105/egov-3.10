@@ -51,7 +51,7 @@
 
         <div class="comment-form">
             <h2>Board Read Page</h2>
-            <form name="board" id="board" action="/sample/boardExec.do" method="post" enctype="multipart/form-data">
+            <form name="board" id="board" action="/sample/boardExec.do" onsubmit="return false;" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <input type="hidden" name="pageIndex" id="pageIndex" value="${paramMap.pageIndex}">
                 <input type="hidden" name="id" id="id" value="${paramMap.id}">
@@ -89,7 +89,7 @@
                         </c:otherwise>
                     </c:choose>
                 </div>
-
+            </form>
                 <div class="form-group">
                     <button type="button" onclick="fnList();" class="btn btn-outline-dark">LIST</button>
                     <c:if test="${ not empty result.ID}">
@@ -97,7 +97,6 @@
                     </c:if>
                     <button type="button" id="btnSave" class="btn btn-outline-primary">SAVE</button>
                 </div>
-            </form>
         </div>
 
     </div>

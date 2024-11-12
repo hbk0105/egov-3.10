@@ -1,39 +1,40 @@
 package com.web.common.cntrl.service.impl;
 
-import com.stn.util.CommandMap;
 import com.web.common.cntrl.service.CrudService;
 import org.springframework.stereotype.Service;
-import java.util.HashMap;
+
 import java.util.List;
 
 @Service("crudService")
 public class CrudServiceImpl implements CrudService {
+
     @Override
-    public HashMap findByOne(HashMap map) {
+    public Object findByOne(Object o) {
         return null;
     }
 
     @Override
-    public int totalCount(HashMap map) {
+    public int totalCount(Object o) {
         return 0;
     }
 
     @Override
-    public List<HashMap<String, Object>> findAll(HashMap map) {
+    public List findAll(Object o) {
         return null;
     }
 
     @Override
-    public int save(HashMap map) {
+    public int save(Object o) {
         return 0;
     }
 
     @Override
-    public int update(HashMap map) {
+    public int update(Object o) {
         return 0;
     }
+
     @Override
-    public int delete(HashMap map) {
+    public int delete(Object o) {
         return 0;
     }
 }

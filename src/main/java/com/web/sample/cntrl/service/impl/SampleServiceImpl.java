@@ -1,6 +1,5 @@
 package com.web.sample.cntrl.service.impl;
 
-import com.stn.aop.RequestingPayment;
 import com.stn.util.FileUtil;
 import com.web.sample.cntrl.mapper.SampleMapper;
 import com.web.sample.cntrl.service.SampleService;
@@ -23,32 +22,37 @@ public class SampleServiceImpl implements SampleService {
     @Autowired
     private FileUtil fileUtil;
 
-    @Override
-    public HashMap findByOne(HashMap map) {
-        return sampleMapper.findByOne(map);
+
+    private void fileSave(HashMap map) throws Exception{
+        MultipartHttpServletRequest multipartReq = (MultipartHttpServletRequest) map.get("multipartReq");
+        List<Map<String,Object>>  fileList = fileUtil.fileUpload(multipartReq,"");
+        for(Map<String, Object> m : fileList){
+            m.put("boardId",map.get("boardId"));
+            sampleMapper.fileSave((HashMap) m);
+        }
     }
+
+
     @Override
-    public List<HashMap> fileList(HashMap map) {
-        return sampleMapper.fileList(map);
+    public Object findByOne(Object o) {
+        return sampleMapper.findByOne((HashMap) o);
     }
 
     @Override
-    public int totalCount(HashMap map) {
-        return sampleMapper.totalCount(map);
+    public int totalCount(Object o) {
+        return sampleMapper.totalCount((HashMap) o);
     }
 
     @Override
-    @RequestingPayment
-    public List<HashMap<String, Object>> findAll(HashMap map) {
-        return sampleMapper.findAll(map);
+    public List findAll(Object o) { return sampleMapper.findAll((HashMap) o);
     }
 
     @Override
     @Transactional
-    public int save(HashMap map) {
+    public int save(Object o) {
+        HashMap map = (HashMap) o;
         int succ = 0;
         map.put("boardId",sampleMapper.selectMaxBoardId());
-
         if(sampleMapper.save(map) > 0){
             succ++;
             try {
@@ -57,16 +61,15 @@ public class SampleServiceImpl implements SampleService {
                 e.printStackTrace();
                 throw new RuntimeException("게시글 등록 중 오류가 발생했습니다.");
             }
-         }
+        }
         return succ;
+
     }
 
-
     @Override
-    @Transactional
-    public int update(HashMap map) {
+    public int update(Object o) {
+        HashMap map = (HashMap) o;
         int succ = 0;
-        map.put("boardId",map.get("id").toString());
         if(sampleMapper.update(map) > 0){
             succ++;
             try {
@@ -79,18 +82,11 @@ public class SampleServiceImpl implements SampleService {
         return succ;
     }
 
-    private void fileSave(HashMap map) throws Exception{
-        MultipartHttpServletRequest multipartReq = (MultipartHttpServletRequest) map.get("multipartReq");
-        List<Map<String,Object>>  fileList = fileUtil.fileUpload(multipartReq,"");
-        for(Map<String, Object> m : fileList){
-            m.put("boardId",map.get("boardId"));
-            sampleMapper.fileSave((HashMap) m);
-        }
-    }
 
     @Override
     @Transactional
-    public int delete(HashMap map) {
+    public int delete(Object o) {
+        HashMap map = (HashMap) o;
         int succ = 0;
         if(sampleMapper.delete(map) > 0){
             succ++;
@@ -109,6 +105,12 @@ public class SampleServiceImpl implements SampleService {
 
 
     @Override
+    public List<HashMap> fileList(HashMap map) {
+        return sampleMapper.fileList(map);
+    }
+
+
+    @Override
     public int deleteFile(HashMap map) {
         return sampleMapper.deleteFile(map);
     }
@@ -117,4 +119,5 @@ public class SampleServiceImpl implements SampleService {
     public HashMap fileMap(HashMap map) {
         return sampleMapper.fileMap(map);
     }
+
 }

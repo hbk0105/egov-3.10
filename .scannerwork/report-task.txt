@@ -1,6 +1,6 @@
 projectKey=study
-serverUrl=http://localhost:9000
-serverVersion=10.4.1.88267
-dashboardUrl=http://localhost:9000/dashboard?id=study
-ceTaskId=99c8f2eb-f2e3-415a-8b6f-bd5ee41dbbae
-ceTaskUrl=http://localhost:9000/api/ce/task?id=99c8f2eb-f2e3-415a-8b6f-bd5ee41dbbae
+serverUrl=http://127.0.0.1:9000
+serverVersion=10.7.0.96327
+dashboardUrl=http://127.0.0.1:9000/dashboard?id=study
+ceTaskId=6184098c-910e-4dd6-9c8c-6c8126875d24
+ceTaskUrl=http://127.0.0.1:9000/api/ce/task?id=6184098c-910e-4dd6-9c8c-6c8126875d24

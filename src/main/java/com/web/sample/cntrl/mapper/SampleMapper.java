@@ -1,11 +1,9 @@
 package com.web.sample.cntrl.mapper;
 
-import com.stn.util.CommandMap;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Mapper("sampleMapper")
 public interface SampleMapper {

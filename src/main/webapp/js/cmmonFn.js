@@ -29,7 +29,12 @@ function fnCustomSelector(selector, callback) {
   });
 }
 
-
+function fnUuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
 
 function fnDynamicFormData(options, formData) {
     // 기본값 설정
@@ -60,6 +65,15 @@ function fnDynamicFormData(options, formData) {
       });
       form.append(input); // 동적 폼
     });
+
+    const token = $("meta[name='_csrf']").attr("content")
+
+    let input = $('<input>').attr({
+        'type': 'hidden',
+        'name': '_csrf',
+        'value': token,
+    });
+    form.append(input); // 동적 폼
 
     form.appendTo('body');
 
