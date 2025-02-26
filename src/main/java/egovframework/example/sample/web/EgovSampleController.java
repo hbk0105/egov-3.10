@@ -273,7 +273,7 @@ public class EgovSampleController {
 
 
 	@PostMapping("/uploadDynamicFiles.do" )
-	public String handleDynamicFileUpload(HttpServletRequest req ,  MultipartHttpServletRequest  multipartReq , HttpServletResponse response) throws Exception {
+	public String handleDynamicFileUpload(HttpServletRequest req ,  MultipartHttpServletRequest  multipartReq , HttpServletResponse res) throws Exception {
 		try {
 			System.out.println(fileUtil.fileUpload(multipartReq,""));
 		}catch (Exception e){
@@ -292,10 +292,10 @@ public class EgovSampleController {
 	@GetMapping("/file/downLoad.do")
 	//  @GetMapping("/files/{fileId}")
 	@Consumes(MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<byte[]> downloadDocument( HttpServletRequest req) throws Exception {
+	public void downloadDocument( HttpServletRequest req , HttpServletResponse res) throws Exception {
 		// @PathVariable Long fileId
 		File f = new File("C:\\upload\\files\\cB4NGcToTUlnqwe7vu7VWz1QoOLfSWzq.pdf");
-		return  fileUtil.fileDownload( "상스.pdf" , new File(f.getAbsolutePath()) , req);
+		fileUtil.fileDownload( "상스.pdf" , new File(f.getAbsolutePath()) , req , res);
 	}
 
 	/**

@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +19,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import java.io.File;
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class SampleController {
@@ -241,17 +243,27 @@ public class SampleController {
      */
     @RequestMapping("/samepl/fileDownLoad.do")
     @Consumes(MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<byte[]> downloadDocument(CommandMap commandMap , HttpServletRequest req , HttpServletResponse response) throws Exception {
+    public void downloadDocument(CommandMap commandMap , HttpServletRequest req , HttpServletResponse res) throws Exception {
         HashMap param = (HashMap) commandMap.getMap();
         HashMap fileMap = sampleService.fileMap(param);
         if(fileMap == null){
-            new PrintWiterUtil().cmmnMsg2(response,"첨부파일이 없습니다.");
+            new PrintWiterUtil().cmmnMsg2(res,"첨부파일이 없습니다.");
         }else{
-            return  fileUtil.fileDownload( fileMap.get("ORIGINAL_FILE_NAME").toString() , new File(fileMap.get("FILE_PATH").toString()) , req);
+              fileUtil.fileDownload( fileMap.get("ORIGINAL_FILE_NAME").toString() , new File(fileMap.get("FILE_PATH").toString()) ,req, res);
         }
-        return null;
     }
 
+
+    @GetMapping("/imageView.do")
+    public void imageView( HttpServletResponse res) throws IOException {
+        
+        /*
+        * 파일 id key 갖고 db데이터 조회 후 파일경로 + 파일원본명 전달 
+        * */
+        
+        String imagePath = "C:\\upload\\files\\1.png";
+        fileUtil.getImage(imagePath,res);
+    }
 
     @GetMapping("/sample/hello")
     public String hello() {

@@ -71,6 +71,7 @@ public class SampleServiceImpl implements SampleService {
         HashMap map = (HashMap) o;
         int succ = 0;
         if(sampleMapper.update(map) > 0){
+            map.put("boardId",map.get("id"));
             succ++;
             try {
                 fileSave(map);

@@ -18,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.util.*;
 
@@ -88,7 +90,7 @@ public class FileUtil {
 
             map.put("origFilename",origFilename);
             map.put("fileName",fileName);
-            map.put("filePath",filePath);
+            map.put("filePath",filePath.replace("/", File.separator).replace("\\", File.separator));
             map.put("size",file.getSize());
             map.put("savePath",savePath);
             map.put("mimeType",new Tika().detect(destinationFile));
@@ -132,41 +134,76 @@ public class FileUtil {
      * @throws Exception
      */
     // TODO: 파일 다운로드
-    public ResponseEntity<byte[]> fileDownload(String orgName , File f , HttpServletRequest req) throws Exception{
-
-        InputStream inputImage = new FileInputStream(f.getAbsolutePath());
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[2048];
-        int l = inputImage.read(buffer);
-        while (l >= 0) {
-            outputStream.write(buffer, 0, l);
-            l = inputImage.read(buffer);
+    public void fileDownload(String orgName, File f, HttpServletRequest req, HttpServletResponse res) throws Exception {
+        if (!f.exists()) {
+            res.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
         }
 
-        HttpHeaders header = new HttpHeaders();
-        String strClient = req.getHeader("User-Agent");
+        // 원본 파일 크기 확인
+        log.debug("원본 파일 크기: " + f.length());
 
-        String dwnFileName = new String(orgName.trim().getBytes("EUC-KR"),"8859_1");   //수정사항
+        // 브라우저 구분 (User-Agent)
+        String userAgent = req.getHeader("User-Agent");
 
-        // https://m.blog.naver.com/PostView.nhn?blogId=kimgungoo&logNo=90045379130&proxyReferer=https:%2F%2Fwww.google.com%2F
-        if(strClient.indexOf("MSIE 5.5")>-1) {
-            header.add("Content-Type", "doesn/matter;");
-            header.add("Content-Disposition", "filename=" + dwnFileName + ";");
+        // 파일 이름 인코딩 (UTF-8 → ISO-8859-1 변환)
+        String dwnFileName = URLEncoder.encode(orgName.trim(), "UTF-8").replaceAll("\\+", "%20");
+
+        // Content-Disposition 설정 (파일 다운로드 방식)
+        if (userAgent != null && (userAgent.contains("MSIE") || userAgent.contains("Trident"))) { // IE 브라우저
+            res.setHeader("Content-Disposition", "attachment; filename=\"" + dwnFileName + "\";");
+        } else { // 크롬, 파이어폭스, 사파리 등
+            res.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + dwnFileName);
         }
-        else {
-            header.add("Content-Type", "application/octet-stream;");
-            header.add("Content-Disposition", "attachment; filename=" + dwnFileName + ";");
+
+        // 파일의 MIME 타입 감지 (Apache Tika 활용)
+        String mimeType = new Tika().detect(f);
+        res.setContentType(mimeType);
+
+        // Content-Length 설정
+        res.setContentLengthLong(f.length());
+
+        // 파일을 직접 읽어서 전송 (OutputStream 사용)
+        try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(f));
+             OutputStream outputStream = res.getOutputStream()) {
+
+            byte[] buffer = new byte[8192]; // 8KB 버퍼
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            outputStream.flush();
+        } catch (IOException e) {
+            log.debug("파일 다운로드 중 오류 발생: " + e.getMessage());
+        }
+    }
+
+    public void getImage(String imagePath , HttpServletResponse res) throws IOException{
+
+        File imgFile = new File(imagePath);
+
+        // 파일 존재 여부 확인
+        if (!imgFile.exists()) {
+            res.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
         }
 
-        // 파일의 mediaType를 알아내기 위한 api
-        //String mediaType = new Tika().detect(new File(f.getAbsolutePath()));
-        header.setContentType(MediaType.valueOf(new Tika().detect(new File(f.getAbsolutePath()))));
-        header.add("Content-Type","text/html; charset=EUC_KR");
-        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
-        header.add("Pragma", "no-cache");
-        header.add("Expires", "0");
+        // 이미지 MIME 타입 감지
+        String mimeType = new Tika().detect(imgFile);
+        res.setContentType(mimeType);
 
-        return new ResponseEntity<byte[]>(outputStream.toByteArray(), header, HttpStatus.OK);
+        // 파일을 직접 읽어서 OutputStream으로 응답 전송
+        try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(imgFile));
+             OutputStream outputStream = res.getOutputStream()) {
+
+            byte[] buffer = new byte[8192]; // 8KB 버퍼
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            outputStream.flush();
+        }
+
     }
 
     /**
@@ -224,12 +261,12 @@ public class FileUtil {
     public int fileDelete(String fullPathAndNm){
         int result =  -99;
 
-        System.out.println("### fullPathAndNm --> " +fullPathAndNm);
+        log.debug("### fullPathAndNm --> " +fullPathAndNm);
         // 파일 객체 생성
         File file = new File(fullPathAndNm);
 
-        System.out.println(file.exists());
-        System.out.println(file.delete());
+        log.debug(file.exists());
+        log.debug(file.delete());
 
         // 파일이 존재하는지 확인 후 삭제
         if (file.exists()) {

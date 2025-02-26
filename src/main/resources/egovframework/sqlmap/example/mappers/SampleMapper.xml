@@ -3,7 +3,7 @@
 <mapper namespace="com.web.sample.cntrl.mapper.SampleMapper">
 
 	<sql id="searchBoard">
-		<if test="searchType != null and searchType != '' and searchTxt != null and searchTxt != '' ">
+		<!--<if test="searchType != null and searchType != '' and searchTxt != null and searchTxt != '' ">
 			<choose>
 				<when test='"title".equalsIgnoreCase(searchType)'>
 					AND TITLE LIKE CONCAT('%', #{searchTxt}, '%')
@@ -27,7 +27,33 @@
 				</when>
 
 			</choose>
-		</if>
+		</if>-->
+
+		<where>
+			<trim prefixOverrides="AND">
+				<if test="searchTxt != null and searchTxt != ''">
+					<choose>
+						<when test="searchType == null or searchType == '' or 'all'.equalsIgnoreCase(searchType)">
+							(
+							TITLE LIKE CONCAT('%', #{searchTxt}, '%')
+							OR CONTENT LIKE CONCAT('%', #{searchTxt}, '%')
+							OR USERNAME = #{searchTxt}
+							)
+						</when>
+						<when test="'title'.equalsIgnoreCase(searchType)">
+							TITLE LIKE CONCAT('%', #{searchTxt}, '%')
+						</when>
+						<when test="'content'.equalsIgnoreCase(searchType)">
+							CONTENT LIKE CONCAT('%', #{searchTxt}, '%')
+						</when>
+						<when test="'writer'.equalsIgnoreCase(searchType)">
+							USERNAME = #{searchTxt}
+						</when>
+					</choose>
+				</if>
+			</trim>
+		</where>
+
 	</sql>
 
 	<select id="findByOne" resultType="hashmap" parameterType="hashmap">
@@ -70,7 +96,6 @@
 			 , (SELECT USERNAME FROM USERS U WHERE U.ID = USER_ID) AS USERNAME       /* 작성자 ID */
 		FROM BOARDS WHERE IS_DELETED != 1
 	) A
-	WHERE 1 = 1
 	<include refid="searchBoard"></include>
 	</select>
 
@@ -95,8 +120,8 @@
 					 , DATE_FORMAT(CREATED_AT, '%Y-%m-%d %H:%i:%S') AS CREATED_AT    /* 작성일자 */
 					 , DATE_FORMAT(UPDATED_AT, '%Y-%m-%d %H:%i:%S') AS UPDATED_AT    /* 수정일자 */
 					 , IS_DELETED    /* 삭제 여부 */
-				FROM BOARDS
-			) B WHERE IS_DELETED != 1
+				FROM BOARDS WHERE IS_DELETED != 1
+			) B
 		<include refid="searchBoard"></include>
 		) A LIMIT #{startPage},#{pageSize}
 	</select>
@@ -107,47 +132,69 @@
 
 	<insert id="save" parameterType="hashmap">
 		/* SampleMapper - save */
-	INSERT INTO
-		BOARDS(ID,TITLE, CONTENT, USER_ID, CREATED_AT)
-		VALUES(#{boardId},#{title},#{content},1,SYSDATE() )
+		<bind name="safeUserId" value="userId != null ? userId : 1"/>
+
+		INSERT INTO BOARDS
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="boardId != null">ID,</if>
+			<if test="title != null">TITLE,</if>
+			<if test="content != null">CONTENT,</if>
+			<if test="userId != null">USER_ID,</if>
+			CREATED_AT
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="boardId != null">#{boardId},</if>
+			<if test="title != null">#{title},</if>
+			<if test="content != null">#{content},</if>
+			<if test="userId != null">#{safeUserId},</if>
+			SYSDATE()
+		</trim>
 	</insert>
 
-	<insert id="fileSave" parameterType="hashmap">
-	/* SampleMapper - fileSave */
-	INSERT INTO BOARD_FILES
-	    (
-		 ID
-		 , BOARD_ID
-		 , FILE_NAME
-		 , FILE_PATH
-		 , FILE_SIZE
-		 , FILE_TYPE
-		 , ORIGINAL_FILE_NAME
-		 , CREATED_AT
-		 , IS_DELETED
-		) VALUES (
-	    	(SELECT MAX(ID)+1 FROM BOARD_FILES F WHERE F.BOARD_ID = #{boardId})
-	    	, #{boardId}
-			, #{fileName}
-			, #{filePath}
-			, #{size}
-			, #{mimeType}
-			, #{origFilename}
-			, SYSDATE()
-			, 0
-		)
+	<insert id="fileSave" parameterType="map">
+		/* SampleMapper - fileSave */
+		<!-- `MAX(ID) + 1`을 먼저 가져와서 `newFileId` 변수에 저장 -->
+		<selectKey keyProperty="newFileId" resultType="int" order="BEFORE">
+			(SELECT MAX(ID)+1 FROM BOARD_FILES F WHERE F.BOARD_ID = #{boardId})
+		</selectKey>
 
+		INSERT INTO BOARD_FILES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="newFileId != null">ID,</if>
+			<if test="boardId != null">BOARD_ID,</if>
+			<if test="fileName != null">FILE_NAME,</if>
+			<if test="filePath != null">FILE_PATH,</if>
+			<if test="size != null">FILE_SIZE,</if>
+			<if test="mimeType != null">FILE_TYPE,</if>
+			<if test="origFilename != null">ORIGINAL_FILE_NAME,</if>
+			CREATED_AT,
+			IS_DELETED
+		</trim>
+		VALUES
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="newFileId != null">#{newFileId},</if>
+			<if test="boardId != null">#{boardId},</if>
+			<if test="fileName != null">#{fileName},</if>
+			<if test="filePath != null">#{filePath},</if>
+			<if test="size != null">#{size},</if>
+			<if test="mimeType != null">#{mimeType},</if>
+			<if test="origFilename != null">#{origFilename},</if>
+			SYSDATE(),
+			0
+		</trim>
 	</insert>
+
 
 	<update id="update" parameterType="hashmap">
 		/* SampleMapper - update */
-	<![CDATA[
 		UPDATE BOARDS
-			SET TITLE = #{title}
-				, CONTENT = #{content}
-				, UPDATED_AT = SYSDATE()
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="title != null">TITLE = #{title},</if>
+			<if test="content != null">CONTENT = #{content},</if>
+			UPDATED_AT = SYSDATE()
+		</trim>
 		WHERE ID = #{id}
-	]]>
 	</update>
 
 	<update id="delete" parameterType="hashmap">
