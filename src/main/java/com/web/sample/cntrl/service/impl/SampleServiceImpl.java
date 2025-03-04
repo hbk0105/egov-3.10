@@ -1,22 +1,26 @@
 package com.web.sample.cntrl.service.impl;
 
 import com.stn.util.FileUtil;
+import com.sun.org.slf4j.internal.Logger;
+import com.sun.org.slf4j.internal.LoggerFactory;
 import com.web.sample.cntrl.mapper.SampleMapper;
 import com.web.sample.cntrl.service.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service("sampleService")
+@Primary
 public class SampleServiceImpl implements SampleService {
 
-    @Resource(name="sampleMapper")
+    private static final Logger logger = LoggerFactory.getLogger(SampleServiceImpl.class);
+    @Autowired
     private SampleMapper sampleMapper;
 
     @Autowired
@@ -34,23 +38,22 @@ public class SampleServiceImpl implements SampleService {
 
 
     @Override
-    public Object findByOne(Object o) {
-        return sampleMapper.findByOne((HashMap) o);
+    public HashMap findByOne(HashMap o) {
+        return sampleMapper.findByOne(o);
     }
 
     @Override
-    public int totalCount(Object o) {
+    public int totalCount(HashMap o) {
         return sampleMapper.totalCount((HashMap) o);
     }
 
     @Override
-    public List findAll(Object o) { return sampleMapper.findAll((HashMap) o);
+    public List findAll(HashMap o) { return sampleMapper.findAll((HashMap) o);
     }
 
     @Override
     @Transactional
-    public int save(Object o) {
-        HashMap map = (HashMap) o;
+    public int save(HashMap map) {
         int succ = 0;
         map.put("boardId",sampleMapper.selectMaxBoardId());
         if(sampleMapper.save(map) > 0){
@@ -58,7 +61,7 @@ public class SampleServiceImpl implements SampleService {
             try {
                 fileSave(map);
             }catch (Exception e){
-                e.printStackTrace();
+                logger.error("게시글 등록 중 오류 발생: {}", e.getMessage(), e);
                 throw new RuntimeException("게시글 등록 중 오류가 발생했습니다.");
             }
         }
@@ -67,8 +70,7 @@ public class SampleServiceImpl implements SampleService {
     }
 
     @Override
-    public int update(Object o) {
-        HashMap map = (HashMap) o;
+    public int update(HashMap map) {
         int succ = 0;
         if(sampleMapper.update(map) > 0){
             map.put("boardId",map.get("id"));
@@ -76,7 +78,7 @@ public class SampleServiceImpl implements SampleService {
             try {
                 fileSave(map);
             }catch (Exception e){
-                e.printStackTrace();
+                logger.error("게시글 수정 중 오류 발생: {}", e.getMessage(), e);
                 throw new RuntimeException("게시글 수정 중 오류가 발생했습니다.");
             }
         }
@@ -86,8 +88,7 @@ public class SampleServiceImpl implements SampleService {
 
     @Override
     @Transactional
-    public int delete(Object o) {
-        HashMap map = (HashMap) o;
+    public int delete(HashMap map) {
         int succ = 0;
         if(sampleMapper.delete(map) > 0){
             succ++;

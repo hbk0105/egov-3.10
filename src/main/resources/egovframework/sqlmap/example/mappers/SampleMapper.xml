@@ -29,6 +29,10 @@
 			</choose>
 		</if>-->
 
+		/*
+			https://velog.io/@gsuchoi/MyBatis-%EB%8F%99%EC%A0%81-%EC%BF%BC%EB%A6%AC-trim
+			https://haenny.tistory.com/439
+	   */
 		<where>
 			<trim prefixOverrides="AND">
 				<if test="searchTxt != null and searchTxt != ''">
